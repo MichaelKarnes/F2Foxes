@@ -1,15 +1,16 @@
-<?php 
+<?php
 include 'boot/session.php'; 
+//https://www.youtube.com/watch?v=SaRh2HauIXY has good video for watching how to work with arrays
 ?>
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>sign up</title>
+		<title>events</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
-        <link rel="stylesheet" href="register/css/register.css" />
+        <link rel="stylesheet" href="pagecontent/signout/css/signout.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
@@ -18,21 +19,14 @@ include 'boot/session.php';
 
             <!--header-->
             <?php include 'pagecontent/header.php'; ?>
-            <div id="main-wrapper">
-	            <div class="wrapper style2">
-		            <div class="inner">
-			            <div class="container">
-				            <div id="content">
-                                <!--Main Content-- link to about.php it is located in the pagecontent folder-->
-                                <?php include 'pagecontent/register/register.php'?>
-				            </div>
-			            </div>
-		            </div>
-	            </div>
-            </div>
+
+            <!--Main Content-- link to about.php it is located in the pagecontent folder-->
+            <?php include 'pagecontent/signout/signal.php'?>
+            
 			<!-- Footer  -->
             <?php include 'pagecontent/footer.php'; ?>
 				
+
 		</div>
 
 		<!--Script-- can be found in the pagecontent folder script.php-->

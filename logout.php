@@ -21,7 +21,7 @@
             <div id="main-wrapper">
 	             <div class="wrapper style2">
                      <?php
-                    echo "<h1><a href='index.php'>You've been logged out.Click here to return to the home menu.</a></h1>";
+                    echo "<h1>You've been logged out.<a href='index.php'>Click to the Home Menu.</a></h1>";
                     ?>
                   </div>
             </div>

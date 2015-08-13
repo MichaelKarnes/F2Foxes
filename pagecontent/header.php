@@ -28,13 +28,16 @@ if ($_SESSION ['username']){?>
                                 <li><a href="http://foxcompany.core-image.net/">Shop</a></li>
 
                                 <?php //session_start();
-                                if ($_SESSION ['username']){?>
+                                if ($_SESSION['student']==1){ ?>
                                     <li><a href="grades.php">Grades</a></li>
                                     <li><a href="signoutsheet.php">Signout Sheet</a></li>
                                     <li><a href="training.php">Training</a></li>
+                                <?php } 
+                                if ($_SESSION['username']){ ?>
                                     <li><a href="logout.php">Log Out</a></li>
-                                <?php }else{?>
 
+                                <?php } 
+                                 if (!($_SESSION['username'])){ ?>
                                 <li><a href="login.php">Log In</a></li>
                                 <li><a href="register.php">Register</a></li>    
                                 <?php }?>          

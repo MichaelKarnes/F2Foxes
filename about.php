@@ -4,7 +4,7 @@ include 'boot/session.php';
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>events</title>
+		<title>About</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -18,9 +18,19 @@ include 'boot/session.php';
             <!--header-->
             <?php include 'pagecontent/header.php'; ?>
 
-            <!--Main Content-- link to about.php it is located in the pagecontent folder-->
-            <?php include 'pagecontent/about/about.php'?>
-            
+            <div id="main-wrapper">
+	            <div class="wrapper style3">
+		            <div class="inner">
+			            <div class="container">
+				            <div class="row">
+                                <!--Main Content-- link to about.php it is located in the pagecontent folder-->
+                                 <?php include 'pagecontent/about/about.php'?>\
+				            </div>
+			            </div>
+		            </div>
+	            </div>
+            </div>
+
 			<!-- Footer  -->
             <?php include 'pagecontent/footer.php'; ?>
 				

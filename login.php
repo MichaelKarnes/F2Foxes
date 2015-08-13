@@ -1,5 +1,5 @@
 <?php
-    $connection = new mysqli("localhost","user","password") or die("Couldn't connect to database");
+    $connection = new mysqli("192.232.249.164", "km310765_admin", "Aftermath2015") or die("Couldn't connect to database");
     include 'boot/session.php'; 
 ?>
 <!DOCTYPE HTML>
@@ -19,9 +19,19 @@
             <!--header-->
             <?php include 'pagecontent/header.php'; ?>
 
-            <!--Main Content-- link to about.php it is located in the pagecontent folder-->
-            <?php include 'pagecontent/login/login.php'?>
-            
+            <div id="main-wrapper">
+	            <div class="wrapper style2">
+		            <div class="inner">
+			            <div class="container">
+				            <div id="content">
+                            <!--Main Content-- link to about.php it is located in the pagecontent folder-->
+                            <?php include 'pagecontent/login/login.php'?>
+                            </div>
+			            </div>
+		            </div>
+	            </div>
+            </div>
+
 			<!-- Footer  -->
             <?php include 'pagecontent/footer.php'; ?>
 				

@@ -37,9 +37,19 @@ include 'boot/session.php';
             <!--header-->
             <?php include 'pagecontent/header.php'; ?>
 
-            <!--Main Content-- link to about.php it is located in the pagecontent folder-->
-            <?php include 'pagecontent/signout/signoutsheet.php'?>
-            
+            <div id="main-wrapper">
+	            <div class="wrapper style3">
+		            <div class="inner">
+			            <div class="container">
+				            <div class="row">
+                            <!--Main Content-- link to about.php it is located in the pagecontent folder-->
+                            <?php include 'pagecontent/signout/signoutsheet.php'?>
+                            </div>
+			             </div>
+		             </div>
+	             </div>
+             </div>
+
 			<!-- Footer  -->
             <?php include 'pagecontent/footer.php'; ?>
 				
