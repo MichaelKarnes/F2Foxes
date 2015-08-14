@@ -1,3 +1,6 @@
+<?php
+    $username = $_SESSION['username']
+?>
 <!-- Main Wrapper -->
 <div id="main-wrapper">
 	<div class="wrapper style2">
