@@ -1,15 +1,13 @@
+<?php
+    $username = $_SESSION['username']
+?>
 <!-- Main Wrapper -->
 <div id="main-wrapper">
 	<div class="wrapper style2">
 		<div class="inner">
 			<div class="container">
 				<div id="content">
-                    <div id="gradeMenu">
-                        <!--create the html structure for the grades interface-->
-                        <form                     
-                    
-                    
-                    
+                    <div id="dialog" title="Tab data">
                     </div>
 
 				</div>

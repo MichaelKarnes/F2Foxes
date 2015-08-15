@@ -29,10 +29,11 @@ if ($_SESSION ['username']){?>
                         <li><a href="http://foxcompany.core-image.net/">Shop</a></li>
 
                         <?php
-                        if ($_SESSION['student']==1){ ?>
+                        if ($_SESSION['username']){ ?>
                             <li><a href="grades.php">Grades</a></li>
                             <li><a href="signoutsheet.php">Signout Sheet</a></li>
                             <li><a href="training.php">Training</a></li>
+                       
                         <?php } 
 
                         if ($_SESSION['signout']==1){ ?>
