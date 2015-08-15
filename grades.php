@@ -1,19 +1,13 @@
 <?php
 include 'boot/session.php'; 
 ?>
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<title>Grades</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-        <script type ="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Tabs - Simple manipulation</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
@@ -95,16 +89,12 @@ include 'boot/session.php';
     });
   });
   </script>
-	</head>
-	<body class="no-sidebar">
-		<div id="page-wrapper">
+</head>
+<body>
 
-            <!--header-->
-            <?php include 'pagecontent/header.php'; ?>
+<?php include 'pagecontent/header.php'; ?> 
 
-            <!--Main Content-- link to about.php it is located in the pagecontent folder-->
-            <!--<?php include 'pagecontent/grades/grades.php'?> -->
-            <div id="dialog" title="Tab data">
+<div id="dialog" title="Tab data">
   <form>
     <fieldset class="ui-helper-reset">
       <label for="tab_title">Title</label>
@@ -115,7 +105,7 @@ include 'boot/session.php';
   </form>
 </div>
  
-<button id="add_tab">Add Tab</button>
+<button id="add_tab">Add New Class</button>
  
 <div id="tabs">
   <ul>
@@ -125,14 +115,7 @@ include 'boot/session.php';
     <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
   </div>
 </div>
-            
-			<!-- Footer  -->
-            <?php include 'pagecontent/footer.php'; ?>
-				
-		</div>
-
-		<!--Script-- can be found in the pagecontent folder script.php-->
-        <?php include 'pagecontent/script.php'?>
-
-	</body>
+ 
+ 
+</body>
 </html>
