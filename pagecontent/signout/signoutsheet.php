@@ -1,12 +1,15 @@
 <?php
 $username=$_SESSION ['username'];
+$userid=$_SESSION ['username'];
+$connect=mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
+mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
+$date=date("Y-m-d");
 ?>
 <!-- Main Wrapper -->
 <div id="main-wrapper">
 	<div class="wrapper style3">
 		<div class="inner">
 			<div class="container">
-				<div class="row">
 					<form >
             <table>
                <tr>
@@ -29,32 +32,47 @@ $username=$_SESSION ['username'];
             </tr>
             <tr > 
                 <th><?php echo "$username"?></th>
-                
                 <?php
-                      $loopname="activities";
-                      $selstack=array();
-                      $activities= array('','Army Training','Cadet Performance Review Board','Class','Corps Center Guard','Corps Soccer Team','Darling Recruiting Company','Fish Drill Team','IEEE','LAB','Parson Mounted Cavalry','Rec','Recon Platoon','Ross Volunteer Company','Rudders Rangers','Ranger Challenge','Study Group','Tutoring','Work');
-                      //$actimg=array('','','','','','','','','','','','','','','','','','','','','','','','','','','');
-                       for ($k=0;$k<$columns-1;$k++) {
-                           echo '<td class="styled_select">';
-                           $loopnameinner=$loopname.$k;
-                           array_push($selstack, $loopnameinner)
-                           ?><select name="<?php echo $loopnameinner;?>"><?php
-                           for($i=0;$i<count($activities);$i++){
-                              echo'<option value="'.($i+1).'">'.$activities[$i].'</option>';
-                           }
-                           echo '</select>'; 
-                           echo '</td>';
-                       }
-                      ?><td><input type="submit"  value="Submit Changes"></td>
+                    $query=mysql_query("SELECT * FROM SignoutActivity  ");
+                    
+                   while ($row=mysql_fetch_assoc ($query))  {  
+                       $name=$row['Abreviation']; ?>
+                        <td>
+                            <select name="<?php echo $name ?>">
+                            <option value="0">
+                                        </option>
+                            <?php  $query1=mysql_query("SELECT * FROM SignoutReason ");
+                            while ($row1=mysql_fetch_assoc($query1))  { 
+                                    $reas=$row1['Reason'];
+                                    $reasID=$row1['Reason']; ?>
+                                        <option value="<?php echo $reasID ?>"><?php echo "$reasID"; ?>
+                                        </option>
+                             <?php } 
+                             ?>
+                          </select>
+                        </td>
+                   <?php }
+                      ?>
+                <td><input type="submit"  value="Submit Changes"></td>
             </tr>
+                <?php ?>
             <tr>
+                <?php  ?>
                     <th> Currently signed out for</th>
-                    <?php for ($p=0;$p<$columns-1;$p++){?>
-                        <td><img src="pagecontent/signout/reasonimages/RangerChallenge.png"  alt="auto" /></td>
-                     <?php } ?>
+                    <?php 
+                        $query2=mysql_query("SELECT s.UserID, s.ReasonID, sa.Abreviation  FROM Signout s RIGHT OUTER JOIN SignoutActivity sa ON s.ActivityID=sa.ActivityID WHERE s.UserID='$userid' and s.Date='$date' ");
+                        while ($row2=mysql_fetch_assoc($query2))  { 
+                            $uid=$rows2['s.UserID'];
+                            $rid=$rows2['s.ReasonID'];
+                            $abrev=$rows2['sa.Abreviation'];
+                            ?>
+                             <td><?php echo $rid ?> </td>
+                     <?php } 
+                     ?>
+                <?php 
+                ?>
             </tr>
-            <?php for ($i=0;$i<3;$i++){?>
+            <?php /* for ($i=0;$i<3;$i++){?>
     
                  <tr>
                 
@@ -63,11 +81,9 @@ $username=$_SESSION ['username'];
                         <td><img src="pagecontent/signout/reasonimages/class.png"  alt="auto" /></td>
                      <?php } ?>
                      
-                </tr>
-                 <?php }?>
+                </tr> */ ?>
             </table>
         </form>
-				</div>
 			</div>
 		</div>
 	</div>

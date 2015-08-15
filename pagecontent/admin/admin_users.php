@@ -32,27 +32,22 @@ if ($submit)//beginning of submit
              $lastname=$row3['LastName'];
             // Needs to insert into the Account_info, Authentication, Grades, Contact_Info
             mysql_query("UPDATE  Account_info SET PositionID='$position_value' WHERE UserID='$user' ") or die ("Could not update Account");
-            $c1=$position_value==1;
             $c2=$position_value>3;
             $c3=$position_value<13;
-            $c4=$p_id==2;
-            $c5=$p_id==3;
-            $c6=$p_id==13;
-            $c7=$p_id==0;
-            if (($c1||($c2&&$c3))&&($c4||$c5||$c6||$c7))
+            $c4=$p_id>0;
+            $c5=$p_id<4;
+            $c6=$p_id==0;
+            if (($c2&&$c3)&&(($c4&&$c5)||$c6))
             {
                mysql_query("INSERT INTO Grades Values('$user','')");
                echo "<p>UserID $user inserted into grades</p>";
             }
-            $c8=$p_id===1;
-            $c9=$p_id>3;
-            $c10=$p_id<13;
-            $c11=$position_value==2;
-            $c12=$position_value==3;
-            $c13=$position_value==13;
-            $c14=$position_value==0;
-            
-            if (($c8||($c9&&$c10))&&($c11||$c12||$c13||$c14))
+            $c7=$p_id>3;
+            $c8=$p_id<13;
+            $c9=$position_value>0;
+            $c10=$position_value<4;
+            $c11=$position_value==0;
+            if (($c7&&$c8)&&(($c9&&$c10)||$c11))
             {
                mysql_query("DELETE FROM Grades WHERE UserID='$user'");
                echo "<p>UserID $user Deleted from grades</p>";
