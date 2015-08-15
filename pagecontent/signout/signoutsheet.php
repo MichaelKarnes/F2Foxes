@@ -60,14 +60,19 @@ $date=date("Y-m-d");
                 <?php  ?>
                     <th> Currently signed out for</th>
                     <?php 
-                        $query2=mysql_query("SELECT s.UserID, s.ReasonID, sa.Abreviation  FROM Signout s RIGHT OUTER JOIN SignoutActivity sa ON s.ActivityID=sa.ActivityID WHERE s.UserID='$userid' and s.Date='$date' ");
-                        while ($row2=mysql_fetch_assoc($query2))  { 
-                            $uid=$rows2['s.UserID'];
-                            $rid=$rows2['s.ReasonID'];
-                            $abrev=$rows2['sa.Abreviation'];
-                            ?>
-                             <td><?php echo $rid ?> </td>
-                     <?php } 
+                        $query2=mysql_query("SELECT Signout.UserID, Signout.ReasonID, SignoutActivity.Abreviation  FROM Signout  RIGHT OUTER JOIN SignoutActivity  ON Signout.ActivityID=SignoutActivity.ActivityID WHERE Signout.UserID='$userid' and Signout.Date='$date' ORDER BY SignoutActivity.ActivityID ");
+                        while ($rows2=mysql_fetch_assoc($query2))  { 
+                           ?>
+                             <td>
+                               <?php 
+                                $uid=$rows2['UserID'];
+                                $rid=$rows2['ReasonID'];
+                                $abrev=$rows2['Abreviation'];
+                                echo "$abrev";
+                                ?>
+                            </td>
+                            <?php 
+                        }
                      ?>
                 <?php 
                 ?>
