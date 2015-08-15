@@ -30,33 +30,45 @@ if ($_SESSION ['username']){?>
 
                         <?php
                         if ($_SESSION['username']){ ?>
+                            <li><a href="">Student</a>
+                        <ul>
                             <li><a href="grades.php">Grades</a></li>
                             <li><a href="signoutsheet.php">Signout Sheet</a></li>
                             <li><a href="training.php">Training</a></li>
+                        </ul></li>
                        
-                        <?php } 
-
-                        if ($_SESSION['signout']==1){ ?>
-                            <li><a href="signal.php">S Admin</a></li>
                         <?php } /*
 
                         if ($_SESSION['training']==1){ ?>
                             <li><a href="trainingchain.php">T Admin</a></li>
                         <?php } */
 
-                         if ($_SESSION['admin']==1){ ?>
-                            <li><a href="admin_reg.php">Admin_reg</a></li>
-                            <li><a href="admin_users.php">Admin_users</a></li>
-                        <?php } 
+                         if ($_SESSION['admin']==1 ||$_SESSION['signout']==1){ ?>
+                            <li><a href="">Admin</a>
+                                <ul>
+                                    <?php if ($_SESSION['signout']==1){ ?>
+                                    <li><a href="admin_reg.php">Admin_reg</a></li>
+                                    <li><a href="admin_users.php">Admin_users</a></li>
+                                    <?php } 
+                                    if ($_SESSION['signout']==1){ ?>
+                                        <li><a href="signal.php">Admin_signout</a></li>
+                                    <?php } ?>
+                                </ul>
+                             </li>
+                        <?php } ?>
+                        <li><a href="">Account</a>
+                            <ul>
 
-                        if ($_SESSION['username']){ ?>
-                            <li><a href="logout.php">Log Out</a></li>
-
-                        <?php } 
-                            if (!($_SESSION['username'])){ ?>
-                        <li><a href="login.php">Log In</a></li>
-                        <li><a href="register.php">Register</a></li>    
-                        <?php }?>          
+                                <?php if ($_SESSION['username']){ ?>
+                                        <li><a href="logout.php">Log Out</a></li>
+                                        <li><a href="account_info.php">Account Info</a></li>
+                                <?php } 
+                                    if (!($_SESSION['username'])){ ?>
+                                        <li><a href="login.php">Log In</a></li>
+                                        <li><a href="register.php">Register</a></li>    
+                                <?php }?> 
+                            </ul>
+                        </li>         
 					</ul>
 				</nav>
 		    </div>
