@@ -41,11 +41,12 @@ if ($_SESSION ['username']){?>
 
                         if ($_SESSION['training']==1){ ?>
                             <li><a href="trainingchain.php">T Admin</a></li>
-                        <?php } 
+                        <?php } */
 
                          if ($_SESSION['admin']==1){ ?>
-                            <li><a href="admin.php">Admin</a></li>
-                        <?php } */
+                            <li><a href="adminreg.php">Admin_reg</a></li>
+                            <li><a href="admin.php">Admin_users</a></li>
+                        <?php } 
 
                         if ($_SESSION['username']){ ?>
                             <li><a href="logout.php">Log Out</a></li>

@@ -39,7 +39,7 @@ if ($username && $password)
                
         }
         else
-            echo "incorrect password";
+            echo " incorrect password";
     }
     else
         echo "user does not exits";

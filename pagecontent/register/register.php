@@ -43,8 +43,9 @@ if ($submit)//beginning of submit
                         //encrypt password
                         $password=md5($password);
                         $passcheck=md5($passcheck );
-                        $queryreg=mysql_query("INSERT INTO Registration VALUES ('$data','$firstname','$lastname','$username','$password','$phone','','','','$email','CA', ,'')");
-                        //order of insert is (date, firstname, lastname, position, password, phone, email, address, state, zip, county
+
+                        $queryreg=mysql_query("INSERT INTO Registration VALUES ('$date','','$firstname','$lastname','','','$username','$password','$phone','$email','','','','')");
+                        //order of insert is (date, UserID(leave blank), firstname, lastname, position,class year,username, password, phone, email, address, state, zip, county
                         die("You have been register! <a href='index.php'>Return to the home page</a>");
                     }
                 }
