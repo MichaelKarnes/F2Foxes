@@ -68,11 +68,11 @@ if ($submit)//beginning of submit
 <form action= "register.php" method="POST"><!--method will have to be changed to post later on when we have a database set up-->
 <!--first name--><p>
     <label for="firstname">First Name</label>
-    <input type="text" id="firstname" name="firstname" value="<?php echo $firstname?>" maxlength="15" />
+    <input type="text" id="firstname" name="firstname" value="<?php echo $firstname?>" maxlength="20" />
     </p>
 <!--Last name--> <p>
     <label for="lastname">Last Name</label>
-    <input type="text" id="lastname" name="lastname" value="<?php echo $lastname?>" maxlength="15" />
+    <input type="text" id="lastname" name="lastname" value="<?php echo $lastname?>" maxlength="20" />
     </p>
     <!--Status-- suggested not what will actually be the admin will decide -->
     <p>
@@ -80,7 +80,7 @@ if ($submit)//beginning of submit
      $i=0;
     ?>
     <label for="status">What is your classification?</label>
-       <select name="<?php echo $loopnameinner;?>"> <?php
+       <select name="<?php echo $loopnameinner; ?>"> <?php
         $query=mysql_query("SELECT Position FROM  Authorization");
         while($row=mysql_fetch_assoc ($query)){
             echo'<option value="'.($i+1).'">'.$row['Position'].'</option>';
@@ -89,32 +89,32 @@ if ($submit)//beginning of submit
     </p>
     <!--Email--><p>
     <label for="email">Current email</label>
-    <input type="text" id="email" name="email" value="<?php echo $email?>" maxlength="30" />
+    <input type="text" id="email" name="email" value="<?php echo $email ?>" maxlength="50" />
     </p>
     <!--Phone--><p>
     <label for="phone">Phone number we can reach you at(please enter in 1222323232 format)</label>
-    <input type="text" id="phone" name="phone" value="<?php echo $phone?>" maxlength="10" />
+    <input type="text" id="phone" name="phone" value="<?php echo $phone ?>" maxlength="10" />
     </p>
     <!--State--><!--<p>
     <label for="state">state of residence</label>
-    <input type="text" id="state" name="state" value="<?php echo $state?>" maxlength="20" />
+    <input type="text" id="state" name="state" value="<?php echo $state ?>" maxlength="20" />
     </p>-->
     <!--username--><p>
     <label for="username">username you would like</label>
-    <input type="text" id="username" name="username" value="<?php echo $username?>" maxlength="15" />
+    <input type="text" id="username" name="username" value="<?php echo $username ?>" maxlength="20" />
     </p>
     <p>
     <!--Password--><p>
     <label for="password">password you would like</label>
-    <input type="password" id="password" name="password" value="<?php echo $password?>" maxlength="15" />
+    <input type="password" id="password" name="password" value="<?php echo $password ?>" maxlength="50" />
     </p>
     <p>
     <label for="passcheck">please enter your password again</label>
-    <input type="password" id="passcheck" name="passcheck" value="<?php echo $passcheck?>" maxlength="15" />
+    <input type="password" id="passcheck" name="passcheck" value="<?php echo $passcheck ?>" maxlength="50" />
     </p>
     <!--State--><!--<p>
     <label for="state">state of residence</label>
-    <input type="text" id="state" name="state" value="<?php echo $state?>" maxlength="20" />
+    <input type="text" id="state" name="state" value="<?php echo $state ?>" maxlength="20" />
     </p>-->
 <p>
 <input type="submit" name="submit" value="register" />

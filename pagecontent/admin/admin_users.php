@@ -8,9 +8,10 @@ $c="c";
 $d="d";
 if ($submit)//beginning of submit
 {   
-    $query3=mysql_query("SELECT UserID FROM Account_info ");
+    $query3=mysql_query("SELECT UserID,PositionID FROM Account_info ");
      while ($row3=mysql_fetch_assoc ($query3))  {
          $user=$row3['UserID'];
+         $p_id=$row3['PositionID'];
          $cvalue_name=$c.$user;
          $dvalue_name=$d.$user;
          $delete_value=strip_tags($_POST["$dvalue_name"]);
@@ -19,32 +20,58 @@ if ($submit)//beginning of submit
          if ($delete_value)
          {
             mysql_query("DELETE FROM Account_info WHERE UserID='$delete_value'") or die("Could not delete from Account_info");
-           // mysql_query("DELETE FROM Account_info,Contat_Info,Authentication, Cadet_Name WHERE UserID='$delete_value'") or die("Could not delete ");
+           // mysql_query("DELETE FROM Account_info,Contat_Info,Authentication WHERE UserID='$delete_value'") or die("Could not delete ");
             mysql_query("DELETE FROM Contact_Info WHERE UserID='$delete_value'")or die("Could not delete from Contact_info");
             mysql_query("DELETE FROM Authentication WHERE UserID='$delete_value'")or die("Could not delete from Authentication");
             mysql_query("DELETE FROM Grades WHERE UserID='$delete_value'");//some users may not be in this table
-            mysql_query("DELETE FROM Cadet_Name WHERE UserID='$delete_value'")or die("Could not delete from Cadet_Name");
          }
          else if ($position_value && $change_value)
          {
              $oldpostion=$row3['PositionID'];
              $firstname=$row3['FirstName'];
              $lastname=$row3['LastName'];
-            // Needs to insert into the Account_info, Authentication, Cadet_Name(if a student),Grades, Contact_Info
+            // Needs to insert into the Account_info, Authentication, Grades, Contact_Info
             mysql_query("UPDATE  Account_info SET PositionID='$position_value' WHERE UserID='$user' ") or die ("Could not update Account");
-         }
-     } /*
+            $c1=$position_value==1;
+            $c2=$position_value>3;
+            $c3=$position_value<13;
+            $c4=$p_id==2;
+            $c5=$p_id==3;
+            $c6=$p_id==13;
+            $c7=$p_id==0;
+            if (($c1||($c2&&$c3))&&($c4||$c5||$c6||$c7))
+            {
+               mysql_query("INSERT INTO Grades Values('$user','')");
+               echo "<p>UserID $user inserted into grades</p>";
+            }
+            $c8=$p_id===1;
+            $c9=$p_id>3;
+            $c10=$p_id<13;
+            $c11=$position_value==2;
+            $c12=$position_value==3;
+            $c13=$position_value==13;
+            $c14=$position_value==0;
+            
+            if (($c8||($c9&&$c10))&&($c11||$c12||$c13||$c14))
+            {
+               mysql_query("DELETE FROM Grades WHERE UserID='$user'");
+               echo "<p>UserID $user Deleted from grades</p>";
+            }
+            echo "<p>UserID $user Updated</p>";
+          } 
+     }
+} /*
      
      if ($_POST["$pvalue_name"])
      {
          ?> <h1><?php echo "$pvalue_name"; ?>here</h1>
 <?php
      }*/
-}  
+  
 
 ?>
 <?php 
-    $query=mysql_query("SELECT * FROM Account_info ");
+    $query=mysql_query("SELECT * FROM Account_info a INNER JOIN Authorization b ON a.PositionID = b.PositionID ");
     $numrows=mysql_num_rows($query);
     ?>
        
@@ -68,8 +95,8 @@ if ($submit)//beginning of submit
                 $userid= $row['UserID']; 
                 $firstname= $row['FirstName'];
                 $lastname= $row['LastName'];
-                $positionid= $row['PositionID']; 
-                echo "<td>$userid</td><td>$firstname</td><td>$lastname</td><td>$positionid</td>" ?>
+                $position= $row['Position']; 
+                echo "<td>$userid</td><td>$firstname</td><td>$lastname</td><td>$position</td>" ?>
                 <td>
                          <input type="checkbox" name="d<?php echo $userid ?>" value="<?php echo $userid ?>">delete account<br>
                 </td>
