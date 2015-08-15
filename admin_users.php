@@ -24,7 +24,7 @@ include 'boot/session.php';
 			            <div class="container">
 				            <div id="content">
                                 <!--Main Content-- link to about.php it is located in the pagecontent folder-->
-                                <?php include 'pagecontent/admin/admin_reg.php'?>
+                                <?php include 'pagecontent/admin/admin_users.php'?>
 				            </div>
 			            </div>
 		            </div>

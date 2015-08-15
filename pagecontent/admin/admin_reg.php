@@ -5,13 +5,6 @@
     mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 $submit=$_POST['change'];
 //form data
-/*$firstname=strip_tags($_POST['firstname']);
-$lastname=strip_tags($_POST['lastname']);
-$username=strip_tags($_POST['username']);
-$password=strip_tags($_POST['password']);
-$passcheck=strip_tags($_POST['passcheck']);
-$email=strip_tags($_POST['email']);
-$phone=strip_tags($_POST['phone']);*/
 $a="a";
 $d="d";
 if ($submit)//beginning of submit
@@ -51,7 +44,10 @@ if ($submit)//beginning of submit
             // Needs to insert into the Account_info, Authentication, Cadet_Name(if a student),Grades, Contact_Info
             mysql_query("INSERT INTO Account_info VALUES('$a_UserID','$a_FirstName','$a_LastName','$position_value')");
             mysql_query("INSERT INTO Authentication VALUES('$a_UserID','$a_Username','$a_Password')");
-            mysql_query("INSERT INTO Cadet_Name VALUES('$a_UserID','$a_Last_F')");
+            /*if($position_value==1||($position_value>3&&$position_value<13)
+            {
+                 mysql_query("INSERT INTO Cadet_Name VALUES('$a_UserID','$a_Last_F')");
+            }*/
             mysql_query("INSERT INTO Contact_Info VALUES('$a_UserID','$a_Phone',$a_Address','$a_State','$a_Country','$a_Zip','$a_Email','$a_Reg_Date')");
             mysql_query("INSERT INTO Grades Values('$a_UserID','')");
             mysql_query("DELETE FROM Registration WHERE Username='$user' ");
