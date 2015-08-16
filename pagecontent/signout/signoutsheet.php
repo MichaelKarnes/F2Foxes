@@ -1,17 +1,18 @@
 <?php
 $username=$_SESSION ['username'];
-$userid=$_SESSION ['username'];
+$userid=$_SESSION ['userid'];
 $connect=mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
 mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
+$query3=mysql_query("SELECT Image,ReasonID FROM SignoutReason ORDER BY ReasonID ");
+$reasons=array();
+while ($row3=mysql_fetch_assoc ($query3))  {  
+    $resonid=$rows3['Image'];
+    array_push($reasons,"$reasonid");
+
+}
 $date=date("Y-m-d");
 ?>
-<!-- Main Wrapper -->
-<div id="main-wrapper">
-	<div class="wrapper style3">
-		<div class="inner">
-			<div class="container">
-					<form >
-            <table>
+<!-- Main Wrapper --><table>
                <tr>
                 <th id="blank"> </th>
                 <th colspan="4"id="days">Mon </th>
@@ -53,43 +54,22 @@ $date=date("Y-m-d");
                         </td>
                    <?php }
                       ?>
-                <td><input type="submit"  value="Submit Changes"></td>
+                <td><?php<input type="submit"  value="Submit Changes"></td>?>
             </tr>
-                <?php ?>
-            <tr>
-                <?php  ?>
-                    <th> Currently signed out for</th>
-                    <?php 
-                        $query2=mysql_query("SELECT Signout.UserID, Signout.ReasonID, SignoutActivity.Abreviation  FROM Signout  RIGHT OUTER JOIN SignoutActivity  ON Signout.ActivityID=SignoutActivity.ActivityID WHERE Signout.UserID='$userid' and Signout.Date='$date' ORDER BY SignoutActivity.ActivityID ");
-                        while ($rows2=mysql_fetch_assoc($query2))  { 
-                           ?>
-                             <td>
-                               <?php 
-                                $uid=$rows2['UserID'];
-                                $rid=$rows2['ReasonID'];
-                                $abrev=$rows2['Abreviation'];
-                                echo "$abrev";
-                                ?>
-                            </td>
-                            <?php 
-                        }
-                     ?>
                 <?php 
                 ?>
-            </tr>
-            <?php /* for ($i=0;$i<3;$i++){?>
-    
-                 <tr>
-                
-                    <th>user</th>
-                     <?php for ($p=0;$p<$columns-1;$p++){?>
-                        <td><img src="pagecontent/signout/reasonimages/class.png"  alt="auto" /></td>
-                     <?php } ?>
-                     
-                </tr> */ ?>
-            </table>
-        </form>
-			</div>
-		</div>
-	</div>
-</div>
+            <tr>
+        <?php
+                    $query2=mysql_query("SELECT Date, UserID, ReasonID, Abreviation  FROM  Signout RIGHT OUTER JOIN SignoutActivity  
+                    ON Signout.ActivityID=SignoutActivity.ActivityID WHERE (Signout.Date='$date' AND Signout.UserID=$userid) OR Signout.Date IS NULL");//WHERE Signout.UserID IS NULL
+                        while ($rows2=mysql_fetch_assoc($query2))  { 
+                            $uid=$rows2['UserID'];
+                            $rid=$rows2['ReasonID'];
+                            $abrev=$rows2['Abreviation'];
+                            echo "<td>$abrev $uid $rid</td>";
+                        }
+          ?>
+            </tr></table>
+        
+                <h1>howdy</h1>
+<h1>howdy</h1>

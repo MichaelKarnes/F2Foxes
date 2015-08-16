@@ -23,6 +23,7 @@ if ($username && $password)
         //cehck to see if they match!
         if($username==$dbusername&&md5($password)==$dbpassword)// password is stored as an md5
         {
+            
             echo"You're in! <a href='index.php'>Click</a> here to enter";// edit this to change were the use goes after logingin
             $_SESSION['username']=$dbusername;
             $_SESSION['userid']=$dbuserid;
