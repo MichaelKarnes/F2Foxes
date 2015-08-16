@@ -1,12 +1,21 @@
-.styled_select{
-                background:#f00;
-                width: 50px;
+.styled_select tr td{
+                background:#fff;
+                min-height: 50px;
+                 min-width: 50px;
                 font-size: 14px;
+                border: 1px solid #000;
                 
             }
-.styled_select select{
-    background:#ffd800;
-    width: 40px;
+.styled_select tr th{
+                background:#fff;
+                min-width: 50px;
+                font-size: 14px;
+                border: 1px solid #000;
+                
+            }
+.styled_select tr td select{
+    background:#e4c5c5;
+    width: 100px;
     padding: 0px;
     font-size: 16px;
     line-height: 1;
