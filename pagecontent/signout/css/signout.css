@@ -21,6 +21,7 @@ td{
 .styled_select tr th{
                 background:#fff;
                 min-width: 50px;
+                height: 50px;
                 font-size: 14px;
                 border: 1px solid #000;
                 
@@ -42,4 +43,11 @@ input[type=checkbox] {
  margin: 0;
   /* Webkit browsers*/
   -webkit-transform: scale(4);
+}
+.test_hover div { display: none;
+                  position:relative;
+                  bottom:40px;
+                  
+}
+.test_hover:hover div { display: block; background-color: #fff; max-width: 50px;
 }

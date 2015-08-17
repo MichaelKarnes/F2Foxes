@@ -1,5 +1,6 @@
 <?php
     include 'boot/session.php'; 
+if (!($_SESSION['student']==1)){ die("Sorry you do not have access to this file "); }  
 ?>
 <!DOCTYPE HTML>
 <html>

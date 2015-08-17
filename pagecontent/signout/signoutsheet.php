@@ -30,7 +30,6 @@ if ($submit)
                  mysql_query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ActivityID='$t_aid'") or die ("error");
                  if($t_rid=='19')
                  {
-                    echo "bob";
                      $t_text=strip_tags($_POST['text_input']);
                      mysql_query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','$t_text')") or die ("dead");
                 
@@ -112,37 +111,56 @@ if ($submit)
 <tr>
     <td>Current Signout</td>
 <?php //Signout.Date='$date'OR Signout.Date IS NULLWHERE  Signout.UserID = '$userid' OR Signout.Date IS NULL
-        $query2=mysql_query("SELECT Date, UserID, ReasonID, Abreviation  FROM  (SELECT * FROM Signout WHERE UserID='$userid'AND Date='$date') AS a RIGHT OUTER JOIN SignoutActivity  
+        $query2=mysql_query("SELECT Date, UserID, ReasonID, Abreviation,Text  FROM  (SELECT * FROM Signout WHERE UserID='$userid'AND Date='$date') AS a RIGHT OUTER JOIN SignoutActivity  
         ON a.ActivityID=SignoutActivity.ActivityID ");
             while ($rows2=mysql_fetch_assoc($query2))  { 
                 $uid=$rows2['UserID'];
                 $rid=$rows2['ReasonID'];
                 $abrev=$rows2['Abreviation']; 
                             
-                if ($rid) {?>
-                <td><img src="pagecontent/signout/reasonimages/<?php echo $reasons[$rid] ?>"  alt="auto" /> </td>
-                    <?php }
-                else { ?>
-                    <td> </td>
-                <?php }
-            }?>
+                if ($rid) { 
+                               $tid=$rid+1;
+                               $query8=mysql_query("SELECT Reason FROM SignoutReason WHERE ReasonID='$tid'");
+                               $row8=mysql_fetch_assoc($query8);
+                               $t_text=$row8['Reason']; 
+                               $intext=$rows2['Text']; 
+                                ?>
+                               <td ><a class="test_hover"><img src="pagecontent/signout/reasonimages/<?php echo $reasons[$rid] ?>"  alt="auto" />
+                                <?php if ($intext){ ?> <div><?php echo $intext; ?> </div> <?php }
+                                            else { ?> <div> <?php echo $t_text; ?> </div> <?php } ?>
+                                </a> </td>
+                           <?php }
+                           else { ?>
+                                <td> </td>
+                            <?php } 
+                        } 
+                        ?>
     <th>If Text</th><td><input type="text" name="text_input" maxlength="50" ></td>
-    </tr>
+    </tr >
            <?php
             $query3=mysql_query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 13 ORDER BY LastName" );
             while ($rows3=mysql_fetch_assoc($query3))  { 
                 $temp_ul=$rows3['LastName'];
                 $temp_uf=$rows3['FirstName'];
                 $temp_id=$rows3['UserID']; ?>
-                <tr> <th><?php echo "$temp_ul, $temp_uf"; ?></th> <?php
-                       $query4=mysql_query("SELECT Date, UserID, ReasonID FROM  (SELECT * FROM Signout WHERE UserID='$temp_id'AND Date='$date') 
+                <tr class="reason_hover"> <th><?php echo "$temp_ul, $temp_uf"; ?></th> <?php
+                       $query4=mysql_query("SELECT Date, UserID, ReasonID, Text FROM  (SELECT * FROM Signout WHERE UserID='$temp_id'AND Date='$date') 
                        AS a RIGHT OUTER JOIN SignoutActivity ON a.ActivityID=SignoutActivity.ActivityID ");
                        while ($rows4=mysql_fetch_assoc($query4))  { 
                            $tuid=$rows4['UserID'];
                            $trid=$rows4['ReasonID'];
-                           if ($trid) { ?>
-                           <td><img src="pagecontent/signout/reasonimages/<?php echo $reasons[$trid] ?>"  alt="auto" /> </td>
-                                <?php }
+                           if ($trid) { 
+                               $tid=$trid+1;
+                               $query8=mysql_query("SELECT Reason FROM SignoutReason WHERE ReasonID='$tid'");
+                               $row8=mysql_fetch_assoc($query8);
+                               $t_text=$row8['Reason']; 
+                               $intext=$rows4['Text']; 
+                                ?>
+                               <td ><a class="test_hover"><img src="pagecontent/signout/reasonimages/<?php echo $reasons[$trid] ?>"  alt="auto" />
+                                <?php if ($intext){ ?> <div><?php echo $intext; ?> </div> <?php }
+                                            else { ?> <div> <?php echo $t_text; ?> </div> <?php } ?>
+                                </a> </td>
+                           <?php }
                            else { ?>
                                 <td> </td>
                             <?php } 

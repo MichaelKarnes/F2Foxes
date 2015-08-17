@@ -29,9 +29,10 @@ if ($_SESSION ['username']){?>
                         <li><a href="http://foxcompany.core-image.net/">Shop</a></li>
 
                         <?php
-                        if ($_SESSION['username']){ ?>
+                        if ($_SESSION['student']){ ?>
                             <li><a href="">Student</a>
                         <ul>
+                            <li><a href="Announcements.php">Announcements</a></li>
                             <li><a href="grades.php">Grades</a></li>
                             <li><a href="signoutstartdate.php">Signout Sheet</a></li>
                             <li><a href="training.php">Training</a></li>
@@ -46,7 +47,7 @@ if ($_SESSION ['username']){?>
                          if ($_SESSION['admin']==1 ||$_SESSION['signout']==1){ ?>
                             <li><a href="">Admin</a>
                                 <ul>
-                                    <?php if ($_SESSION['signout']==1){ ?>
+                                    <?php if ($_SESSION['admin']==1){ ?>
                                     <li><a href="admin_reg.php">Admin_reg</a></li>
                                     <li><a href="admin_users.php">Admin_users</a></li>
                                     <?php } 
