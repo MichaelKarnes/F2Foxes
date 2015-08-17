@@ -33,7 +33,7 @@ if ($_SESSION ['username']){?>
                             <li><a href="">Student</a>
                         <ul>
                             <li><a href="grades.php">Grades</a></li>
-                            <li><a href="signoutsheet.php">Signout Sheet</a></li>
+                            <li><a href="signoutstartdate.php">Signout Sheet</a></li>
                             <li><a href="training.php">Training</a></li>
                         </ul></li>
                        

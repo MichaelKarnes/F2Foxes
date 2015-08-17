@@ -23,7 +23,7 @@ if ($submit)//beginning of submit
            // mysql_query("DELETE FROM Account_info,Contat_Info,Authentication WHERE UserID='$delete_value'") or die("Could not delete ");
             mysql_query("DELETE FROM Contact_Info WHERE UserID='$delete_value'")or die("Could not delete from Contact_info");
             mysql_query("DELETE FROM Authentication WHERE UserID='$delete_value'")or die("Could not delete from Authentication");
-            mysql_query("DELETE FROM Grades WHERE UserID='$delete_value'");//some users may not be in this table
+            mysql_query("DELETE FROM Grades WHERE UserID='$delete_value'")or die("Could not delete from Grades");//some users may not be in this table
          }
          else if ($position_value && $change_value)
          {

@@ -1,5 +1,5 @@
 <?php
-include 'boot/session.php'; 
+    include 'boot/session.php'; 
 ?>
 <!DOCTYPE HTML>
 <html>

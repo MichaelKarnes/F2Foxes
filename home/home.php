@@ -17,6 +17,7 @@
                             <div id="slider" class="nivoSlider">
                                 <img src="home/images/F-2CompanySpring2015.jpg" data-thumb="home/images/F-2CompanySpring2015.jpg" alt="auto" />
                                 <img src="home/images/Corps.jpg" data-thumb="home/images/Corps.jpg" alt="auto" />
+                                <img src="home/images/MarchInFall2014.jpg" data-thumb="home/images/MarchInFall2014.jpg" alt="auto" />
                                 <!--<img src="home/images/toystory.jpg" data-thumb="home/images/toystory.jpg" alt="auto" />
                                 <a href="http://dev7studios.com"><img src="home/images/up.jpg" data-thumb="home/images/up.jpg" alt="auto" title="This is an example of a caption" /></a>
                                 <img src="home/images/walle.jpg" data-thumb="home/images/walle.jpg" alt="auto" data-transition="slideInLeft" />

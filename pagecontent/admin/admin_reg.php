@@ -42,7 +42,7 @@ if ($submit)//beginning of submit
             mysql_query("INSERT INTO Account_info VALUES('$a_UserID','$a_FirstName','$a_LastName','$position_value')");
             mysql_query("INSERT INTO Authentication VALUES('$a_UserID','$a_Username','$a_Password')");
             mysql_query("INSERT INTO Contact_Info VALUES('$a_UserID','$a_Phone',$a_Address','$a_State','$a_Country','$a_Zip','$a_Email','$a_Reg_Date')");
-            mysql_query("INSERT INTO Grades Values('$a_UserID','')");
+            mysql_query("INSERT INTO Grades VALUES('$a_UserID','')");
             
             mysql_query("DELETE FROM Registration WHERE Username='$user' ");
          }
