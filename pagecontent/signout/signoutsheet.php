@@ -27,8 +27,17 @@ if ($submit)
              if ($_POST['c_reason'])
              {
                  $t_rid=strip_tags($_POST['c_reason']);
-                  mysql_query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ActivityID='$t_aid'") or die ("error");
-                  mysql_query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid')") or die ("dead");
+                 mysql_query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ActivityID='$t_aid'") or die ("error");
+                 if($t_rid=='19')
+                 {
+                    echo "bob";
+                     $t_text=strip_tags($_POST['text_input']);
+                     mysql_query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','$t_text')") or die ("dead");
+                
+                 }
+                 else{
+                     mysql_query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','')") or die ("dead");
+                 }
              }
         }
     } /*
@@ -117,6 +126,7 @@ if ($submit)
                     <td> </td>
                 <?php }
             }?>
+    <th>If Text</th><td><input type="text" name="text_input" maxlength="50" ></td>
     </tr>
            <?php
             $query3=mysql_query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 13 ORDER BY LastName" );
