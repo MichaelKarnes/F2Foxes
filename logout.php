@@ -1,6 +1,6 @@
 <?php 
     include 'boot/session.php'; 
-    if (!($_SESSION['username']==1)){ die("Sorry you do not have access to this file "); } 
+    #if (!($_SESSION['username']==1)){ die("Sorry you do not have access to this file "); } 
     session_destroy();
 ?>
 <!DOCTYPE HTML>
@@ -22,7 +22,7 @@
             <div id="main-wrapper">
 	             <div class="wrapper style2">
                      <?php
-                    echo "<h1>You've been logged out.<a href='index.php'>Click to the Home Menu.</a></h1>";
+                    echo "<h1>You've been logged out.<a href='index.php'>Please click home.</a></h1>";
                     ?>
                   </div>
             </div>
