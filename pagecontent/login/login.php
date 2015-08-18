@@ -27,7 +27,7 @@ if ($username && $password)
             echo"You're in! <a href='index.php'>Click</a> here to enter";// edit this to change were the use goes after logingin
             $_SESSION['username']=$dbusername;
             $_SESSION['userid']=$dbuserid;
-            $query=mysql_query("SELECT a.Admin, a.Training, a.Grades, a.Signout, a.Student, a.OldFox, a.Parent, a.Public_Relations FROM Account_info i INNER JOIN Authorization a ON i.PositionID = a.PositionID WHERE i.UserID='$dbuserid' ");
+            $query=mysql_query("SELECT a.Admin, a.Training, a.Grades, a.Signout, a.Student, a.OldFox, a.Parent, a.Public_Relations, a.Upperclassmen FROM Account_info i INNER JOIN Authorization a ON i.PositionID = a.PositionID WHERE i.UserID='$dbuserid' ");
             $row=mysql_fetch_assoc ($query);
             $_SESSION['admin']=$row['Admin'];
             $_SESSION['training']=$row['Training'];
@@ -36,6 +36,7 @@ if ($username && $password)
             $_SESSION['student']=$row['Student'];
             $_SESSION['oldfox']=$row['OldFox'];
             $_SESSION['parent']=$row['Parent'];
+            $_SESSION['upperclassmen']=$row['Upperclassmen'];
             $_SESSION['public_relations']=$row['Public_Relations'];
                
         }
