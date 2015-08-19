@@ -156,7 +156,7 @@ if ($submit)
                                $t_text=$row8['Reason']; 
                                $intext=$rows4['Text']; 
                                 ?>
-                               <td ><a class="test_hover"><img src="pagecontent/signout/reasonimages/<?php echo $reasons[$trid] ?>"  alt="auto" />
+                               <td ><a class="signout_hover"><img src="pagecontent/signout/reasonimages/<?php echo $reasons[$trid] ?>"  alt="auto" />
                                 <?php if ($intext){ ?> <div><?php echo $intext; ?> </div> <?php }
                                             else { ?> <div> <?php echo $t_text; ?> </div> <?php } ?>
                                 </a> </td>

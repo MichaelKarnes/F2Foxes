@@ -3,19 +3,22 @@ th{
     color: #000;
     height: 50px;
     text-align:center; vertical-align:middle;
+    table-layout:fixed; 
 }
 td{
     font: 15px arial, sans-serif;
     color: #000;
     height: 50px;
     text-align:center; vertical-align:middle;
+    table-layout:fixed; 
 }
 .styled_select tr td{
                 background:#fff;
                 height: 50px;
-                 min-width: 50px;
+               min-width: 50px;
                 font-size: 14px;
                 border: 1px solid #000;
+                table-layout:fixed; 
                 
             }
 .styled_select tr th{
@@ -24,11 +27,11 @@ td{
                 height: 50px;
                 font-size: 14px;
                 border: 1px solid #000;
+                table-layout:fixed; 
                 
             }
 .styled_select tr td select{
     background:#e4c5c5;
-    width: 100px;
     padding: 0px;
     font-size: 16px;
     line-height: 1;
@@ -44,10 +47,60 @@ input[type=checkbox] {
   /* Webkit browsers*/
   -webkit-transform: scale(4);
 }
+input[type=radio] {
+  /* All browsers except webkit*/
+  float: left;
+  transform: scale(3);
+ margin:10px;
+  /* Webkit browsers*/
+  -webkit-transform: scale(3);
+}
 .test_hover div { display: none;
                   position:relative;
                   bottom:40px;
                   
 }
-.test_hover:hover div { display: block; background-color: #fff; max-width: 50px;
+.test_hover:hover div {
+    display: block;
+    background-color: #fff;
+    max-width: 50px;
+    text-align: center;
 }
+
+.signal { 
+    table-layout:fixed; width:500px;
+}
+.signal tr th {
+    height: 20px;
+    table-layout:fixed;
+     border: 1px solid #000;
+     height: 50px;
+}
+.signal tr td {
+    height: 20px;
+    table-layout:fixed;
+     border: 1px solid #000;
+     height: 50px;
+}
+.selectsignout{ 
+    table-layout:fixed; width:400px;
+}
+.selectsignout tr td {
+    height: 20px;
+    table-layout:fixed;
+}
+.selectsignout tr th {
+    height: 20px;
+    table-layout:fixed;
+}
+.signout_hover div { display: none;
+                  position:relative;
+                  bottom:40px;              
+}
+.signout_hover:hover div {
+    display: block;
+    background-color: #fff;
+    max-width: 100px;
+    text-align: center;
+}
+/*
