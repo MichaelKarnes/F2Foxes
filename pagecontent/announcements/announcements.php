@@ -5,7 +5,7 @@
 ?>
 <h3 >Announcements</h3>
 <p>
-<a href="announcementsnew.php" class="button alt icon fa-file-o">New Announcement</a></p>
+<a href="announcementsnew.php" class="button alt icon fa-file-o">New Announcement/Document</a></p>
 <?php } ?>
 <?php //a INNER JOIN Account_info b WHERE a.UserID=b.UserID FirstName, LastName,
     if ($_SESSION['upperclassmen'])
@@ -29,9 +29,9 @@
           <div >
           <p class="titleannouncement"><b>  <?php  echo $title ?></b></p>
           <p class="individualannouncement"><b>Date added :</b> <?php echo $date ?> <b>Person Who added :</b> <?php echo "$lastname, $firstname" ?><br>
-          <?php echo $body ?></p><p class="titleannouncement">
+          <?php echo $body ?></p><p class="individualannouncement">
            <?php if ($row['Link']){ ?>
-                <a href="<?php echo $link ?>" class="button alt icon fa-file-o">Link</a> 
+                <a href="<?php echo $link ?>" class="button alt icon fa-file-o" class="link">Link</a> 
            <?php } 
            if ($_SESSION['userid']==$t_userID||$_SESSION['admin']==1){ ?>
                 <form>

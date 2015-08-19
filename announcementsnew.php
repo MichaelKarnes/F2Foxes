@@ -25,7 +25,7 @@ if (!($_SESSION['admin']==1)){ die("Sorry you do not have access to this file ")
 			            <div class="container">
 				            <div class="content">
                                 <!--Main Content-- link to about.php it is located in the pagecontent folder-->
-                                 <?php include 'pagecontent/announcementsadmin/announcementsadmin.php'?>
+                                 <?php include 'pagecontent/announcements/announcementsnew.php'?>
 				            </div>
 			            </div>
 		            </div>

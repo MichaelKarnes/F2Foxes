@@ -10,3 +10,14 @@
     margin-left: 50px;
     
 }
+.link{
+    margin-left: 50px;
+}
+input[type=checkbox] {
+  /* All browsers except webkit*/
+  float: left;
+  transform: scale(4);
+ margin: 0;
+  /* Webkit browsers*/
+  -webkit-transform: scale(4);
+}
