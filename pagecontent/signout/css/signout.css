@@ -103,4 +103,5 @@ input[type=radio] {
     max-width: 100px;
     text-align: center;
 }
+.cornerimage { position: absolute; top: 0; right: 0; } 
 /*
