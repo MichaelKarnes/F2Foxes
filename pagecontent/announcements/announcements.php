@@ -26,20 +26,21 @@
           $lastname=$row['LastName'];
           $t_userID=$row['LastName'];
           $date=$row['Date'];  ?>
-          <div >
+          <form action="announcements.php" method="POST"><div >
           <p class="titleannouncement"><b>  <?php  echo $title ?></b></p>
           <p class="individualannouncement"><b>Date added :</b> <?php echo $date ?> <b>Person Who added :</b> <?php echo "$lastname, $firstname" ?><br>
-          <?php echo $body ?></p><p class="individualannouncement">
+          <?php echo $body ?></p><p class="individualannouncement"><table class="table_announcement"><tr>
            <?php if ($row['Link']){ ?>
-                <a href="<?php echo $link ?>" class="button alt icon fa-file-o" class="link">Link</a> 
+                <td><a href="<?php echo $link ?>" class="button alt icon fa-file-o" class="link">Link</a></td>
            <?php } 
            if ($_SESSION['userid']==$t_userID||$_SESSION['admin']==1){ ?>
-                <form>
-                    <input type="checkbox" name="delete" value="<?php echo $userid ?>">change position<br>
-                </form></p>
-            </div>
-           <?php } 
-           ?>
+                <td><p><label for="delete">Delete</label>
+                    <input type="checkbox" name="delete" value="<?php echo $userid ?>"></td></p>
+              <td><input type="submit" name="delete_s" value="delete announcement"></td>
+                <?php } ?>
+              </tr></table>
+            </div></form>
+           
 
     <?php    } ?>
 
