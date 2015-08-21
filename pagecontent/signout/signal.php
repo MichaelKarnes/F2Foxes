@@ -11,7 +11,7 @@ echo $date;
 $submit2=$_POST['signoutchange'];
 $submit1=$_POST['information'];
 if($submit2 ){
-    $query6=mysql_query("SELECT UserID FROM Account_info WHERE PositionID BETWEEN 4 AND 13 ORDER BY LastName" );
+    $query6=mysql_query("SELECT UserID FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
     $t_act=$_SESSION['signalcheck'];
     mysql_query("DELETE FROM SignoutCheck WHERE Date='$date' AND ActivityID='$t_act'")or die("Could not delete from Grades");
     mysql_query("INSERT INTO SignoutCheck Values('$date','$t_act')");
@@ -61,7 +61,7 @@ $query1=mysql_query("SELECT * FROM SignoutActivity ");
         <th>Accounted For</th>
         </tr>
         <?php
-        $query3=mysql_query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 13 ORDER BY LastName" );
+        $query3=mysql_query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
         while ($rows3=mysql_fetch_assoc($query3))  { 
             $temp_ul=$rows3['LastName'];
             $temp_uf=$rows3['FirstName'];

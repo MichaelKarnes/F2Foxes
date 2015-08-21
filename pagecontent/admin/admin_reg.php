@@ -19,7 +19,7 @@ if ($submit)//beginning of submit
          $activation_value=strip_tags($_POST["$avalue_name"]);
          if ($delete_value)
          {
-            mysql_query("DELETE FROM Registration WHERE Username='$delete_value'");
+            mysql_query("DELETE FROM Registration WHERE Username='$delete_value'")or die ("Couldn't delete from Registration");
          }
          else if ($position_value && $activation_value)
          {
@@ -32,6 +32,7 @@ if ($submit)//beginning of submit
             $a_LastName=$row4['LastName'];
             $a_Username=$row4['Username'];
             $a_Password=$row4['Password'];
+            $a_classyear= $row['classyear']; 
             $a_Phone=$row4['Phone']; 
             $a_Email=$row4['Email'];
             $a_Address=$row4['Address'];
@@ -39,12 +40,12 @@ if ($submit)//beginning of submit
             $a_Zip=$row4['Zip'];
             $a_Country=$row4['Country'];
             // Needs to insert into the Account_info, Authentication, Grades, Contact_Info
-            mysql_query("INSERT INTO Account_info VALUES('$a_UserID','$a_FirstName','$a_LastName','$position_value')");
-            mysql_query("INSERT INTO Authentication VALUES('$a_UserID','$a_Username','$a_Password')");
-            mysql_query("INSERT INTO Contact_Info VALUES('$a_UserID','$a_Phone',$a_Address','$a_State','$a_Country','$a_Zip','$a_Email','$a_Reg_Date')");
-            mysql_query("INSERT INTO Grades VALUES('$a_UserID','')");
+            mysql_query("INSERT INTO Account_info VALUES('$a_UserID','$a_FirstName','$a_LastName','$position_value')") or die ("Couldn't insert into Account_info");
+            mysql_query("INSERT INTO Authentication VALUES('$a_UserID','$a_Username','$a_Password')")or die ("Couldn't insert into Authentication");
+            mysql_query("INSERT INTO Contact_Info VALUES('$a_UserID','$a_Reg_Date','$a_classyear','$a_Phone','$a_Address','$a_State','$a_Country','$a_Zip','$a_Email')")or die ("Couldn't insert into Contact_info");
+            if ($position_value>3){ mysql_query("INSERT INTO Grades VALUES('$a_UserID','')")or die ("Couldn't insert into grades");}
             
-            mysql_query("DELETE FROM Registration WHERE Username='$user' ");
+            mysql_query("DELETE FROM Registration WHERE Username='$user' ")or die ("Couldn't delete from Registration");
          }
      }
      /*if ($_POST["$pvalue_name"])

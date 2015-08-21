@@ -157,12 +157,13 @@ if ($submit)
     </tr >
     <?php  } ?>
            <?php
-            $query3=mysql_query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 13 ORDER BY LastName" );
+            $query3=mysql_query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
             while ($rows3=mysql_fetch_assoc($query3))  { 
                 $temp_ul=$rows3['LastName'];
                 $temp_uf=$rows3['FirstName'];
-                $temp_id=$rows3['UserID']; ?>
-                <tr class="reason_hover"> <th><?php echo "$temp_ul, $temp_uf"; ?></th> <?php
+                $temp_id=$rows3['UserID']; 
+                $t_first_letter=$temp_uf['0'];?>
+                <tr class="reason_hover"> <th><b><?php echo "$temp_ul, $t_first_letter"; ?></b></th> <?php
                        $query4=mysql_query("SELECT Date, UserID, ReasonID, Text, AccountedFor FROM  (SELECT * FROM Signout WHERE UserID='$temp_id'AND Date='$date') 
                        AS a RIGHT OUTER JOIN SignoutActivity ON a.ActivityID=SignoutActivity.ActivityID ");
                        while ($rows4=mysql_fetch_assoc($query4))  { 
