@@ -1,5 +1,7 @@
 
 <?php
+    mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
+    mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 echo"<h1> Register</h1>"; 
 $submit=$_POST['submit'];
 //form data
@@ -8,18 +10,16 @@ $lastname=strip_tags($_POST['lastname']);
 $username=strip_tags($_POST['username']);
 $password=strip_tags($_POST['password']);
 $passcheck=strip_tags($_POST['passcheck']);
+$position=strip_tags($_POST['position']);
 $email=strip_tags($_POST['email']);
 $phone=strip_tags($_POST['phone']);
 $date=date("Y-m-d");
 if ($submit)//beginning of submit
 {    
-    //open database
-    mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-    mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
     $query=mysql_query("SELECT a.Username, r.Username FROM  Authentication a, Registration r WHERE a.Username='$username' OR r.Username='$username'");
     $count= mysql_num_rows($query);//checks to see if there is a row with that username returns 1 if there is
            
-    //check that all blocks are filled out
+    //check that all blocks ared filled out
     if($firstname &&$lastname && $username && $password && $passcheck &&$email)
     {    
         if($count==0)
@@ -76,23 +76,26 @@ if ($submit)//beginning of submit
     </p>
     <!--Status-- suggested not what will actually be the admin will decide -->
     <p>
-    <?php  $query=mysql_query("SELECT Position FROM  Authorization");
+    <?php 
      $i=0;
     ?>
     <label for="status">What is your classification?</label>
-       <select name="<?php echo $loopnameinner; ?>"> <?php
-        $query=mysql_query("SELECT Position FROM  Authorization");
-        while($row=mysql_fetch_assoc ($query)){
-            echo'<option value="'.($i+1).'">'.$row['Position'].'</option>';
-        }  ?>
+       <select name="position">
+           <option value="0"></option> <?php
+        $query=mysql_query("SELECT Position FROM  Authorization ORDER BY Position");
+        
+        while($row=mysql_fetch_assoc ($query)){ 
+           $poss=$row['Position']; ?>
+           <option value="<?php echo $poss ?>"><?php echo $poss ?></option>
+        <?php }  ?>
       </select>
     </p>
     <!--Email--><p>
     <label for="email">Current email</label>
-    <input type="text" id="email" name="email" value="<?php echo $email ?>" maxlength="50" />
+    <input type="email" id="email" name="email" value="<?php echo $email ?>" maxlength="50" />
     </p>
     <!--Phone--><p>
-    <label for="phone">Phone number we can reach you at(please enter in 1222323232 format)</label>
+    <label for="phone">Phone number we can reach you at (please enter in 1222323232 format)</label>
     <input type="text" id="phone" name="phone" value="<?php echo $phone ?>" maxlength="10" />
     </p>
     <!--State--><!--<p>

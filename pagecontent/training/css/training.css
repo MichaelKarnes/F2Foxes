@@ -22,3 +22,7 @@ table tr td{
     width: 100px;
     font-style: 20px; 
 }
+#training_pagetitle{
+   text-align:center;
+    padding: 10px;
+}

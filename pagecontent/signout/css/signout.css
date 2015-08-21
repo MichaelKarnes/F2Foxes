@@ -4,6 +4,7 @@ th{
     height: 50px;
     text-align:center; vertical-align:middle;
     table-layout:fixed; 
+    text-transform: uppercase;
 }
 td{
     font: 15px arial, sans-serif;
@@ -11,6 +12,7 @@ td{
     height: 50px;
     text-align:center; vertical-align:middle;
     table-layout:fixed; 
+    text-transform: uppercase;
 }
 .styled_select tr td{
                 background:#fff;
@@ -19,6 +21,7 @@ td{
                 font-size: 14px;
                 border: 1px solid #000;
                 table-layout:fixed; 
+                text-transform: uppercase;
                 
             }
 .styled_select tr th{
@@ -28,6 +31,7 @@ td{
                 font-size: 14px;
                 border: 1px solid #000;
                 table-layout:fixed; 
+                text-transform: uppercase;
                 
             }
 .styled_select tr td select{
@@ -39,6 +43,7 @@ td{
     border-radius: 1px;
     height: 34px;
     -webkit-appearance: none;
+    text-transform: uppercase;
 }
 input[type=checkbox] {
   /* All browsers except webkit*/
@@ -103,5 +108,11 @@ input[type=radio] {
     max-width: 100px;
     text-align: center;
 }
-.cornerimage { position: absolute; top: 0; right: 0; } 
+.cornerimage {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    bottom: 0px;
+    height: 1px;
+} 
 /*

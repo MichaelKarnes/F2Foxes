@@ -27,7 +27,7 @@
             $upperclassmen=1;
             $all=0;
         }
-         mysql_query("INSERT INTO Announcements Values('$date','$userid','$title','$body','$link','$student','$upperclassmen','$all')") or die("could not create Announcement");
+         mysql_query("INSERT INTO Announcements Values('','$date','$userid','$title','$body','$link','$student','$upperclassmen','$all')") or die("could not create Announcement");
     }
 
 ?>

@@ -50,6 +50,7 @@ if ($_SESSION ['username']){?>
                                     <?php if ($_SESSION['admin']==1){ ?>
                                     <li><a href="admin_reg.php">Admin_reg</a></li>
                                     <li><a href="admin_users.php">Admin_users</a></li>
+                                    <li><a href="adminvideo.php">Admin_videos</a></li>
                                     <?php } 
                                     if ($_SESSION['signout']==1){ ?>
                                         <li><a href="signal.php">Admin_signout</a></li>

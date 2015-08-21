@@ -163,7 +163,7 @@ if ($submit)
                 $temp_uf=$rows3['FirstName'];
                 $temp_id=$rows3['UserID']; 
                 $t_first_letter=$temp_uf['0'];?>
-                <tr class="reason_hover"> <th><b><?php echo "$temp_ul, $t_first_letter"; ?></b></th> <?php
+                <tr class="reason_hover"> <th ><b><?php echo "$temp_ul, $t_first_letter"; ?></b></th> <?php
                        $query4=mysql_query("SELECT Date, UserID, ReasonID, Text, AccountedFor FROM  (SELECT * FROM Signout WHERE UserID='$temp_id'AND Date='$date') 
                        AS a RIGHT OUTER JOIN SignoutActivity ON a.ActivityID=SignoutActivity.ActivityID ");
                        while ($rows4=mysql_fetch_assoc($query4))  { 

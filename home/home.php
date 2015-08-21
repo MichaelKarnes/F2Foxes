@@ -27,6 +27,7 @@
                                 <strong>This</strong> is an example of a <em>HTML</em> caption with <a href="#">a link</a>. 
                             </div>
                         </div>
+                    <?php /*?>
 					<div class="row">
 						<div class="4u 12u(mobile)">
 							<section>
@@ -34,6 +35,7 @@
 								<header class="second icon fa-user">
 									<h3>Here's a Heading</h3>
 									<p>And a subtitle</p>
+                                    
 								</header>
 							</section>
 						</div>
@@ -63,17 +65,32 @@
 							quis eget mi. Etiam eu ante risus. Aliquam erat volutpat. Aliquam luctus mattis lectus sit
 							amet pulvinar. Nam nec turpis.</p>
 						</div>
-					</div>
+					</div>*/
+                    ?>
 				</section>
 
 		</div>
 	</div>
+    <div class="wrapper style1">
+		<div class="inner">
+            <section class="container box feature1">
+                <div class="12u">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/xHZ7BFBoYCQ?rel=0" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/jofNR_WkoCE?rel=0&amp;controls=0" frameborder="0" allowfullscreen></iframe>
+                             <iframe width="560" height="315" src="https://www.youtube.com/embed/nTNew9f8fjk?rel=0&amp;controls=0" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="420" height="315" src="https://www.youtube.com/embed/OkdPfbOp_8g?rel=0&amp;controls=0" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/3AOl_aEMQdE?rel=0" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/g-jwWYX7Jlo?rel=0" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </section>
+        </div>
+    </div>
 	<div class="wrapper style2">
 		<div class="inner">
 
 			<!-- Feature 2 -->
 				<section class="container box feature2">
-					<div class="row">
+                    <div class="row">
 						<div class="6u 12u(mobile)">
 							<section>
 								<header class="major">
@@ -106,6 +123,7 @@
 
 			</div>
 	</div>
+    <?php /* ?>
 	<div class="wrapper style3">
 		<div class="inner">
 			<div class="container">
@@ -182,10 +200,11 @@
 									</footer>
 								</article>
 							</section>
-
+                           
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>*/
+    ?>
 </div>
