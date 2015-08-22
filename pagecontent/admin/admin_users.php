@@ -9,7 +9,7 @@ $d="d";
 if ($submit)//beginning of submit
 {   
     $query3=mysql_query("SELECT UserID,PositionID FROM Account_info ");
-     while ($row3=mysql_fetch_assoc ($query3))  {
+    while ($row3=mysql_fetch_assoc ($query3))  {
          $user=$row3['UserID'];
          $p_id=$row3['PositionID'];
          $cvalue_name=$c.$user;

@@ -15,10 +15,8 @@
 								<li><a href="#">Can add more here</a></li>
 							</ul>
 						</section>
-
 				</div>
 				<div class="3u 12u(mobile)">
-
 					<!-- Links -->
 						<section>
 							<h2>Academic Links</h2>
@@ -33,7 +31,10 @@
 						</section>
 
 					<!-- Links -->
-						<section>
+
+				</div>
+				<div class="6u 12u(mobile)">
+                    <section>
 							<h2>Links for Parents and Prospects</h2>
 							<ul class="divided">
 								<li><a href="http://corps.tamu.edu/">Corps of Cadets Website</a></li>
@@ -42,11 +43,8 @@
 								<li><a href="http://armyrotc.tamu.edu/">Army ROTC</a></li>
 							</ul>
 						</section>
-
-				</div>
-				<div class="6u 12u(mobile)">
-
 					<!-- About -->
+                    <?php /*
 						<section>
 							<h2><strong>ZeroFour</strong> by HTML5 UP</h2>
 							<p>Hi! This is <strong>ZeroFour</strong>, a free, fully responsive HTML5 site
@@ -55,9 +53,10 @@
 							licensed so use it for any personal or commercial project (just credit us
 							for the design!).</p>
 							<a href="#" class="button alt icon fa-arrow-circle-right">Learn More</a>
-						</section>
+						</section>*/
+                        ?>
 
-					<!-- Contact -->
+					<!-- Contact --><?php /*?>
 						<section>
 							<h2>Get in touch</h2>
 							<div>
@@ -88,7 +87,8 @@
 									</div>
 								</div>
 							</div>
-						</section>
+						</section>*/
+                             ?>
 
 				</div>
 			</div>
@@ -96,7 +96,7 @@
 				<div class="12u">
 					<div id="copyright">
 						<ul class="menu">
-							<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							<li>&copy; Creators: David McDermott, Micheal Karnes and Peter Myers. Template from <a href="http://html5up.net">HTML5 UP</a></li>
 						</ul>
 					</div>
 				</div>

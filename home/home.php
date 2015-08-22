@@ -1,4 +1,8 @@
 <!-- Main Wrapper -->
+<?php
+    mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
+mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
+?>
 <div id="main-wrapper">
 	<div class="wrapper style1">
 		<div class="inner">
@@ -75,12 +79,11 @@
 		<div class="inner">
             <section class="container box feature1">
                 <div class="12u">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/xHZ7BFBoYCQ?rel=0" frameborder="0" allowfullscreen></iframe>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/jofNR_WkoCE?rel=0&amp;controls=0" frameborder="0" allowfullscreen></iframe>
-                             <iframe width="560" height="315" src="https://www.youtube.com/embed/nTNew9f8fjk?rel=0&amp;controls=0" frameborder="0" allowfullscreen></iframe>
-                    <iframe width="420" height="315" src="https://www.youtube.com/embed/OkdPfbOp_8g?rel=0&amp;controls=0" frameborder="0" allowfullscreen></iframe>
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/3AOl_aEMQdE?rel=0" frameborder="0" allowfullscreen></iframe>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/g-jwWYX7Jlo?rel=0" frameborder="0" allowfullscreen></iframe>
+                   <?php $query=mysql_query("SELECT * FROM Videos");
+                        while ($row=mysql_fetch_assoc ($query))  { 
+                         $code=$row['Embededcode'];  
+                         echo $code;
+                        } ?>
                     </div>
                 </section>
         </div>

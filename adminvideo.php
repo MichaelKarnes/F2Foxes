@@ -1,10 +1,11 @@
 <?php 
 include 'boot/session.php'; 
+if (!($_SESSION['admin']==1)){ die("Sorry you do not have access to this file "); }
 ?>
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>sign up</title>
+		<title>Sign Up</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->

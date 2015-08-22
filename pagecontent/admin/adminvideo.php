@@ -2,7 +2,7 @@
 mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
 mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 $delete=$_POST['delete'];
-$submit=$_POST['mewvideo'];
+$submit=$_POST['newvideo'];
 if ($delete){
     $query=mysql_query("SELECT * FROM Videos");
     while ($row=mysql_fetch_assoc ($query))  { 
@@ -18,14 +18,15 @@ if($submit)
 {
     $title=$_POST['title'];
     $embededcode=$_POST['newvideo'];
-    mysql_query("INSERT INTO Videos VALUES('','$title','$emebededcode')") or die("Issue inserting video");
+    mysql_query("INSERT INTO Videos VALUES('','$title','$embededcode')") or die("Issue inserting video");
 }
 ?>
+<p>This page will make changes to the home page. The only person with access to this page is an admin or someone with admin rights</p>
 <h1>Videos from youtube</h1>
 <form action="adminvideo.php" method="POST"> 
 <table>
     <tr>
-    <th>Video ID</th><th>Title</th><th>Video embeded link</th><th>delete button</th></tr>
+    <th>Video ID</th><th>Title</th><th>delete button</th></tr>
 <?php $query=mysql_query("SELECT * FROM Videos");
  while ($row=mysql_fetch_assoc ($query))  { 
     $videoid=$row['VideoID'];
@@ -33,9 +34,8 @@ if($submit)
     $code=$row['Embededcode']; ?>
     <tr>
         <td><?php echo $videoid ?></td>
-        <td><?php echo $title ?></td>
-        <td><?php echo $code ?></td>
-        <td><input type="checkbox" name="<?php echo $code ?>" value="<?php echo $code ?>" /></td>
+        <td><?php echo $t_title ?></td>
+        <td><input type="checkbox" name="<?php echo $videoid ?>" value="<?php echo $videoid ?>" /></td>
         
     </tr>
 <?php } ?>

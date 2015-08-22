@@ -22,11 +22,13 @@ if ($_SESSION ['username']){?>
 				<nav id="nav">
 					<ul>
 						<li ><a href="index.php">Home</a></li>
-                        <li><a href="about.php">About Us</a></li>
-                        <li><a href="events.php">Events</a></li>
-                                			
-                        <li><a href="recruiting.php">Join F-2</a></li>
+                        <li><a href="">Recruiting</a>
+                        <ul>
+                            <li><a href="about.php">About Us</a></li>
+                            <li><a href="recruiting.php">Join F-2</a></li>
                         <li><a href="http://foxcompany.core-image.net/">Shop</a></li>
+                        </ul>
+                        <li><a href="events.php">Events</a></li>
 
                         <?php
                         if ($_SESSION['student']){ ?>
@@ -36,6 +38,7 @@ if ($_SESSION ['username']){?>
                             <li><a href="grades.php">Grades</a></li>
                             <li><a href="signoutstartdate.php">Signout Sheet</a></li>
                             <li><a href="training.php">Training</a></li>
+                            <li><a href="events.php">Events</a></li>
                         </ul></li>
                        
                         <?php } /*
