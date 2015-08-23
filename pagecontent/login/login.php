@@ -7,17 +7,17 @@ $password=$_POST['password'];
 if ($username && $password)
 {
     
-    $query=$db->query("SELECT * FROM Authentication WHERE Username='$username' ");
-    $numrows=mysqli_num_rows($query);
+    $query2=$db->query("SELECT * FROM Authentication WHERE Username='$username' ");
+    $numrows=mysqli_num_rows($query2);
     // echo "rows is $numrows"; this is a quick check to see if the username exists
     if ($numrows!=0)
     {
         //code to login
-        while ($row=mysqli_fetch_assoc ($query))
+        while ($row2=mysqli_fetch_assoc ($query2))
         {
-            $dbusername=$row ['Username'];
-            $dbpassword=$row ['Password'];
-            $dbuserid=$row ['UserID'];
+            $dbusername=$row2 ['Username'];
+            $dbpassword=$row2 ['Password'];
+            $dbuserid=$row2 ['UserID'];
         }
         //cehck to see if they match!
         if($username==$dbusername&&md5($password)==$dbpassword)// password is stored as an md5
