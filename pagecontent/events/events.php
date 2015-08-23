@@ -17,33 +17,10 @@
 							<iframe src="https://www.google.com/calendar/embed?title=F2%20Calendar&amp;showDate=0&amp;showPrint=0&amp;showCalendars=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23ffcc33&amp;src=biaetvmchcue7p57mglc5c39os%40group.calendar.google.com&amp;color=%23875509&amp;ctz=America%2FMexico_City" style=" border-width:0 " width="100%" height="600" frameborder="0" scrolling="no"></iframe>
                                             
 
-							<h3>More intriguing information</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus
-							justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis,
-							ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-							vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-							Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-							rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.
-							Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.
-							ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-							vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-							Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-							rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.
-							Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.
-							Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus lorem ipsum
-							dolor sit amet phasellus consequat.</p>
+							<h3>F2 Calendar Info</h3>
+							<p>The above calendar is updated frequently. Please check back regularly to stay
+                            in tune with F2</p>
 
-							<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim
-							quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu.
-							Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-							fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-							Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-							ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-							vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-							fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-							Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
-							Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus sed feugiat lorem ipsum
-							dolor nullam blandit tempus.</p>
 						</article>
 
 				</div>
