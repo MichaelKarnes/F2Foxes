@@ -3,10 +3,8 @@
 <div id="header-wrapper">
 	<div class="container">
 <?php 
- $username=$_SESSION ['username'];
-if ($_SESSION ['username']){?>
+$username=$_SESSION ['username'];?>
     <link rel="stylesheet" href="pagecss/header.css" /><!--changes the size of the tabs on the top-->
-<?php }?>
 <!-- Header -->
 	<header id="header">
 		<div class="inner">
@@ -22,24 +20,23 @@ if ($_SESSION ['username']){?>
 				<nav id="nav">
 					<ul>
 						<li ><a href="index.php">Home</a></li>
-                        <li><a href="">Recruiting</a>
-                        <ul>
-                            <li><a href="about.php">About Us</a></li>
-                            <li><a href="recruiting.php">Join F-2</a></li>
-                        <li><a href="http://foxcompany.core-image.net/">Shop</a></li>
-                        </ul>
-                        <li><a href="events.php">Events</a></li>
+                        <li class="dropdown"><a href="">Recruiting</a>
+                            <ul >
+                                <li><a href="about.php">About Us</a></li>
+                                <li><a href="recruiting.php">Join F-2</a></li>
+                                <li><a href="http://foxcompany.core-image.net/">Shop</a></li>
+                            </ul>
 
                         <?php
                         if ($_SESSION['student']){ ?>
-                            <li><a href="">Student</a>
-                        <ul>
-                            <li><a href="Announcements.php">Announcements</a></li>
-                            <li><a href="grades.php">Grades</a></li>
-                            <li><a href="signoutstartdate.php">Signout Sheet</a></li>
-                            <li><a href="training.php">Training</a></li>
-                            <li><a href="events.php">Events</a></li>
-                        </ul></li>
+                            <li class="dropdown"><a href="">Student</a>
+                                <ul>
+                                    <li><a href="Announcements.php">Announcements</a></li>
+                                    <li><a href="grades.php">Grades</a></li>
+                                    <li><a href="signoutstartdate.php">Signout Sheet</a></li>
+                                    <li><a href="training.php">Training</a></li>
+                                    <li><a href="events.php">Events</a></li>
+                                </ul></li>
                        
                         <?php } /*
 

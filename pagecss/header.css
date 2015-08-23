@@ -5,16 +5,14 @@
 
 			#nav {
 				position: absolute;
-				right: 0em;
+				right: 28em;
 				top: 0;
 				line-height: 5em;
 			}
-
 				#nav > ul > li {
 					float: left;
 					padding: 0 0 0 0;
 				}
-
 					#nav > ul > li > a, #nav > ul > li > span {
 						color: #fff;
 						text-decoration: none;
@@ -49,3 +47,4 @@
                      #nav>ul>li>ul>li>a:hover{
                          color: #b6ff00;
 	                }
+		}
