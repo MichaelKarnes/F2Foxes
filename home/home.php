@@ -115,7 +115,7 @@ mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 									<h2>Represent F-2</h2>
 									<p>wear clothing that resperesents a redass outfit</p>
 								</header>
-								<p>The Fox Company Store houses all fox items for cadets and parents. If your looking to walk around and represent a redass outfit click the button. </p>
+								<p>The Fox Company Store contains F2 merchandise for cadets and parents. If you want to represent a redass outfit, click the button below. </p>
 								<footer>
 									<a href="http://foxcompany.core-image.net/" class="button medium alt icon fa-info-circle">FOX COMPANY STORE</a>
 								</footer>
