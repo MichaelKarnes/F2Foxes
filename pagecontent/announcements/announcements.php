@@ -8,21 +8,21 @@ while ($row=mysqli_fetch_assoc ($query))  {
         $db->query("DELETE FROM Announcements WHERE AnnouncementID='$t_annID'");
     }
 }
-if ($_SESSION['upperclassmen']==1){ 
+if ($_SESSION['upperclassmen']==1||$_SESSION['root']==1){ 
 ?>
 <h3 >Announcements</h3>
 <p>
 <a href="announcementsnew.php" class="button alt icon fa-file-o">New Announcement/Document</a></p>
 <?php } ?>
 <?php //a INNER JOIN Account_info b WHERE a.UserID=b.UserID FirstName, LastName,
-    if ($_SESSION['upperclassmen'])
+    if ($_SESSION['upperclassmen']==1||$_SESSION['root']==1)
     {
         $query=$db->query("SELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID");
     }
-    else if ($_SESSION['student']){
+    else if ($_SESSION['student']==1){
         $query=$db->query("SELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID  FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID AND Upperclassmen='0' ");
     }
-    else if ($_SESSION['username']){
+    else if ($_SESSION['username']==1){
         $query=$db->query("SSELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID  FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID AND Upperclassmen='0'AND Cadet='0' ORDER BY Date");
     }?>
     
@@ -35,7 +35,7 @@ if ($_SESSION['upperclassmen']==1){
           $t_userID=$row['LastName'];
           $date=$row['Date'];
          $annID=$row['AnnouncementID']; ?>
-           <hr noshade size="2"> 
+           <hr  size="2"> 
           <form action="announcements.php" method="POST"><div >
           <h1 class="titleannouncement"><b>  <?php  echo $title ?></b></h1>
           <p class="individualannouncement"><b>Date added :</b> <?php echo $date ?> <b>Person Who added :</b> <?php echo "$lastname, $firstname" ?><br>

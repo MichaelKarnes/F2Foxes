@@ -1,6 +1,6 @@
 <?php 
 include 'boot/session.php'; 
-if (!($_SESSION['training']==1)){ die("Sorry you do not have access to this file "); } 
+if (!($_SESSION['training']==1)&&!($_SESSION['root']==1)){ die("Sorry you do not have access to this file "); } 
 ?>
 <!DOCTYPE HTML>
 <html>

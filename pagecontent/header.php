@@ -28,7 +28,7 @@ $username=$_SESSION ['username'];?>
                             </ul>
 
                         <?php
-                        if ($_SESSION['student']){ ?>
+                        if ($_SESSION['student']==1||$_SESSION['root']==1){ ?>
                             <li class="dropdown"><a href="">Student</a>
                                 <ul>
                                     <li><a href="Announcements.php">Announcements</a></li>

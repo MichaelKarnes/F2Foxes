@@ -1,6 +1,6 @@
 <?php
 include 'boot/session.php'; 
-if (!($_SESSION['signout']==1)){ die("Sorry you do not have access to this file "); } 
+if (!($_SESSION['signout']==1)&&!($_SESSION['root']==1)){ die("Sorry you do not have access to this file "); } 
 //https://www.youtube.com/watch?v=SaRh2HauIXY has good video for watching how to work with arrays
 ?>
 <!DOCTYPE HTML>
