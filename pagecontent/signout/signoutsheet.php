@@ -53,7 +53,7 @@ if ($submit)
     }*/
     $query6=$db->query("SELECT Date, UserID, ReasonID FROM  (SELECT * FROM Signout WHERE UserID='$userid' AND Date='$date') 
     AS a RIGHT OUTER JOIN SignoutActivity ON a.ActivityID=SignoutActivity.ActivityID ");
-    while ($rows6=mysqli_fetch_assoc ($query3))
+    while ($rows6=mysqli_fetch_assoc ($query6))
     {
         $tuid=$rows6['UserID'];
         $trid=$rows6['ReasonID'];
