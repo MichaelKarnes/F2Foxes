@@ -10,6 +10,7 @@
 <div class="container">
 	<div id="contentdifferentstyle">
     
+    <!--slight modification to make for smaller and have arrow image-->
     <style> 
     form{
         color: Black;
@@ -22,8 +23,9 @@
 
     <h1>Please update your grades on a regular basis!</h1>
     <p>Use the selector below to add, edit, or delete class information</p>
-    <form action="class.php" method="POST">
+    <form method="POST">
     <select name="classoptions">
+    <option value=""> </option>
     <option value="addClass">Add Class</option>
     <option value="editClass">Edit Class</option>
     <option value="deleteClass">Delete Class</option>
@@ -31,15 +33,26 @@
     <input type="submit">
     </form>
 
-    <form action="addClass.php" method="POST">
-        <fieldset class="ui-helper-reset">
-        <label for="classes">Class Name (ex. MATH-151)</label>
-        <input type="text" name="classes" id="classes" value="" class="ui-widget-content ui-corner-all">
-        <label for="credits">Number of Credit Hours</label>
-        <input type="text" name="credits" id="credits" value="3" class="ui-widget-content ui-corner-all"></input>
-        </fieldset>
-    <input type="submit"></input>
-    </form>
+    <br></br>
+
+    <?php
+        if($_POST['classoptions'] == "addClass") {
+            echo "Please enter the class name and corresponding credit hours";
+            echo'<form action="classes.php" method="POST">
+                <fieldset>
+                <label for="classes">Class Name (ex. MATH-151)</label>
+                <input type="text" name="classes" id="classes" value="">
+                <label for="credits">Number of Credit Hours (ex. 3)</label>
+                <input type="text" name="credits" id="credits" value="3"></input>
+                </fieldset>
+                <input type="submit"></input>
+                </form>'; 
+        } elseif ($_POST['classoptions'] == "editClass") {
+            echo "Please e"
+            
+        }
+    ?>
+
     
 	</div>
 	</div>
