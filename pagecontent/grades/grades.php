@@ -12,16 +12,27 @@
 <div class="container">
 	<div id="contentdifferentstyle">
     
-    <form action="class.php">
-    <select name="cars">
-    <option value="addClass">addClass</option>
-    <option value="deleteClass">deleteClass</option>
-    <option value="editClass">editClass</option>
+    <style> 
+    form{
+        color: Black;
+        width: 65%;
+    }
+    select{
+          background: url(images/new_arrow.jpg) no-repeat right;     
+    }
+    </style>
+
+    <h1>Please update your grades on a regular basis!</h1>
+    <p>Use the selector below to add, edit, or delete class information</p>
+    <form action="class.php" method="POST">
+    <select name="classoptions">
+    <option value="addClass">Add Class</option>
+    <option value="editClass">Edit Class</option>
+    <option value="deleteClass">Delete Class</option>
     </select>
     <input type="submit">
     </form>
 
-    <div id="gradedialog" title="Class Data">
     <form action="addClass.php" method="POST">
         <fieldset class="ui-helper-reset">
         <label for="classes">Class Name (ex. MATH-151)</label>
@@ -31,7 +42,7 @@
         </fieldset>
     <input type="submit"></input>
     </form>
-    </div>
+    
 	</div>
 	</div>
 </div>
