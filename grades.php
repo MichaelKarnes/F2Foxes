@@ -23,18 +23,6 @@ if (!($_SESSION['student']==1)){ die("Sorry you do not have access to this file 
             
         <?php include 'pagecontent/footer.php'; ?>
 		</div>	
-
-
-  <style>
-  #gradedialog label, #gradedialog input { display:block; }
-  #gradedialog label { margin-top: 0.5em; }
-  #gradedialog input, #gradedialog textarea { width: 95%; }
-  #tabs { margin-top: 1em; }
-  #tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
-  #add_tab { cursor: pointer; }
-  </style>
-
-  <script src="pagecontent/grades/gradesScript.js"></script>
  
 </body>
 </html>
