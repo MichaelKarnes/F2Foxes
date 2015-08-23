@@ -1,16 +1,14 @@
 
 <!-- Main Wrapper -->
   <?php
-    $connect=mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-    mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 $submit=$_POST['change'];
 //form data
 $a="a";
 $d="d";
 if ($submit)//beginning of submit
 {   
-    $query3=mysql_query("SELECT Username FROM Registration ");
-     while ($row3=mysql_fetch_assoc ($query3))  {
+    $query3=$db->query("SELECT Username FROM Registration ");
+     while ($row3=mysqli_fetch_assoc ($query3))  {
          $user=$row3['Username'];
          $avalue_name=$a.$user;
          $dvalue_name=$d.$user;
@@ -19,12 +17,12 @@ if ($submit)//beginning of submit
          $activation_value=strip_tags($_POST["$avalue_name"]);
          if ($delete_value)
          {
-            mysql_query("DELETE FROM Registration WHERE Username='$delete_value'")or die ("Couldn't delete from Registration");
+            $db->query("DELETE FROM Registration WHERE Username='$delete_value'")or die ("Couldn't delete from Registration");
          }
          else if ($position_value && $activation_value)
          {
-            $query4=mysql_query("SELECT * FROM Registration WHERE Username='$user'");
-            $row4=mysql_fetch_assoc ($query4);
+            $query4=$db->query("SELECT * FROM Registration WHERE Username='$user'");
+            $row4=mysqli_fetch_assoc ($query4);
             //igrnored Requested_Position only good for registration page
             $a_Reg_Date=$row4['Reg_Date'];
             $a_UserID=$row4['UserID'];
@@ -40,12 +38,12 @@ if ($submit)//beginning of submit
             $a_Zip=$row4['Zip'];
             $a_Country=$row4['Country'];
             // Needs to insert into the Account_info, Authentication, Grades, Contact_Info
-            mysql_query("INSERT INTO Account_info VALUES('$a_UserID','$a_FirstName','$a_LastName','$position_value')") or die ("Couldn't insert into Account_info");
-            mysql_query("INSERT INTO Authentication VALUES('$a_UserID','$a_Username','$a_Password')")or die ("Couldn't insert into Authentication");
-            mysql_query("INSERT INTO Contact_Info VALUES('$a_UserID','$a_Reg_Date','$a_classyear','$a_Phone','$a_Address','$a_State','$a_Country','$a_Zip','$a_Email')")or die ("Couldn't insert into Contact_info");
-            if ($position_value>3){ mysql_query("INSERT INTO Grades VALUES('$a_UserID','')")or die ("Couldn't insert into grades");}
+            $db->query("INSERT INTO Account_info VALUES('$a_UserID','$a_FirstName','$a_LastName','$position_value')") or die ("Couldn't insert into Account_info");
+            $db->query("INSERT INTO Authentication VALUES('$a_UserID','$a_Username','$a_Password')")or die ("Couldn't insert into Authentication");
+            $db->query("INSERT INTO Contact_Info VALUES('$a_UserID','$a_Reg_Date','$a_classyear','$a_Phone','$a_Address','$a_State','$a_Country','$a_Zip','$a_Email')")or die ("Couldn't insert into Contact_info");
+            if ($position_value>3){ $db->query("INSERT INTO Grades VALUES('$a_UserID','')")or die ("Couldn't insert into grades");}
             
-            mysql_query("DELETE FROM Registration WHERE Username='$user' ")or die ("Couldn't delete from Registration");
+            $db->query("DELETE FROM Registration WHERE Username='$user' ")or die ("Couldn't delete from Registration");
          }
      }
      /*if ($_POST["$pvalue_name"])
@@ -57,8 +55,8 @@ if ($submit)//beginning of submit
 
 ?>
 <?php 
-    $query=mysql_query("SELECT * FROM Registration ");
-    $numrows=mysql_num_rows($query);
+    $query=$db->query("SELECT * FROM Registration ");
+    $numrows=mysqli_num_rows($query);
     ?>
        
         <h1> Users Registered but not active = <?php echo "$numrows"; ?> </h1>
@@ -84,7 +82,7 @@ if ($submit)//beginning of submit
                 <th>Position</th>
 
             </tr>
-           <?php  while ($row=mysql_fetch_assoc ($query))  { ?>
+           <?php  while ($row=mysqli_fetch_assoc ($query))  { ?>
             <tr>
                 <?php 
                 $reg_date= $row['Reg_Date']; 
@@ -111,8 +109,8 @@ if ($submit)//beginning of submit
                 </td>
                 <td>
                     <select name="<?php echo $username ?>">
-                       <?php  $query2=mysql_query("SELECT PositionID, Position FROM Authorization ");
-                        while ($row2=mysql_fetch_assoc ($query2))  {
+                       <?php  $query2=$db->query("SELECT PositionID, Position FROM Authorization ");
+                        while ($row2=mysqli_fetch_assoc ($query2))  {
                             $value=$row2['PositionID'];
                             $label= $row2['Position'];
                         ?>

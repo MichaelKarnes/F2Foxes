@@ -1,13 +1,11 @@
 <?php
-mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
-$query=mysql_query("SELECT AnnouncementID FROM Announcements ");
-while ($row=mysql_fetch_assoc ($query))  { 
+$query=$db->query("SELECT AnnouncementID FROM Announcements ");
+while ($row=mysqli_fetch_assoc ($query))  { 
     $t_annID=$row['AnnouncementID'];
     $delete=$_POST["$t_annID"];
     if($delete)
     {
-        mysql_query("DELETE FROM Announcements WHERE AnnouncementID='$t_annID'");
+        $db->query("DELETE FROM Announcements WHERE AnnouncementID='$t_annID'");
     }
 }
 if ($_SESSION['upperclassmen']==1){ 
@@ -19,16 +17,16 @@ if ($_SESSION['upperclassmen']==1){
 <?php //a INNER JOIN Account_info b WHERE a.UserID=b.UserID FirstName, LastName,
     if ($_SESSION['upperclassmen'])
     {
-        $query=mysql_query("SELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID");
+        $query=$db->query("SELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID");
     }
     else if ($_SESSION['student']){
-        $query=mysql_query("SELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID  FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID AND Upperclassmen='0' ");
+        $query=$db->query("SELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID  FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID AND Upperclassmen='0' ");
     }
     else if ($_SESSION['username']){
-        $query=mysql_query("SSELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID  FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID AND Upperclassmen='0'AND Cadet='0' ORDER BY Date");
+        $query=$db->query("SSELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID  FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID AND Upperclassmen='0'AND Cadet='0' ORDER BY Date");
     }?>
     
-    <?php while ($row=mysql_fetch_assoc ($query))  { 
+    <?php while ($row=mysqli_fetch_assoc ($query))  { 
           $title=$row['Title'];  
           $body=$row['Body']; 
           $link=$row['Link']; 

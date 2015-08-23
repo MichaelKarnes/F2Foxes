@@ -1,7 +1,7 @@
 <!-- Main Wrapper -->
 <?php
-    mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
+    //mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
+//mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 ?>
 <div id="main-wrapper">
 	<div class="wrapper style1">
@@ -79,11 +79,12 @@ mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 		<div class="inner">
             <section class="container box feature1">
                 <div class="12u">
-                   <?php $query=mysql_query("SELECT * FROM Videos");
-                        while ($row=mysql_fetch_assoc ($query))  { 
+                   <?php $query=$db->query("SELECT * FROM Videos");
+                        while ($row=mysqli_fetch_assoc ($query))  { 
                          $code=$row['Embededcode'];  
                          echo $code;
                         } ?>
+
                     </div>
                 </section>
         </div>

@@ -1,5 +1,5 @@
 <?php
-    $connection = new mysqli("192.232.249.164", "km310765_admin", "Aftermath2015") or die("Couldn't connect to database");
+    
     include 'boot/session.php'; 
 ?>
 <!DOCTYPE HTML>

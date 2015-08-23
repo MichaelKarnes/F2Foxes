@@ -1,7 +1,5 @@
 
 <?php
-    mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-    mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 echo"<h1> Register</h1>"; 
 $submit=$_POST['submit'];
 //form data
@@ -16,8 +14,8 @@ $phone=strip_tags($_POST['phone']);
 $date=date("Y-m-d");
 if ($submit)//beginning of submit
 {    
-    $query=mysql_query("SELECT a.Username, r.Username FROM  Authentication a, Registration r WHERE a.Username='$username' OR r.Username='$username'");
-    $count= mysql_num_rows($query);//checks to see if there is a row with that username returns 1 if there is
+    $query=$db->query("SELECT a.Username, r.Username FROM  Authentication a, Registration r WHERE a.Username='$username' OR r.Username='$username'");
+    $count= mysqli_num_rows($query);//checks to see if there is a row with that username returns 1 if there is
            
     //check that all blocks ared filled out
     if($firstname &&$lastname && $username && $password && $passcheck &&$email)
@@ -44,7 +42,7 @@ if ($submit)//beginning of submit
                         $password=md5($password);
                         $passcheck=md5($passcheck );
 
-                        $queryreg=mysql_query("INSERT INTO Registration VALUES ('$date','','$firstname','$lastname','','','$username','$password','$phone','$email','','','','')");
+                        $queryreg=$db->query("INSERT INTO Registration VALUES ('$date','','$firstname','$lastname','','','$username','$password','$phone','$email','','','','')");
                         //order of insert is (date, UserID(leave blank), firstname, lastname, position,class year,username, password, phone, email, address, state, zip, county
                         die("You have been register! <a href='index.php'>Return to the home page</a>");
                     }
@@ -82,9 +80,9 @@ if ($submit)//beginning of submit
     <label for="status">What is your classification?</label>
        <select name="position">
            <option value="0"></option> <?php
-        $query=mysql_query("SELECT Position FROM  Authorization ORDER BY Position");
+        $query=$db->query("SELECT Position FROM  Authorization ORDER BY Position");
         
-        while($row=mysql_fetch_assoc ($query)){ 
+        while($row=mysqli_fetch_assoc ($query)){ 
            $poss=$row['Position']; ?>
            <option value="<?php echo $poss ?>"><?php echo $poss ?></option>
         <?php }  ?>
