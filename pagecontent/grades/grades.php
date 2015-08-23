@@ -1,5 +1,8 @@
 <?php
-    $username = $_SESSION['username']
+    $username=$_SESSION ['username'];
+    $userid=$_SESSION ['userid'];
+    $connect=mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
+    mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 ?>
 
 <!-- Main Wrapper -->
@@ -15,12 +18,12 @@
     <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
 
     <div id="gradedialog" title="Class Data">
-    <form>
+    <form action="addClass.php" method="POST">
         <fieldset class="ui-helper-reset">
         <label for="tab_title">Class Name (ex. MATH-151)</label>
-        <input type="text" name="tab_title" id="tab_title" value="Type Class Name Here!" class="ui-widget-content ui-corner-all">
+        <input type="text" name="classes" id="classes" value="" class="ui-widget-content ui-corner-all">
         <label for="tab_content">Number of Credit Hours</label>
-        <input type="text" name="tab_content" id="tab_content" value="3" class="ui-widget-content ui-corner-all"></input>
+        <input type="text" name="credits" id="credits" value="3" class="ui-widget-content ui-corner-all"></input>
         </fieldset>
     </form>
     </div>
