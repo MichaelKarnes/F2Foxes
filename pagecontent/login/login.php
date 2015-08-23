@@ -6,15 +6,14 @@ $username=$_POST['username'];
 $password=$_POST['password'];
 if ($username && $password)
 {
-    $connect=mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-    mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
-    $query=mysql_query("SELECT * FROM Authentication WHERE Username='$username' ");
-    $numrows=mysql_num_rows($query);
+    
+    $query=$db->query("SELECT * FROM Authentication WHERE Username='$username' ");
+    $numrows=mysqli_num_rows($query);
     // echo "rows is $numrows"; this is a quick check to see if the username exists
     if ($numrows!=0)
     {
         //code to login
-        while ($row=mysql_fetch_assoc ($query))
+        while ($row=mysqli_fetch_assoc ($query))
         {
             $dbusername=$row ['Username'];
             $dbpassword=$row ['Password'];
@@ -27,8 +26,8 @@ if ($username && $password)
             echo"You're in! <a href='index.php'>Click</a> here to enter";// edit this to change were the use goes after logingin
             $_SESSION['username']=$dbusername;
             $_SESSION['userid']=$dbuserid;
-            $query=mysql_query("SELECT a.Admin, a.Training, a.Grades, a.Signout, a.Student, a.OldFox, a.Parent, a.Public_Relations, a.Upperclassmen FROM Account_info i INNER JOIN Authorization a ON i.PositionID = a.PositionID WHERE i.UserID='$dbuserid' ");
-            $row=mysql_fetch_assoc ($query);
+            $query=$db->query("SELECT a.Admin, a.Training, a.Grades, a.Signout, a.Student, a.OldFox, a.Parent, a.Public_Relations, a.Upperclassmen FROM Account_info i INNER JOIN Authorization a ON i.PositionID = a.PositionID WHERE i.UserID='$dbuserid' ");
+            $row=mysqli_fetch_assoc ($query);
             $_SESSION['admin']=$row['Admin'];
             $_SESSION['training']=$row['Training'];
             $_SESSION['grades']=$row['Grades'];

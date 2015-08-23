@@ -1,6 +1,4 @@
 <?php
-    mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-    mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
     $date=date('Y-m-d');
     $userid=$_SESSION ['userid'];
     $submit=$_POST['newannounce'];
@@ -27,7 +25,7 @@
             $upperclassmen=1;
             $all=0;
         }
-         mysql_query("INSERT INTO Announcements Values('','$date','$userid','$title','$body','$link','$student','$upperclassmen','$all')") or die("could not create Announcement");
+         $db->query("INSERT INTO Announcements Values('','$date','$userid','$title','$body','$link','$student','$upperclassmen','$all')") or die("could not create Announcement");
          echo "Announcement has been sent. Check the announcements tab to see it.";
     }
 

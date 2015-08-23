@@ -1,16 +1,14 @@
 <?php
-mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
 $delete=$_POST['delete'];
 $submit=$_POST['newvideo'];
 if ($delete){
-    $query=mysql_query("SELECT * FROM Videos");
-    while ($row=mysql_fetch_assoc ($query))  { 
+    $query=$db->query("SELECT * FROM Videos");
+    while ($row=mysqli_fetch_assoc ($query))  { 
           $t_videoid=$row['VideoID'];  
           $temp=$_POST["$t_videoid"];
           if ($temp)
           {
-              mysql_query("DELETE FROM Videos WHERE VideoID='$temp'")or die("Issue deleting video/videos");
+              $db->query("DELETE FROM Videos WHERE VideoID='$temp'")or die("Issue deleting video/videos");
           }
     }
 }
@@ -18,7 +16,7 @@ if($submit)
 {
     $title=$_POST['title'];
     $embededcode=$_POST['newvideo'];
-    mysql_query("INSERT INTO Videos VALUES('','$title','$embededcode')") or die("Issue inserting video");
+    $db->query("INSERT INTO Videos VALUES('','$title','$embededcode')") or die("Issue inserting video");
 }
 ?>
 <p>This page will make changes to the home page. The only person with access to this page is an admin or someone with admin rights</p>
@@ -27,8 +25,8 @@ if($submit)
 <table>
     <tr>
     <th>Video ID</th><th>Title</th><th>delete button</th></tr>
-<?php $query=mysql_query("SELECT * FROM Videos");
- while ($row=mysql_fetch_assoc ($query))  { 
+<?php $query=$db->query("SELECT * FROM Videos");
+ while ($row=mysqli_fetch_assoc ($query))  { 
     $videoid=$row['VideoID'];
     $t_title=$row['Title'];
     $code=$row['Embededcode']; ?>

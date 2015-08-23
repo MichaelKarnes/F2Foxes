@@ -1,13 +1,11 @@
 <?php 
 $username=$_SESSION ['username'];
 $userid=$_SESSION ['userid'];
-$connect=mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-mysql_select_db("km310765_f2foxes") or die("Couldn't find db");
-$query5=mysql_query("SELECT * FROM SignoutReason ORDER BY ReasonID ");
+$query5=$db->query("SELECT * FROM SignoutReason ORDER BY ReasonID ");
 $imagearray=array();
 $reasons=array();
 $reasonsid=array();
-while ($row5=mysql_fetch_assoc ($query5))  {  
+while ($row5=mysqli_fetch_assoc ($query5))  {  
     $image=$row5['Image'];
     $reason=$row5['Reason'];
     $reasonid=$row5['ReasonID'];
@@ -23,8 +21,8 @@ $submit=$_POST['signout'];
 $a="activity";
 if ($submit)
 {   
-    $query7=mysql_query("SELECT ActivityID FROM SignoutActivity");
-    while ($row7=mysql_fetch_assoc($query7))  { 
+    $query7=$db->query("SELECT ActivityID FROM SignoutActivity");
+    while ($row7=mysqli_fetch_assoc($query7))  { 
         $t_actID=$row7['ActivityID'];
         $act=$a.$t_actID;
         $t_aid=strip_tags($_POST["$act"]);
@@ -34,15 +32,15 @@ if ($submit)
              if ($_POST['c_reason'])
              {
                  $t_rid=strip_tags($_POST['c_reason']);
-                 mysql_query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ActivityID='$t_aid'") or die ("error");
+                 $db->query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ActivityID='$t_aid'") or die ("error");
                  if($t_rid=='20')
                  {
                      $t_text=strip_tags($_POST['text_input']);
-                     mysql_query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','$t_text','1')") or die ("dead");
+                     $db->query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','$t_text','1')") or die ("dead");
                 
                  }
                  else{
-                     mysql_query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','','1')") or die ("dead");
+                     $db->query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','','1')") or die ("dead");
                  }
              }
         }
@@ -53,9 +51,9 @@ if ($submit)
         mysql_query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ReasonID='$temp'");
         mysql_query("INSERT INTO Signout VALUES('','$date','$userid','$ActivityID',')");
     }*/
-    $query6=mysql_query("SELECT Date, UserID, ReasonID FROM  (SELECT * FROM Signout WHERE UserID='$userid' AND Date='$date') 
+    $query6=$db->query("SELECT Date, UserID, ReasonID FROM  (SELECT * FROM Signout WHERE UserID='$userid' AND Date='$date') 
     AS a RIGHT OUTER JOIN SignoutActivity ON a.ActivityID=SignoutActivity.ActivityID ");
-    while ($rows6=mysql_fetch_assoc ($query3))
+    while ($rows6=mysqli_fetch_assoc ($query3))
     {
         $tuid=$rows6['UserID'];
         $trid=$rows6['ReasonID'];
@@ -91,13 +89,13 @@ if ($submit)
 <tr > <form action="signoutsheet.php" method="POST">
     <th><?php echo "$username"?></th>
     <?php 
-        $query=mysql_query("SELECT * FROM SignoutActivity  ");
+        $query=$db->query("SELECT * FROM SignoutActivity  ");
                     
-    while ($row=mysql_fetch_assoc ($query))  {  
+    while ($row=mysqli_fetch_assoc ($query))  {  
             $name=$row['ActivityID']; 
             $t_name=$a.$name; 
-            $queryc=mysql_query("SELECT * FROM SignoutCheck WHERE Date='$date' AND ActivityID='$name'");
-            $countc= mysql_num_rows($queryc);
+            $queryc=$db->query("SELECT * FROM SignoutCheck WHERE Date='$date' AND ActivityID='$name'");
+            $countc= mysqli_num_rows($queryc);
             if ($countc==0) { ?>
             
             <td><input type="checkbox" name="<?php echo $t_name ?>" value="<?php echo $name; ?>"></td>
@@ -128,9 +126,9 @@ if ($submit)
 <tr>
     <td>Current Signout</td>
 <?php //Signout.Date='$date'OR Signout.Date IS NULLWHERE  Signout.UserID = '$userid' OR Signout.Date IS NULL
-        $query2=mysql_query("SELECT Date, UserID, ReasonID, Abreviation,Text  FROM  (SELECT * FROM Signout WHERE UserID='$userid'AND Date='$date') AS a RIGHT OUTER JOIN SignoutActivity  
+        $query2=$db->query("SELECT Date, UserID, ReasonID, Abreviation,Text  FROM  (SELECT * FROM Signout WHERE UserID='$userid'AND Date='$date') AS a RIGHT OUTER JOIN SignoutActivity  
         ON a.ActivityID=SignoutActivity.ActivityID ");
-            while ($rows2=mysql_fetch_assoc($query2))  { 
+            while ($rows2=mysqli_fetch_assoc($query2))  { 
                 $uid=$rows2['UserID'];
                 $rid=$rows2['ReasonID'];
                 $abrev=$rows2['Abreviation']; 
@@ -157,16 +155,16 @@ if ($submit)
     </tr >
     <?php  } ?>
            <?php
-            $query3=mysql_query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
-            while ($rows3=mysql_fetch_assoc($query3))  { 
+            $query3=$db->query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
+            while ($rows3=mysqli_fetch_assoc($query3))  { 
                 $temp_ul=$rows3['LastName'];
                 $temp_uf=$rows3['FirstName'];
                 $temp_id=$rows3['UserID']; 
                 $t_first_letter=$temp_uf['0'];?>
                 <tr class="reason_hover"> <th ><b><?php echo "$temp_ul, $t_first_letter"; ?></b></th> <?php
-                       $query4=mysql_query("SELECT Date, UserID, ReasonID, Text, AccountedFor FROM  (SELECT * FROM Signout WHERE UserID='$temp_id'AND Date='$date') 
+                       $query4=$db->query("SELECT Date, UserID, ReasonID, Text, AccountedFor FROM  (SELECT * FROM Signout WHERE UserID='$temp_id'AND Date='$date') 
                        AS a RIGHT OUTER JOIN SignoutActivity ON a.ActivityID=SignoutActivity.ActivityID ");
-                       while ($rows4=mysql_fetch_assoc($query4))  { 
+                       while ($rows4=mysqli_fetch_assoc($query4))  { 
                            $tuid=$rows4['UserID'];
                            $trid=$rows4['ReasonID'];
                             $check=$rows4['AccountedFor'];

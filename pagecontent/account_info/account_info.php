@@ -1,6 +1,5 @@
 <!-- Main Wrapper -->
-<?php  $connect=mysql_connect("192.232.249.164", "km310765_admin", "Aftermath2015") or die ("Couldn't connect!");
-mysql_select_db("km310765_f2foxes") or die("Couldn't find db"); 
+<?php  
 $userid=$_SESSION['userid'];
 
 $submit=$_POST['contactinfo'];
@@ -15,16 +14,16 @@ if ($submit)
     $comma=", ";
     $newlast_f=$newlastname.$comma.$newfirstname[0];
     
-    mysql_query("UPDATE  Contact_Info SET ClassYear='$newclassyear', Phone='$newphone', Email='$newemail' WHERE UserID='$userid' ") or die ("Could not update Account");
-    mysql_query("UPDATE  Account_info SET FirstName='$newfirstname', LastName='$lastname' WHERE UserID='$userid' ") or die ("Could not update Account");
+    $db->query("UPDATE  Contact_Info SET ClassYear='$newclassyear', Phone='$newphone', Email='$newemail' WHERE UserID='$userid' ") or die ("Could not update Account");
+    $db->query("UPDATE  Account_info SET FirstName='$newfirstname', LastName='$lastname' WHERE UserID='$userid' ") or die ("Could not update Account");
     if ($_SESSION['student']){
-        mysql_query("UPDATE  Account_info SET FirstName='$newfirstname', LastName='$newlastname' WHERE UserID='$userid' ") or die ("Could not update Account");
+        $db->query("UPDATE  Account_info SET FirstName='$newfirstname', LastName='$newlastname' WHERE UserID='$userid' ") or die ("Could not update Account");
     }
     echo "Account Updated";
 }
 
-$query=mysql_query("SELECT * FROM Contact_Info c INNER JOIN Account_info a ON c.UserID=a.UserID WHERE c.UserID='$userid'  ");
-$row=mysql_fetch_assoc ($query);
+$query=$db->query("SELECT * FROM Contact_Info c INNER JOIN Account_info a ON c.UserID=a.UserID WHERE c.UserID='$userid'  ");
+$row=mysqli_fetch_assoc ($query);
 $firstname= $row['FirstName'];
 $lastname= $row['LastName'];
 $classyear= $row['ClassYear'];
