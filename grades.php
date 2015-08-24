@@ -14,6 +14,7 @@ if (!($_SESSION['student']==1)){ die("Sorry you do not have access to this file 
         <link rel="stylesheet" href="pagecontent/grades/gradeStyle.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+        <script>src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"</script>
 	</head>
 	<body class="no-sidebar">
 		<div id="page-wrapper">
