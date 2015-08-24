@@ -18,7 +18,7 @@ if ($submit)//beginning of submit
     $count= mysqli_num_rows($query);//checks to see if there is a row with that username returns 1 if there is
            
     //check that all blocks ared filled out
-    if($firstname &&$lastname && $username && $password && $passcheck &&$email)
+    if($firstname &&$lastname && $username && $password && $passcheck &&$email&&$phone)
     {    
         if($count==0)
         {

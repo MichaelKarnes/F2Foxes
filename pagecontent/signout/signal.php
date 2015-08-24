@@ -5,27 +5,31 @@ while ($row5=mysqli_fetch_assoc ($query5))  {
     $reasonid=$row5['Image'];
     array_push($reasons, "$reasonid");
 }
-$date = date('Y-m-d', strtotime('previous monday'));
+$date = date('w') == 1 ? date('Y-m-d') : date('Y-m-d', strtotime('previous monday'));
 echo $date;
 $submit2=$_POST['signoutchange'];
 $submit1=$_POST['information'];
 if($submit2 ){
-    $query6=$db->query("SELECT UserID FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
     $t_act=$_SESSION['signalcheck'];
     $db->query("DELETE FROM SignoutCheck WHERE Date='$date' AND ActivityID='$t_act'")or die("Could not delete from Grades");
     $db->query("INSERT INTO SignoutCheck Values('$date','$t_act')");
-    while ($row6=mysql_fetch_assoc ($query6))  {
+    $query6=$db->query("SELECT UserID FROM Account_info WHERE PositionID BETWEEN 4 AND 15");
+    while ($row6=mysqli_fetch_assoc ($query6))  {
         $temp1_id=$row6['UserID'];
         $acc=strip_tags($_POST["$temp1_id"]);
-        echo "$acc";
+        $query8=$db->query("SELECT UserID FROM Signout WHERE Userid='$temp1_id'AND Date='$date'AND ActivityID='$t_act'");
+        $count8= mysqli_num_rows($query8);
+        if (!($count8))
+        {
+            echo "here = $temp1_id";
+            $db->query("INSERT INTO Signout VALUES('$date','$temp1_id','1','$t_act','','1')") or die ("dead");
+        }
         if($acc=="accountedfor"){
             $db->query("UPDATE  Signout SET AccountedFor='3'WHERE UserID='$temp1_id'AND Date='$date' AND ActivityID='$t_act' ") or die ("Could not update Account");
-            echo "here";
+            
         }
         else if ($acc="absent") {
             $db->query("UPDATE  Signout SET AccountedFor='2' WHERE UserID='$temp1_id'AND Date='$date' AND ActivityID='$t_act'") or die ("Could not update Account");
-            echo "here1";
-            echo $acc;
         }
     }
     
@@ -60,7 +64,7 @@ $query1=$db->query("SELECT * FROM SignoutActivity ");
         <th>Accounted For</th>
         </tr>
         <?php
-        $query3=$db->query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
+        $query3=$db->query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 15 ORDER BY LastName" );
         while ($rows3=mysqli_fetch_assoc($query3))  { 
             $temp_ul=$rows3['LastName'];
             $temp_uf=$rows3['FirstName'];
@@ -70,10 +74,10 @@ $query1=$db->query("SELECT * FROM SignoutActivity ");
                     AS a RIGHT OUTER JOIN SignoutActivity ON a.ActivityID=SignoutActivity.ActivityID WHERE SignoutActivity.ActivityID='$t_act' ");
                     while ($rows4=mysqli_fetch_assoc($query4))  { 
                         $tuid=$rows4['UserID'];
-                        $trid=$rows4['ReasonID'];
+                        $trid=$rows4['ReasonID']-1;
                         //$roll=$rows4['AccountedFor'];
-                        if ($trid>1) { 
-                            $tid=$trid+1;
+                        if ($trid>0) { 
+                            $tid=$trid;
                             $query8=$db->query("SELECT Reason FROM SignoutReason WHERE ReasonID='$tid'");
                             $row8=mysqli_fetch_assoc($query8);
                             $t_text=$row8['Reason']; 
@@ -92,7 +96,7 @@ $query1=$db->query("SELECT * FROM SignoutActivity ");
                             <td> </td>
                         <?php } 
                         else { 
-                             $db->query("INSERT INTO Signout VALUES('$date','$temp_id','1','$t_act','','1')") or die ("dead");?>
+                             ?>
                             <td> </td>
                         <?php } 
                     } 

@@ -5,6 +5,7 @@ th{
     text-align:center; vertical-align:middle;
     table-layout:fixed; 
     text-transform: uppercase;
+    font-weight: bold;
 }
 td{
     font: 15px arial, sans-serif;
@@ -13,6 +14,7 @@ td{
     text-align:center; vertical-align:middle;
     table-layout:fixed; 
     text-transform: uppercase;
+    font-weight: bold;
 }
 .styled_select tr td{
                 background:#fff;

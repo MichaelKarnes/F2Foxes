@@ -64,6 +64,66 @@
         } 
     ?>
      <div id="classes"></div>
+      <?php $query=$db->query("SELECT * FROM Grades_Classes WHERE UserID='$userid' ");
+      while ($row=mysqli_fetch_assoc ($query))  {
+          $t_class=$row['Class'];
+          $t_credits=$row['Credits'];?>
+          <form name="update_class">
+          <fieldset>
+          <label for="classes">Class:</label>
+          <input type="text" name="classes" id="classes" value="<?php echo $t_class ?>"></input>
+          <label for="credits">Credits:</label>
+          <input type="text" name="credits" id="credits" value="<?php echo $t_credits ?>"></input>
+          <input type="button" value="update class" onClick="update_class();"></input>
+          </fieldset>
+          </form><?php
+          $query2=$db->query("SELECT * FROM Grade_Div WHERE UserID='$userid'AND Class='$t_class'");
+          while ($row2=mysqli_fetch_assoc ($query2))  {
+              $t_div=$row2['Div_Name'];
+              $t_percentage=$row2['Percentage'];?>
+              <form name="update_div">
+              <fieldset>
+              <label for="div">Division:</label>
+              <input type="text" name="div" id="div" value="<?php echo $t_div ?>"></input>
+              <label for="percentage">Percentage:</label>
+              <input type="text" name="percentage" id="credits" value="<?php echo $t_percentage ?>"></input>
+              <input type="button" value="update field" onClick="update_div();"></input>
+              </fieldset>
+              </form><?php
+              $query3=$db->query("SELECT * FROM Grades_Assignment WHERE UserID='$userid'AND Class='$t_class'AND Div_Name='$t_Div'");
+              while ($row3=mysqli_fetch_assoc ($query3))  { 
+                  $t_assignment=$row3['Assignment'];
+                  $t_grade=$row3['Grade'];?>
+                  <form name="update_assignment">
+                  <fieldset>
+                  <label for="asignment">Assignment:</label>
+                  <input type="text" name="assignment" id="assignment" value="<?php echo $t_assignment ?>"></input>
+                  <label for="grade">Grade:</label>
+                  <input type="text" name="grade" id="grade" value="<?php echo $t_grade ?>"></input>
+                  <input type="button" value="update assignment" onClick="update_assignment();"></input>
+                  </fieldset>
+                  </form><?php
+              } ?>
+              <form  method="POST">
+              <select name="assignmentoptions">
+              <option value="">Click anywhere on this box to make a selection!</option>
+              <option value="addassignment">Add Assignment</option>
+              <option value="noForm">Collapse Form</option>
+              </select>
+              <input type="submit" value="add Assignment">
+              </form><br><br>          
+          <?php } ?>
+          <form  method="POST">
+          <select name="divoptions">
+          <option value="">Click anywhere on this box to make a selection!</option>
+          <option value="adddiv">Add Division</option>
+          <option value="noForm">Collapse Form</option>
+          </select>
+          <input type="submit" value="add field">
+          </form><br><br> 
+      <?php }
+       
+        ?>
     <p>hi</p>
         
 

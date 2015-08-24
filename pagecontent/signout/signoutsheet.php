@@ -18,8 +18,22 @@ $current_week=date('w') == 1 ? date('m/d/Y') : date('m/d/Y', strtotime('previous
 $s="-";
 $date=$d[6].$d[7].$d[8].$d[9].$s.$d[0].$d[1].$s.$d[3].$d[4];
 $submit=$_POST['signout'];
+$delete=$_POST['delete'];
 $a="activity";
-if ($submit)
+if ($delete)
+{
+     $query7=$db->query("SELECT ActivityID FROM SignoutActivity");
+     while ($row7=mysqli_fetch_assoc($query7))  { 
+        $t_actID=$row7['ActivityID'];
+        $act=$a.$t_actID;
+        $t_aid=strip_tags($_POST["$act"]);
+        if($t_aid)
+        {
+            $db->query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ActivityID='$t_aid'") or die ("error");
+        }
+     }
+}
+ if ($submit)
 {   
     $query7=$db->query("SELECT ActivityID FROM SignoutActivity");
     while ($row7=mysqli_fetch_assoc($query7))  { 
@@ -28,39 +42,23 @@ if ($submit)
         $t_aid=strip_tags($_POST["$act"]);
         if($t_aid)
         {   
+
              //$t_aid=$_SESSION ["$t_actID"];
-             if ($_POST['c_reason'])
+             if($_POST['text_input'])
+             {
+                 $db->query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ActivityID='$t_aid'") or die ("error");
+                 $t_text=strip_tags($_POST['text_input']);
+                 $db->query("INSERT INTO Signout VALUES('$date','$userid','20','$t_aid','$t_text','1')") or die ("dead");
+             }
+             else if  ($_POST['c_reason'])
              {
                  $t_rid=strip_tags($_POST['c_reason']);
                  $db->query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ActivityID='$t_aid'") or die ("error");
-                 if($t_rid=='20')
-                 {
-                     $t_text=strip_tags($_POST['text_input']);
-                     $db->query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','$t_text','1')") or die ("dead");
-                
-                 }
-                 else{
-                     $db->query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','','1')") or die ("dead");
-                 }
+                 $db->query("INSERT INTO Signout VALUES('$date','$userid','$t_rid','$t_aid','','1')") or die ("dead");
              }
         }
-    } /*
-    for ($i=0;$i<sizeof($array2);$i++)
-    {
-        $temp_id=$array2[$i];
-        mysql_query("DELETE FROM Signout WHERE UserID='$userid' AND Date='$date' AND ReasonID='$temp'");
-        mysql_query("INSERT INTO Signout VALUES('','$date','$userid','$ActivityID',')");
-    }*/
-    $query6=$db->query("SELECT Date, UserID, ReasonID FROM  (SELECT * FROM Signout WHERE UserID='$userid' AND Date='$date') 
-    AS a RIGHT OUTER JOIN SignoutActivity ON a.ActivityID=SignoutActivity.ActivityID ");
-    while ($rows6=mysqli_fetch_assoc ($query6))
-    {
-        $tuid=$rows6['UserID'];
-        $trid=$rows6['ReasonID'];
-    }
-}
-//echo "$date";
-?>
+    } 
+} ?>
 <br><h1>week of <?php echo $date ?>
 <li ><a href="lastweek.php"> &larr;Previous Week</a></li>
 <li ><a href="nextweek.php"> Next Week&rarr;</a></li></h1>
@@ -73,7 +71,8 @@ if ($submit)
     <th colspan="2"id="days">Wed </th>
     <th colspan="3"id="days">Thur </th>
     <th colspan="3"id="days">Fri </th>
-    <th>CM </th>     
+    <th>CM </th>    
+    <th colspan="2">New Signout</th> 
 </tr>
 <tr>
     <?php 
@@ -83,7 +82,7 @@ if ($submit)
             echo'<th>'.$abre[$i].'</th>';
         }
     ?>
-    <th colspan="2">New Signout</th>
+    <td colspan="2"><input type="submit" name="delete" value="Remove Selected"></td>
 </tr>
     <?php  if ($_SESSION['Week']>=$current_week){  ?>
 <tr > <form action="signoutsheet.php" method="POST">
@@ -113,11 +112,11 @@ if ($submit)
                 for ($i=0;$i<sizeof($reasons);++$i){ 
                    $temp1= $reasonsid["$i"];
                    $temp2=$reasons["$i"];
-                    ?>
-                <option value="<?php echo "$temp1" ?>"><?php echo "$temp2"; ?>
-                </option>
-            <?php } 
-            ?>
+                   if ($temp2!="Text"){ ?>
+                        <option value="<?php echo "$temp1" ?>"><?php echo "$temp2"; ?>
+                        </option>
+                    <?php  }
+                 } ?>
             </select>
     </td>
     <td><input type="submit" name="signout" value="Submit Changes"></td>
@@ -155,7 +154,7 @@ if ($submit)
     </tr >
     <?php  } ?>
            <?php
-            $query3=$db->query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
+            $query3=$db->query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 15 ORDER BY LastName" );
             while ($rows3=mysqli_fetch_assoc($query3))  { 
                 $temp_ul=$rows3['LastName'];
                 $temp_uf=$rows3['FirstName'];
