@@ -10,48 +10,44 @@
 <div class="container">
 	<div id="contentdifferentstyle">
     
-    <!--slight modification to make for smaller and have arrow image-->
+    <!--slight modification to make selector have arrow image-->
     <style> 
-    form{
-        color: Black;
-        width: 65%;
-    }
     select{
           background: url(images/new_arrow.jpg) no-repeat right;     
     }
     </style>
 
     <h1>Please update your grades on a regular basis!</h1>
-    <p>Use the selector below to add, edit, or delete class information</p>
+    <p>Use the selector below to add a new class or to collapse the new class form</p>
     <form method="POST">
     <select name="classoptions">
-    <option value=""> </option>
+    <option value="">Click anywhere on this box to make a selection!</option>
     <option value="addClass">Add Class</option>
-    <option value="editClass">Edit Class</option>
-    <option value="deleteClass">Delete Class</option>
+    <option value="editClass">Collapse Form</option>
     </select>
     <input type="submit">
     </form>
 
     <br></br>
-
+    
+    <!--if the user wishes to add a new class, the following php code will display the form.
+    Otherwise the if condition is false, and the form will not be displayed. -->
     <?php
         if($_POST['classoptions'] == "addClass") {
             echo "Please enter the class name and corresponding credit hours";
-            echo'<form action="classes.php" method="POST">
+            echo'<form action="pagecontent/grades/addClass.php" method="POST">
                 <fieldset>
                 <label for="classes">Class Name (ex. MATH-151)</label>
-                <input type="text" name="classes" id="classes" value="">
+                <input type="text" name="classes" id="classes" value=""></input>
                 <label for="credits">Number of Credit Hours (ex. 3)</label>
                 <input type="text" name="credits" id="credits" value="3"></input>
+                <input type="submit" ></input>
                 </fieldset>
-                <input type="submit"></input>
-                </form>'; 
-        } elseif ($_POST['classoptions'] == "editClass") {
-            echo "Please e"
-            
-        }
+                </form>';
+        } 
     ?>
+    <p>hi</p>
+        
 
     
 	</div>
