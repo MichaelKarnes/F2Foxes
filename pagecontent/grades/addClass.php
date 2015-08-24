@@ -16,7 +16,7 @@
     //echo "class=$class";
     //echo "helloword";
     ?>
-<p>Inserted class=<?php echo $class; ?>  With Credits=<?php echo $credit; ?></p>
+<p>Inserted class=<?php echo $class; ?>  with credits=<?php echo $credit; ?></p>
 
 
 
