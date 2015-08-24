@@ -1294,8 +1294,9 @@
 	form input[type="text"],
 	form input[type="email"],
 	form input[type="password"] {
-		line-height: 3em;
-		padding: 0 1em;
+		/*line-height: 3em;
+		padding: 0 1em;*/
+      
 	}
 
 	form select {
