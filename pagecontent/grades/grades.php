@@ -9,49 +9,49 @@
 <div class="inner">
 <div class="container">
 	<div id="contentdifferentstyle">
-    
-    <!--slight modification to make for smaller and have arrow image-->
-    <style> 
-    form{
-        color: Black;
-        width: 65%;
-    }
-    select{
-          background: url(images/new_arrow.jpg) no-repeat right;     
-    }
+
+    <!--slight modification to make selector have arrow image-->
+    <style>
+        select {
+            background: url(images/new_arrow.jpg) no-repeat right;
+        }
+        .hide { position:absolute; top:-1px; right:-1px; width:0px; height:0px; }
     </style>
 
+    <!--hidden iframe prevents form submit button from switching pages-->
+    <iframe name ="hiddenFrame" class="hide"></iframe>
+
     <h1>Please update your grades on a regular basis!</h1>
-    <p>Use the selector below to add, edit, or delete class information</p>
+    <p>Use the selector below to add a new class or to collapse the new class form</p>
     <form method="POST">
     <select name="classoptions">
-    <option value=""> </option>
+    <option value=" ">Click anywhere on this box to make a selection!</option>
     <option value="addClass">Add Class</option>
-    <option value="editClass">Edit Class</option>
-    <option value="deleteClass">Delete Class</option>
+    <option value="noForm">Collapse Form</option>
     </select>
     <input type="submit">
     </form>
 
     <br></br>
-
+    
+    <!--if the user wishes to add a new class, the following php code will display the form.
+    Otherwise the if condition is false, and the form will not be displayed. -->
     <?php
         if($_POST['classoptions'] == "addClass") {
-            echo "Please enter the class name and corresponding credit hours";
-            echo'<form action="classes.php" method="POST">
+            #the form targets a hidden iframe to prevent having to reload the page
+            echo'<form action="pagecontent/grades/addClass.php" method="POST" target="hiddenFrame" class="hideForm">
                 <fieldset>
                 <label for="classes">Class Name (ex. MATH-151)</label>
-                <input type="text" name="classes" id="classes" value="">
+                <input type="text" name="classes" id="classes" value=""></input>
                 <label for="credits">Number of Credit Hours (ex. 3)</label>
                 <input type="text" name="credits" id="credits" value="3"></input>
+                <input type="submit" id ="hide"></input>
                 </fieldset>
-                <input type="submit"></input>
-                </form>'; 
-        } elseif ($_POST['classoptions'] == "editClass") {
-            echo "Please e"
-            
-        }
+                </form>';
+        } 
     ?>
+    <p>hi</p>
+        
 
     
 	</div>
