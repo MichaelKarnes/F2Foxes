@@ -10,14 +10,6 @@
 <div class="container">
 	<div id="contentdifferentstyle">
 
-    <script>
-        $(document).ready(function(){
-            $("#hide").click(function(){
-            $(".hideForm").remove();
-        });
-    });
-    </script>
-
     <!--slight modification to make selector have arrow image-->
     <style>
         select {
@@ -46,7 +38,6 @@
     Otherwise the if condition is false, and the form will not be displayed. -->
     <?php
         if($_POST['classoptions'] == "addClass") {
-            echo "Please enter the class name and corresponding credit hours";
             #the form targets a hidden iframe to prevent having to reload the page
             echo'<form action="pagecontent/grades/addClass.php" method="POST" target="hiddenFrame" class="hideForm">
                 <fieldset>
