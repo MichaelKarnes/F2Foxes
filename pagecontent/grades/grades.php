@@ -7,133 +7,75 @@
 
 <!-- Main Wrapper -->
 <div id="main-wrapper">
-<div class="wrapper style2">
-<div class="inner">
-<div class="container">
-	<div id="contentdifferentstyle">
-
-    <!--slight modification to make selector have arrow image-->
-    <style>
-        select {
-            background: url(images/new_arrow.jpg) no-repeat right;
-        }
-        .hide { position:absolute; top:-1px; right:-1px; width:0px; height:0px; }
-    </style>
-
-    <!--hidden iframe prevents form submit button from switching pages-->
-    <iframe name ="hiddenFrame" class="hide"></iframe>
-
-    <h1>Please update your grades on a regular basis!</h1>
-    <p>Use the selector below to add a new class or to collapse the new class form</p>
-    <form  method="POST">
-    <select name="classoptions">
-    <option value="">Click anywhere on this box to make a selection!</option>
-    <option value="addClass">Add Class</option>
-    <option value="noForm">Collapse Form</option>
-    </select>
-    <input type="submit">
-    </form>
-
-    <br></br>
-    
-    <!--if the user wishes to add a new class, the following php code will display the form.
-    Otherwise the if condition is false, and the form will not be displayed. -->
-    <?php
-        if($_POST['classoptions'] == "addClass") {
-            #the form targets a hidden iframe to prevent having to reload the page
-            echo'<form name="newclass" target="hiddenFrame" class="hideForm">
-                <fieldset>
-                <label for="classes">Class Name (ex. MATH-151)</label>
-                <input type="text" name="classes" id="classes" value="math"></input>
-                <label for="credits">Number of Credit Hours (ex. 3)</label>
-                <input type="text" name="credits" id="credits" value="3"></input>
-                <input type="button" value="class" id ="hide" onClick="new_class();"></input>
-                </fieldset>
-                </form>';
-
-                //commented out what you did David incase you want to go back but it works
-                /*echo'<form action="pagecontent/grades/addClass.php" method="POST" target="hiddenFrame" class="hideForm">
-                <fieldset>
-                <label for="classes">Class Name (ex. MATH-151)</label>
-                <input type="text" name="classes" id="classes" value=""></input>
-                <label for="credits">Number of Credit Hours (ex. 3)</label>
-                <input type="text" name="credits" id="credits" value="3"></input>
-                <input type="submit" id ="hide"></input>
-                </fieldset>
-                </form>';*/
-        } 
-    ?>
-     <div id="classes"></div>
-      <?php $query=$db->query("SELECT * FROM Grades_Classes WHERE UserID='$userid' ");
-      while ($row=mysqli_fetch_assoc ($query))  {
-          $t_class=$row['Class'];
-          $t_credits=$row['Credits'];?>
-          <form name="update_class">
-          <fieldset>
-          <label for="classes">Class:</label>
-          <input type="text" name="classes" id="classes" value="<?php echo $t_class ?>"></input>
-          <label for="credits">Credits:</label>
-          <input type="text" name="credits" id="credits" value="<?php echo $t_credits ?>"></input>
-          <input type="button" value="update class" onClick="update_class();"></input>
-          </fieldset>
-          </form><?php
-          $query2=$db->query("SELECT * FROM Grade_Div WHERE UserID='$userid'AND Class='$t_class'");
-          while ($row2=mysqli_fetch_assoc ($query2))  {
-              $t_div=$row2['Div_Name'];
-              $t_percentage=$row2['Percentage'];?>
-              <form name="update_div">
-              <fieldset>
-              <label for="div">Division:</label>
-              <input type="text" name="div" id="div" value="<?php echo $t_div ?>"></input>
-              <label for="percentage">Percentage:</label>
-              <input type="text" name="percentage" id="credits" value="<?php echo $t_percentage ?>"></input>
-              <input type="button" value="update field" onClick="update_div();"></input>
-              </fieldset>
-              </form><?php
-              $query3=$db->query("SELECT * FROM Grades_Assignment WHERE UserID='$userid'AND Class='$t_class'AND Div_Name='$t_Div'");
-              while ($row3=mysqli_fetch_assoc ($query3))  { 
-                  $t_assignment=$row3['Assignment'];
-                  $t_grade=$row3['Grade'];?>
-                  <form name="update_assignment">
-                  <fieldset>
-                  <label for="asignment">Assignment:</label>
-                  <input type="text" name="assignment" id="assignment" value="<?php echo $t_assignment ?>"></input>
-                  <label for="grade">Grade:</label>
-                  <input type="text" name="grade" id="grade" value="<?php echo $t_grade ?>"></input>
-                  <input type="button" value="update assignment" onClick="update_assignment();"></input>
-                  </fieldset>
-                  </form><?php
-              } ?>
-              <form  method="POST">
-              <select name="assignmentoptions">
-              <option value="">Click anywhere on this box to make a selection!</option>
-              <option value="addassignment">Add Assignment</option>
-              <option value="noForm">Collapse Form</option>
-              </select>
-              <input type="submit" value="add Assignment">
-              </form><br><br>          
-          <?php } ?>
-          <form  method="POST">
-          <select name="divoptions">
-          <option value="">Click anywhere on this box to make a selection!</option>
-          <option value="adddiv">Add Division</option>
-          <option value="noForm">Collapse Form</option>
-          </select>
-          <input type="submit" value="add field">
-          </form><br><br> 
-      <?php }
-       
-        ?>
-    <p>hi</p>
-        
-
-    
-	</div>
-	</div>
-</div>
-</div>
-
-
+    <div class="wrapper style2">
+        <div class="inner">
+            <div class="container">
+                <div style="height: 600px; position: relative; color: rgb(64, 66, 72);">
+                    <div style="width:30%; height:100%; padding: 10px 20px; float: left; border-right: 1px solid #aaa;">
+                        <h2 style="text-align: center;">My Grades</h2>
+                        <div style="background-color: #eee; border-radius: 5px; border: 1px solid #aaa; padding: 10px 20px; margin-bottom: 5px;" onclick="">
+                            <span>CSCE 436-500</span>
+                            <h4 style="width: 50%; text-align: right; float: right;">89.50%</h4>
+                        </div>
+                        <div style="background-color: #eee; border-radius: 5px; border: 1px solid #aaa; padding: 10px 20px;" onclick="">
+                            <span>ECEN 454-508</span>
+                            <h4 style="width: 50%; text-align: right; float: right;">91.26%</h4>
+                        </div>
+                    </div>
+                    <div style="width:70%; height:100%; padding: 10px 20px; float: right; border-left: 1px solid #aaa;">
+                        <h2 style="text-align: center;">CSCE 436-500</h2>
+                        <table>
+                            <colgroup>
+                                <col style="width: 45%;"></col>
+                                <col style="width: 20%;"></col>
+                                <col style="width: 35%;"></col>
+                            </colgroup>
+                            <tr style="background-color: #ddd;">
+                                <td style="padding: 5px 20px;" colspan="1">
+                                    Type:
+                                    <select>
+                                        <option>All</option>
+                                        <option>Quizzes (20%)</option>
+                                        <option>Tests (30%)</option>
+                                        <option>Projects (30%)</option>
+                                        <option>Homework (20%)</option>
+                                    </select>
+                                </td>
+                                <td style="padding: 5px 20px; text-align: right;" colspan="2">
+                                    Order by:
+                                    <select>
+                                        <option>Assignment Name</option>
+                                        <option selected>Last Updated</option>
+                                        <option>Grade</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr style="background-color: #eee; border-bottom: 1px solid #999; height: 15px; line-height: 15px;">
+                                <td style="padding: 5px 20px; font-size: 8pt;">ASSIGNMENT NAME</td>
+                                <td style="padding: 5px 20px; font-size: 8pt;">LAST UPDATED</td>
+                                <td style="padding: 5px 20px; text-align: right; font-size: 8pt;">GRADE</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ccc; height: 20px; line-height: 20px;">
+                                <td style="padding: 10px 20px 5px 20px; font-size: 8pt; font-weight: bold;">HW1</td>
+                                <td style="padding: 10px 20px 5px 20px; font-size: 8pt;">8-25-2015 14:37</td>
+                                <td style="padding: 10px 20px 5px 20px; font-size: 8pt; font-weight: bold; text-align: right;">80%</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ccc; height: 20px; line-height: 20px;">
+                                <td style="padding: 10px 20px 5px 20px; font-size: 8pt; font-weight: bold;">HW2</td>
+                                <td style="padding: 10px 20px 5px 20px; font-size: 8pt;">8-25-2015 14:37</td>
+                                <td style="padding: 10px 20px 5px 20px; font-size: 8pt; font-weight: bold; text-align: right;">80%</td>
+                            </tr>
+                            <tr style="height: 20px; line-height: 20px;">
+                                <td style="padding: 10px 20px 5px 20px; font-size: 8pt; font-weight: bold;">HW3</td>
+                                <td style="padding: 10px 20px 5px 20px; font-size: 8pt;">8-25-2015 14:37</td>
+                                <td style="padding: 10px 20px 5px 20px; font-size: 8pt; font-weight: bold; text-align: right;">80%</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 	<div class="wrapper style3">
 		<div class="inner">
 			<div class="container">
