@@ -55,16 +55,13 @@ else{
 <br></br>
 <h1>Please Log In</h1>
 <form action= "login.php" method="post">
-<p>
+<fieldset>
 <label for="username">Username</label>
 <input type="text" id="username" name="username" value="" maxlength="20" />
-</p>
-<p>
-<label for="password">Password</label>
+<label for="password">Password <a href="forgot.php"> (Forgot Password?)</a> </label>
 <input type="password" id="password" name="password" value="" maxlength="20" />
-</p>
-<p>
+<br></br>
 <input type="submit" value="Login" />
-</p>
 </fieldset>
-</form><p><a href="register.php">Not Registered? Click here.</a></p>
+</form>
+<p><a href="register.php">Not Registered? Click here.</a></p>
