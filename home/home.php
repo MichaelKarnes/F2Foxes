@@ -18,7 +18,7 @@
 						</div>
 					</div>
                         <div class="slider-wrapper theme-default">
-                            <style>#slider {width: 90%; height:692px; margin-left: auto; margin-right: auto;}</style>
+                            <style>#slider {width: 80%; height:500px; margin-left: auto; margin-right: auto;}</style>
                             <div id="slider" class="nivoSlider">
                                 <img src="home/images/March_In.jpg" data-thumb="home/images/March_In.jpg" alt="auto" />
                                 <img src="home/images/rudders.jpg" data-thumb="home/images/rudders.jpg" alt="auto" />
