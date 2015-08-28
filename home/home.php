@@ -77,7 +77,11 @@
 	</div>
     <div class="wrapper style1">
 		<div class="inner">
+            
             <section class="container box feature1">
+                <br></br>
+                <p>F-2 cadets participating in the Rudder's Rangers Quad Assault and the
+                Fish Drill Team Competition!</p>
                 <div class="12u">
                    <?php $query=$db->query("SELECT * FROM Videos");
                         while ($row=mysqli_fetch_assoc ($query))  { 
@@ -88,6 +92,7 @@
                     </div>
                 </section>
         </div>
+        <br></br>
     </div>
 	<div class="wrapper style2">
 		<div class="inner">
@@ -98,15 +103,13 @@
 						<div class="6u 12u(mobile)">
 							<section>
 								<header class="major">
-									<h2>Get Conected!</h2>
+									<h2>Get Conected</h2>
 									<p>F-2 is always looking for support and involvement</p>
 								</header>
-								<p>Currently f-2 is working on feugiat sit amet ornare in, hendrerit in lectus.
-								Praesent semper mod quis eget mi. Etiam eu ant risus. Aliquam erat volutpat.
-								Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-								consequat etiam.</p>
+								<p>Click the button below to visit the Fox Company Facebook page.</p>
 								<footer>
-									<a href="" class="button medium icon fa-arrow-circle-right">Let's do this</a>
+									<a href="https://www.facebook.com/TexasAmCorpsOfCadetsCompanyF2Foxes" class="button medium alt icon fa-info-circle">VISIT FACEBOOK</a>
+                                    <br></br>
 								</footer>
 							</section>
 						</div>
@@ -116,9 +119,10 @@
 									<h2>Represent F-2</h2>
 									<p>wear clothing that resperesents a redass outfit</p>
 								</header>
-								<p>The Fox Company Store contains F2 merchandise for cadets and parents. If you want to represent a redass outfit, click the button below. </p>
+								<p>The Fox Company Store contains F-2 merchandise for cadets and parents.</p>
 								<footer>
 									<a href="http://foxcompany.core-image.net/" class="button medium alt icon fa-info-circle">FOX COMPANY STORE</a>
+                                    <br></br>
 								</footer>
 							</section>
 						</div>
