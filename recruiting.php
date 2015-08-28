@@ -1,6 +1,5 @@
 <?php
 include 'boot/session.php'; 
-if (!($_SESSION['username'])){ die("Sorry you do not have access to this file "); } 
 ?>
 <!DOCTYPE HTML>
 <html>

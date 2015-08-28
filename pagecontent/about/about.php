@@ -5,6 +5,7 @@
 .black {color: #000;}
 .centerPic {margin-left: auto; margin-right: auto;}</style>
 <h2 id="heading"> About Company F-2 </h2>
+<br></br>
 <p class="black"> Thanks for visiting the company F-2 website! Established in 1959, F-2 is the 
 oldest active outfit in the Texas A&M Corps of Cadets. Our outfit motto is 
 "All we do is win!", and we work hard everyday to live by that motto.

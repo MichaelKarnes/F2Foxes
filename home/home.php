@@ -18,59 +18,17 @@
 						</div>
 					</div>
                         <div class="slider-wrapper theme-default">
+                            <style>#slider {width: 90%; height:692px; margin-left: auto; margin-right: auto;}</style>
                             <div id="slider" class="nivoSlider">
                                 <img src="home/images/March_In.jpg" data-thumb="home/images/March_In.jpg" alt="auto" />
                                 <img src="home/images/rudders.jpg" data-thumb="home/images/rudders.jpg" alt="auto" />
                                 <img src="home/images/Good_Bull.jpg" data-thumb="home/images/Good_Bull.jpg" alt="auto" />
-                                <!--<img src="home/images/toystory.jpg" data-thumb="home/images/toystory.jpg" alt="auto" />
-                                <a href="http://dev7studios.com"><img src="home/images/up.jpg" data-thumb="home/images/up.jpg" alt="auto" title="This is an example of a caption" /></a>
-                                <img src="home/images/walle.jpg" data-thumb="home/images/walle.jpg" alt="auto" data-transition="slideInLeft" />
-                                <img src="home/images/nemo.jpg" data-thumb="home/images/nemo.jpg" alt="auto" title="#htmlcaption" />-->
                             </div>
                             <div id="htmlcaption" class="nivo-html-caption">
                                 <strong>This</strong> is an example of a <em>HTML</em> caption with <a href="#">a link</a>. 
                             </div>
                         </div>
-                    <?php /*?>
-					<div class="row">
-						<div class="4u 12u(mobile)">
-							<section>
-								<a href="https://youtu.be/jofNR_WkoCE" class="image featured"><img src="images/pic01.jpg" alt="auto" /></a>
-								<header class="second icon fa-user">
-									<h3>Here's a Heading</h3>
-									<p>And a subtitle</p>
-                                    
-								</header>
-							</section>
-						</div>
-						<div class="4u 12u(mobile)">
-							<section>
-								<a href="#" class="image featured"><img src="images/pic02.jpg" alt="auto" /></a>
-								<header class="second icon fa-cog">
-									<h3>Also a Heading</h3>
-									<p>And another subtitle</p>
-								</header>
-							</section>
-						</div>
-						<div class="4u 12u(mobile)">
-							<section>
-								<a href="#" class="image featured"><img src="images/pic03.jpg" alt="auto" /></a>
-								<header class="second icon fa-bar-chart-o">
-									<h3>Another Heading</h3>
-									<p>And yes, a subtitle</p>
-								</header>
-							</section>
-						</div>
-					</div>
-					<div class="row">
-						<div class="12u">
-							<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus. Praesent semper
-							bibendum ipsum, et tristique augue fringilla eu. Vivamus id risus vel dolor auctor euismod
-							quis eget mi. Etiam eu ante risus. Aliquam erat volutpat. Aliquam luctus mattis lectus sit
-							amet pulvinar. Nam nec turpis.</p>
-						</div>
-					</div>*/
-                    ?>
+                    
 				</section>
 
 		</div>

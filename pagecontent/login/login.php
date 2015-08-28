@@ -23,7 +23,7 @@ if ($username && $password)
         if($username==$dbusername&&md5($password)==$dbpassword)// password is stored as an md5
         {
             
-            echo"You're in! <a href='index.php'>Click</a> here to enter";// edit this to change were the use goes after logingin
+            echo"You're in! <a href='index.php'>Click here to enter</a>";// edit this to change were the use goes after logingin
             $_SESSION['username']=$dbusername;
             $_SESSION['userid']=$dbuserid;
             $query=$db->query("SELECT a.Admin, a.Root, a.Training, a.Grades, a.Signout, a.Student, a.OldFox, a.Parent, a.Public_Relations, a.Upperclassmen FROM Account_info i INNER JOIN Authorization a ON i.PositionID = a.PositionID WHERE i.UserID='$dbuserid' ");

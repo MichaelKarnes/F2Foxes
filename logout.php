@@ -21,9 +21,12 @@
             <?php include 'pagecontent/header.php'; ?>
             <div id="main-wrapper">
 	             <div class="wrapper style2">
-                     <?php
-                    echo "<h1>You've been logged out.<a href='index.php'>Please click home.</a></h1>";
+                    <br></br>
+                    <?php 
+                    echo"<p>You've been logged out.<a href='index.php'>Please return to the home page.</a></p>"
                     ?>
+                    <br></br>
+                    
                   </div>
             </div>
 			<!-- Footer  -->

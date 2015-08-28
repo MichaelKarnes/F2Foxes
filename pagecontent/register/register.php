@@ -62,7 +62,7 @@ if ($submit)//beginning of submit
 //echo md5("alex");// shows how to turn a file into md5
 ?>
     <!--Prevents Mobile Nav Bar From covering up content-->
-<h1>Welcome to the Fox Company Website If you could please fill out the form and hit submit when you are done</h1>
+<h1>Please fill out the form below and hit "Submit" to register for an account</h1>
 <form action= "register.php" method="POST"><!--method will have to be changed to post later on when we have a database set up-->
 <!--first name--><p>
     <label for="firstname">First Name</label>
