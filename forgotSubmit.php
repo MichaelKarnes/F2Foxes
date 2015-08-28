@@ -25,15 +25,23 @@ include 'boot/session.php';
 			<div class="container">
 			<div id="content">
             <!--Main Content-->
-                      
+                     
+            <br></br> 
             <?php
                 $newPass = $_POST['newPass'];
                 $newPass2 = $_POST['newPass2'];
                 if($newPass != $newPass2) {
-                    echo "Passwords do not match.";
+                    echo '<p>Passwords do not match. <a href ="forgot.php">Please Try Again</a></p>';
+                }
+
+                $userForgot = $_POST['userForgot'];
+                $checkUserQuery = $db->query("SELECT * FROM Authentication WHERE Username='$userForgot' ");
+                if($checkUserQuery != 1 ) {
+                    echo '<p>Username does not exist. <a href ="forgot.php">Please Try Again</a></p>';
                 }
 
             ?>
+            <br></br>
             
 
             <br></br>

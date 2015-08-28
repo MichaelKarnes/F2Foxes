@@ -30,11 +30,11 @@ include 'boot/session.php';
             <form action="forgotSubmit.php" method="POST">
             <fieldset>
             <label>Username</label>
-            <input type="text" name="userName" maxlength="20" />
+            <input type="text" name="userForgot" maxlength="20" />
             <label>New Password</label>
-            <input type="text" name="newPass" maxlength="20" />
+            <input type="password" name="newPass" maxlength="20" />
             <label>Please Enter New Password Again</label>
-            <input type="text" name="newPass2" maxlength="20" />
+            <input type="password" name="newPass2" maxlength="20" />
             <br></br>
             <input type="submit" />
             </fieldset>
