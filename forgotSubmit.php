@@ -29,19 +29,23 @@ include 'boot/session.php';
             <br></br> 
             <?php
                 #check to see if both passwords match from forgot.php
-                #if they do, email the admin
+                #also validate the new password length
                 $newPass = $_POST['newPass'];
                 $newPass2 = $_POST['newPass2'];
 
                 if($newPass != $newPass2) {
                     echo '<p>Passwords do not match.<a href ="forgot.php"> Please Try Again.</a></p>';
-                }      
+                } 
+                elseif(strlen($newPass) > 25 || strlen($newPass) < 6) {
+                    echo '<p>Passwords must be between 6 and 25 characters.<a href ="forgot.php"> Please Try Again.</a></p>';
+                }
+                #insert new password into the database for admin to see the next time admin 
+                #logs on. See login.php     
                 else {
                     $userForgot = $_POST['userForgot'];
-                    $message = "Username: " . $userForgot . "\n New Password: " . $newPass;
-                    $header = "From: dm@f2foxes.com"
-                    mail("dtmcderm@verizon.net","F2 Foxes Password Reset",$message);
-                    echo '<p>Your request has been succesfully emailed to the website admins,
+                    #insert date time (the null ' '), the user who Forgot, and the new desired password
+                    $query = $db->query("INSERT INTO Forgot_Password VALUES('', '$userForgot', '$newPass')");
+                    echo '<p>Your request has been succesfully sent to the website admins,
                     David M and Peter M. One of us will contact you by phone for confirmation 
                     within the next 24 hours. Once we verify your request, your password will 
                     be changed and encrypted. Alternatively, you can contact one of us directly
