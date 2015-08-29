@@ -36,19 +36,19 @@ include 'boot/session.php';
                 if($newPass != $newPass2) {
                     echo '<p>Passwords do not match.<a href ="forgot.php"> Please Try Again.</a></p>';
                 } 
-                elseif(strlen($newPass) >= 25 || strlen($newPass) <= 6) {
-                    echo '<p>Passwords must be between 6 to 25 characters.<a href ="forgot.php"> Please Try Again.</a></p>';
+                elseif(strlen($newPass) > 25 || strlen($newPass) < 6) {
+                    echo '<p>Passwords must be 6 to 25 characters.<a href ="forgot.php"> Please Try Again.</a></p>';
                 }
                 #insert new password into the database for admin to see the next time admin 
-                #logs on. See login.php     
+                #logs on. See bottom section of header.php. header.php also acts as a 
+                #notification center for admins for forgotten passwords    
                 else {
                     $userForgot = $_POST['userForgot'];
                     $timestamp = time();
-                    echo $timestamp;
-                    $date = date("M-D-Y");
-                    echo $date;
+                    $date = date("m-d-y");
+                    $phone = $_POST['phone'];
                     #insert date and time , the user who Forgot, and the new desired password
-                    $query = $db->query("INSERT INTO Forgot_Password VALUES(' ', '$date', '$timestamp', '$userForgot', '$newPass')");
+                    $query = $db->query("INSERT INTO Forgot_Password VALUES('$timestamp', '$date', '$userForgot', '$newPass', '$phone')");
                     echo '<p>Your request has been succesfully sent to the website admins,
                     David M and Peter M. One of us will contact you by phone for confirmation 
                     within the next 24 hours. Once we verify your request, your password will 

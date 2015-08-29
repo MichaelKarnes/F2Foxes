@@ -31,6 +31,8 @@ include 'boot/session.php';
             <fieldset>
             <label>Username</label>
             <input type="text" name="userForgot" maxlength="20" />
+            <label>Phone Number</label>
+            <input type="text" name="phone" maxlength="20" />
             <label>New Password </label>
             <input type="password" name="newPass" maxlength="20" />
             <label>Enter New Password Again </label>

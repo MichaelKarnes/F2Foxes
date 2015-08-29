@@ -77,3 +77,23 @@ $username=$_SESSION ['username'];?>
 	    </header>
 	</div>
 </div>
+            <?php
+            #if the user is an admin, show the admin if someone forgot their password
+            #if so, the admin must go to the host gator account to directly change
+            #the users password, and then delete the forgot password request
+            if($_SESSION['admin'] == 1) {
+                $queryForgot = $db->query("SELECT * FROM Forgot_Password");
+                echo "Check for Forgotten Passwords: ";
+                if($queryForgot->num_rows > 0) {
+                    echo "Yes" . "<br>" . "Visit phpMyAdmin to process the request." . "<br>";
+                    #output forgotten password data
+                    while($row3 = $queryForgot->fetch_assoc()) {
+                        echo "Time: " . $row3["Time"] . " / Date: " . $row3["DayMonthYear"] .
+                        " / Username: " . $row3["userNew"] . " / Requested Password: " . 
+                        $row3["passNew"] . " / Phone: " . $row3["Phone"] . "<br>";
+                    }
+                } else {
+                    echo "None!";
+                }
+            }
+            ?>
