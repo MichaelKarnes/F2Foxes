@@ -4,7 +4,7 @@ include 'boot/session.php';
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>events</title>
+		<title>forgot password</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -31,9 +31,9 @@ include 'boot/session.php';
             <fieldset>
             <label>Username</label>
             <input type="text" name="userForgot" maxlength="20" />
-            <label>New Password</label>
+            <label>New Password </label>
             <input type="password" name="newPass" maxlength="20" />
-            <label>Please Enter New Password Again</label>
+            <label>Enter New Password Again </label>
             <input type="password" name="newPass2" maxlength="20" />
             <br></br>
             <input type="submit" />
