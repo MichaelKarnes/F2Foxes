@@ -33,15 +33,16 @@ if ($submit)//beginning of submit
             $a_classyear= $row['classyear']; 
             $a_Phone=$row4['Phone']; 
             $a_Email=$row4['Email'];
+            $a_tamu=$row4['TamuEmail'];
             $a_Address=$row4['Address'];
             $a_State=$row4['State'];
             $a_Zip=$row4['Zip'];
             $a_Country=$row4['Country'];
             // Needs to insert into the Account_info, Authentication, Grades, Contact_Info
-            $db->query("INSERT INTO Account_info VALUES('$a_UserID','$a_FirstName','$a_LastName','$position_value')") or die ("Couldn't insert into Account_info");
+            $db->query("INSERT INTO Account_info VALUES('$a_UserID','$a_FirstName','$a_LastName','$position_value','')") or die ("Couldn't insert into Account_info");
             $db->query("INSERT INTO Authentication VALUES('$a_UserID','$a_Username','$a_Password')")or die ("Couldn't insert into Authentication");
-            $db->query("INSERT INTO Contact_Info VALUES('$a_UserID','$a_Reg_Date','$a_classyear','$a_Phone','$a_Address','$a_State','$a_Country','$a_Zip','$a_Email')")or die ("Couldn't insert into Contact_info");
-            if ($position_value>3){ $db->query("INSERT INTO Grades VALUES('$a_UserID','')")or die ("Couldn't insert into grades");}
+            $db->query("INSERT INTO Contact_Info VALUES('$a_UserID','$a_Reg_Date','$a_classyear','$a_Phone','$a_Address','$a_State','$a_Country','$a_Zip','$a_Email','$a_tamu')")or die ("Couldn't insert into Contact_info");
+           
             
             $db->query("DELETE FROM Registration WHERE Username='$user' ")or die ("Couldn't delete from Registration");
          }

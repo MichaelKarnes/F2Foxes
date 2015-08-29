@@ -75,6 +75,7 @@ $query1=$db->query("SELECT * FROM SignoutActivity ");
                     while ($rows4=mysqli_fetch_assoc($query4))  { 
                         $tuid=$rows4['UserID'];
                         $trid=$rows4['ReasonID']-1;
+                        $account=$rows4['AccountedFor'];
                         //$roll=$rows4['AccountedFor'];
                         if ($trid>0) { 
                             $tid=$trid;
@@ -99,15 +100,15 @@ $query1=$db->query("SELECT * FROM SignoutActivity ");
                              ?>
                             <td> </td>
                         <?php } 
-                    } 
+                     
                     ?>
                 <td class="radio-toolbar">
-                    <input type="radio" name="<?php echo $temp_id ?>" value="accountedfor">
+                    <input type="radio" name="<?php echo $temp_id ?>" value="accountedfor"<?php if($account==3){ echo "Checked";} ?>>
                     <label for="<?php echo $temp_id ?>">Good</label>
-                    <input type="radio" name="<?php echo $temp_id ?>" value="absent" Checked>
+                    <input type="radio" name="<?php echo $temp_id ?>" value="absent" <?php if($account!=3){ echo "Checked";} ?>>
                     <label for="<?php echo $temp_id ?>">Not Good</label></td>
 
-                    </tr><?php        } ?> 
+                    </tr><?php        } } ?> 
             <tr>
             <td><input type="submit" name="signoutchange" value="Submit accountablity"></tr>
 </table></form>

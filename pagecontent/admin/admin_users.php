@@ -21,7 +21,6 @@ if ($submit)//beginning of submit
            // mysql_query("DELETE FROM Account_info,Contat_Info,Authentication WHERE UserID='$delete_value'") or die("Could not delete ");
             $db->query("DELETE FROM Contact_Info WHERE UserID='$delete_value'")or die("Could not delete from Contact_info");
             $db->query("DELETE FROM Authentication WHERE UserID='$delete_value'")or die("Could not delete from Authentication");
-            $db->query("DELETE FROM Grades WHERE UserID='$delete_value'")or die("Could not delete from Grades");//some users may not be in this table
             $db->query("DELETE FROM Signout WHERE UserID='$delete_value'")or die("Could not delete from Grades");
             $db->query("DELETE FROM Grades_Classes WHERE UserID='$delete_value'")or die("Could not delete from Grades");
             $db->query("DELETE FROM Grade_Assignment WHERE UserID='$delete_value'")or die("Could not delete from Grades");
@@ -45,7 +44,6 @@ if ($submit)//beginning of submit
             $c8=$position_value<4;
             if ($c7&&$c8)
             {
-               $db->query("DELETE FROM Grades WHERE UserID='$user'") or die("Could not delete from Grades");
                $db->query("DELETE FROM Grades_Classes WHERE UserID='$user'") or die("Could not delete from Grades_Classes");
                $db->query("DELETE FROM Grade_Assignment WHERE UserID='$user'") or die("Could not delete from Grades_Assignment");
                $db->query("DELETE FROM Grade_Div WHERE UserID='$user'") or die("Could not delete from Grades_Div");
@@ -66,7 +64,7 @@ if ($submit)//beginning of submit
 
 ?>
 <?php //INNER JOIN Authorization  ON Account_info .PositionID = Authorization.PositionID
-    $query=$db->query("SELECT * FROM Account_info  INNER JOIN Authorization  ON Account_info .PositionID = Authorization.PositionID ");
+    $query=$db->query("SELECT * FROM Account_info  INNER JOIN Authorization  ON Account_info .PositionID = Authorization.PositionID  Order By LastName");
     $numrows=mysqli_num_rows($query);
     ?>
        

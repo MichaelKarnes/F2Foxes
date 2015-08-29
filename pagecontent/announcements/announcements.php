@@ -20,9 +20,9 @@ if ($_SESSION['upperclassmen']==1||$_SESSION['root']==1){
         $query=$db->query("SELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID");
     }
     else if ($_SESSION['student']==1){
-        $query=$db->query("SELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID  FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID AND Upperclassmen='0' ");
+        $query=$db->query("SELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID  FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID AND Upperclassmen='1' ");
     }
-    else if ($_SESSION['username']==1){
+    else if ($_SESSION['username']){
         $query=$db->query("SSELECT b.FirstName, b.LastName, a.Date, a.Body, a.Title, a.Link, a.UserID, a.AnnouncementID  FROM Announcements a INNER JOIN Account_info b WHERE a.UserID=b.UserID AND Upperclassmen='0'AND Cadet='0' ORDER BY Date");
     }?>
     

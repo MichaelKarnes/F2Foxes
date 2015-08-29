@@ -42,7 +42,7 @@ if ($submit)//beginning of submit
                         $password=md5($password);
                         $passcheck=md5($passcheck );
 
-                        $queryreg=$db->query("INSERT INTO Registration VALUES ('$date','','$firstname','$lastname','','','$username','$password','$phone','$email','','','','')");
+                        $queryreg=$db->query("INSERT INTO Registration VALUES ('$date','','$firstname','$lastname','','','$username','$password','$phone','$email','$tamu','','','','')");
                         //order of insert is (date, UserID(leave blank), firstname, lastname, position,class year,username, password, phone, email, address, state, zip, county
                         die("You have been register! <a href='index.php'>Return to the home page</a>");
                     }
@@ -91,6 +91,10 @@ if ($submit)//beginning of submit
     <!--Email--><p>
     <label for="email">Current email</label>
     <input type="email" id="email" name="email" value="<?php echo $email ?>" maxlength="50" />
+    </p>
+    <p>
+    <label for="tamu">Tamu email</label>
+    <input type="email" id="tamu" name="tamu" value="<?php echo $tamu ?>" maxlength="50" />
     </p>
     <!--Phone--><p>
     <label for="phone">Phone number we can reach you at (please enter in 1222323232 format)</label>
