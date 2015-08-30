@@ -37,7 +37,8 @@ if ($username && $password)
             $_SESSION['root']=$row['Root'];
             $_SESSION['upperclassmen']=$row['Upperclassmen'];
             $_SESSION['public_relations']=$row['Public_Relations']; 
-            header("Location: index.php");
+            //header("Location: index.php"); //uncoment not on web
+            header('Location: http://www.f2foxes.com/');
         }
         else
             echo " incorrect password";
