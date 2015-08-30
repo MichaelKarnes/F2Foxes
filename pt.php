@@ -27,25 +27,32 @@ $userid=$_SESSION ['userid'];
 			
             <h1>My PT Scores</h1>
             <table style="width: 90%">
+            <tr>
+                
+            </tr>
             <?php
                 #search the database for any existing pt scores according to user id
-                $query = $db->("SELECT * FROM WHERE UserID = '$userid'");
+                $query = $db->query("SELECT * FROM PT WHERE UserID = '$userid'");
                 #if a non zero number of rows is returned, fetch each row for display
                 if($query->num_rows > 0) {
-                    while($rows = $query->fetch-assoc()) {
+                    while($row = mysqli_fetch_assoc($query)) {
+                        echo"blue";
                         #while data can be fetched, create HTML Table
                         echo "<tr>" . 
-                        "<td>" . $rows["Date"] . "</td>" .
-                        "<td>" . $rows["Push_Ups_Raw"] . "</td>" .
-                        "<td>" . $rows["Push_Ups_Score"] . "</td>" .
-                        "<td>" . $rows["Sit_Ups_Raw"] . "</td>" .
-                        "<td>" . $rows["Sit_Ups_Score"] . "</td>" .
-                        "<td>" . $rows["Run_Raw"] . "</td>" .
-                        "<td>" . $rows["Run_Score"] . "</td>" .
-                        "<td>" . $rows["Overall_Score"] . "</td>" .
-                        "</tr>";
-                    }
+                        "<td>" . $row["Date"] . "</td>" .
+                        "<td>" . $row["Push_Ups_Raw"] . "</td>" .
+                        "<td>" . $row["Push_Ups_Score"] . "</td>" .
+                        "<td>" . $row["Sit_Ups_Raw"] . "</td>" .
+                        "<td>" . $row["Sit_Ups_Score"] . "</td>" .
+                        "<td>" . $row["Run_Raw"] . "</td>" .
+                        "<td>" . $row["Run_Score"] . "</td>" .
+                        "<td>" . $row["Overall_Score"] . "</td>" .
+                        "</tr>"; 
+                    } 
+                } else {
+                    echo "No PT Scores to Date!";
                 }
+                
             ?> 
             </table>
             
@@ -69,16 +76,17 @@ $userid=$_SESSION ['userid'];
             <br>
             <input type="radio" name="gender" value="female">Female
             <br></br>
-            <input type="text" name="runRaw" maxlength="15"/>
             <input type="button" class="imSpecial">
             </fieldset>
             </form>       
 			
 
             <?php
+                
                 #if the form has been set, do some calculations and communicate with
                 #the PT table in the database. Note if statement for male or female.
-                if(/*check if form is set isset() */ 1) {
+                /*
+                if(check if form is set isset()  1) {
                     if($_POST['gender'] == "male") {
                     #raw push ups to score using linear regression on score tables
                     #from military.com
@@ -98,7 +106,7 @@ $userid=$_SESSION ['userid'];
                         }
                     }
                 }
-                
+                */
             ?>
 
 			</div>
