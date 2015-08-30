@@ -45,7 +45,7 @@ if ($submit)//beginning of submit
 
                         $queryreg=$db->query("INSERT INTO Registration VALUES ('$date','','$firstname','$lastname','','','$username','$password','$phone','$email','$tamu','','','','')");
                         //order of insert is (date, UserID(leave blank), firstname, lastname, position,class year,username, password, phone, email, address, state, zip, county
-                        die("You have been register! Please Wait for an Admin to activate your Account. <a href='index.php'>Return to the home page</a>");
+                        die("You have been registered! Please Wait for an Admin to activate your Account. <a href='index.php'>Return to the home page</a>");
                     }
                 }
             }//end of password check

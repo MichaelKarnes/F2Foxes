@@ -3,11 +3,14 @@
 <div id="header-wrapper">
 	<div class="container">
 <?php 
-$username=$_SESSION ['username'];?>
-    <link rel="stylesheet" href="pagecss/header.css" /><!--changes the size of the tabs on the top-->
+$username=$_SESSION ['username'];
+
+?>
+<link rel="stylesheet" href="pagecss/header.css" />
 <!-- Header -->
 	<header id="header">
 		<div class="inner">
+            
 
 			<!-- Logo --><!--changes the logo once someone logs in-->
                     <?php if ($_SESSION ['username']){?>
@@ -32,7 +35,7 @@ $username=$_SESSION ['username'];?>
                         if ($_SESSION['student']==1||$_SESSION['root']==1){ ?>
                             <li class="dropdown"><a href="">Student</a>
                                 <ul>
-                                    <li><a href="Announcements.php">Announcements</a></li>
+                                    <li><a href="announcements.php">Announcements</a></li>
                                     <li><a href="grades.php">Grades</a></li>
                                     <?php //<li><a href="pt.php">PT Scores</a></li> ?>
                                     <li><a href="signoutstartdate.php">Signout Sheet</a></li>

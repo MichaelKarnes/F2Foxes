@@ -21,7 +21,6 @@ if($submit2 ){
         $count8= mysqli_num_rows($query8);
         if (!($count8))
         {
-            echo "here = $temp1_id";
             $db->query("INSERT INTO Signout VALUES('$date','$temp1_id','1','$t_act','','1')") or die ("dead");
         }
         if($acc=="accountedfor"){

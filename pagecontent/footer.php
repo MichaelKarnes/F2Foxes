@@ -12,7 +12,6 @@
 								<li><a href="https://assembly.tamu.edu/Login.aspx?ReturnUrl=%2f">Cadet Management System(CMS) </a></li>
 								<li><a href="https://cadets.tamu.edu/default.aspx">Cadets Intranet</a></li>
 								<li><a href="https://www.google.com/drive/">Google Drive</a></li>
-								<li><a href="#">Can add more here</a></li>
 							</ul>
 						</section>
 				</div>
