@@ -71,13 +71,8 @@ if ($submit)//beginning of submit
                 <th>Requested position</th>
                 <th>Class Year</th>
                 <th>Username</th>
-                <th>Password</th>
                 <th>Phone</th>
                 <th>Email</th>
-                <th>Address</th>
-                <th>State</th>
-                <th>Zip</th>
-                <th>Country</th>
                 <th>Delete</th>
                 <th>Activiate</th>
                 <th>Position</th>
@@ -101,7 +96,7 @@ if ($submit)//beginning of submit
                 $zip= $row['Zip']; 
                 $country= $row['Country']; 
                 echo "<td>$reg_date</td><td>$userid</td><td>$firstname</td><td>$lastname</td><td>$requested_position</td><td>$classyear</td>
-                <td>$username</td><td>$password</td><td>$phone</td><td>$email</td><td>$address</td><td>$state</td><td>$zip</td><td>$country</td>" ?>
+                <td>$username</td><td>$phone</td><td>$email</td>" ?>
                 <td>
                          <input type="checkbox" name="d<?php echo $username ?>" value="<?php echo $username ?>">delete account<br>
                 </td>

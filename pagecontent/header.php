@@ -23,7 +23,7 @@ $username=$_SESSION ['username'];?>
                         <li class="dropdown"><a href="">Recruiting</a>
                             <ul >
                                 <li><a href="about.php">About Us</a></li>
-                                <li><a href="recruiting.php">Join F-2</a></li>
+                                <?php //<li><a href="recruiting.php">Join F-2</a></li> ?>
                                 <?php if ($_SESSION ['username']){ ?><li><a href="events.php">Events</a></li>
                                 <?php } ?>
                             </ul>
