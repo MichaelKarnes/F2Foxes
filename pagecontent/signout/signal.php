@@ -13,7 +13,7 @@ if($submit2 ){
     $t_act=$_SESSION['signalcheck'];
     $db->query("DELETE FROM SignoutCheck WHERE Date='$date' AND ActivityID='$t_act'")or die("Could not delete from Grades");
     $db->query("INSERT INTO SignoutCheck Values('$date','$t_act')");
-    $query6=$db->query("SELECT UserID FROM Account_info WHERE PositionID BETWEEN 4 AND 15");
+    $query6=$db->query("SELECT UserID FROM Account_info WHERE PositionID BETWEEN 4 AND 14");
     while ($row6=mysqli_fetch_assoc ($query6))  {
         $temp1_id=$row6['UserID'];
         $acc=strip_tags($_POST["$temp1_id"]);
@@ -64,7 +64,7 @@ $query1=$db->query("SELECT * FROM SignoutActivity ");
         <th>Accounted For</th>
         </tr>
         <?php
-        $query3=$db->query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 15 ORDER BY LastName" );
+        $query3=$db->query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
         while ($rows3=mysqli_fetch_assoc($query3))  { 
             $temp_ul=$rows3['LastName'];
             $temp_uf=$rows3['FirstName'];

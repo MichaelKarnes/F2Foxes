@@ -76,7 +76,7 @@ $userid=$_SESSION ['userid'];
             <br>
             <input type="radio" name="gender" value="female">Female
             <br></br>
-            <input type="button" class="imSpecial">
+            <p><input type="button" class="imSpecial"></p>
             </fieldset>
             </form>       
 			
