@@ -2,7 +2,7 @@
     
 //reference=https://www.youtube.com/watch?v=v8HoVdenZFM
     $username=$_SESSION ['username'];
-    $userid= ($_SESSION['admin']==1 && !empty($_GET['id']) && $_GET['id'] != 2) ? $_GET['id'] : $_SESSION ['userid'];
+    $userid= ($_SESSION['grades']==1 && !empty($_GET['id']) && $_GET['id'] != 2) ? $_GET['id'] : $_SESSION ['userid'];
 
     date_default_timezone_set('America/Chicago');
 
@@ -102,7 +102,7 @@
 <script type="text/javascript" src="pagecontent/grades/grades.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-<?php if($_SESSION['admin']==1 && (empty($_GET['id']) || $_GET['id'] == 2)) { ?>
+<?php if($_SESSION['grades']==1 && (empty($_GET['id']) || $_GET['id'] == 2)) { ?>
 <script type="text/javascript">
     $(document).ready(function () {
         resort_users();
@@ -179,6 +179,8 @@
                     <div style="width:30%; height:100%; padding: 10px 20px; float: left; border-right: 1px solid #aaa;">
                         <h2 style="text-align: center;">My Grades</h2>
                         <?php foreach($classes as $thisclass) { ?>
+                        <?php /* <?php if ($_SESSION['grades']==1){ ?><a href="?id=<?php echo $thisclas['ID']; ?><?php echo "?class=".$thisclass['ID']; ?>" style="text-decoration: none;"> <?php } 
+                            else { ?><a href="<?php echo "?class=".$thisclass['ID']; ?>" style="text-decoration: none;"><?php   } ?>*/ ?>
                         <a href="<?php echo "?class=".$thisclass['ID']; ?>" style="text-decoration: none;">
                             <div style="background-color: #eee; border-radius: 5px; border: 1px solid #aaa; padding: 10px 20px; margin-bottom: 5px;">
                                 <?php if($canedit) { ?>
