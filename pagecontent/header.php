@@ -23,7 +23,7 @@ $username=$_SESSION ['username'];?>
                         <li class="dropdown"><a href="">Recruiting</a>
                             <ul >
                                 <li><a href="about.php">About Us</a></li>
-                                <li><a href="recruiting.php">Join F-2</a></li>
+                                <?php //<li><a href="recruiting.php">Join F-2</a></li> ?>
                                 <?php if ($_SESSION ['username']){ ?><li><a href="events.php">Events</a></li>
                                 <?php } ?>
                             </ul>
@@ -34,7 +34,7 @@ $username=$_SESSION ['username'];?>
                                 <ul>
                                     <li><a href="Announcements.php">Announcements</a></li>
                                     <li><a href="grades.php">Grades</a></li>
-                                    <li><a href="pt.php">PT Scores</a></li>
+                                    <?php //<li><a href="pt.php">PT Scores</a></li> ?>
                                     <li><a href="signoutstartdate.php">Signout Sheet</a></li>
                                     <li><a href="training.php">Training</a></li>
                                 </ul></li>

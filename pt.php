@@ -28,7 +28,9 @@ $userid=$_SESSION ['userid'];
             <h1>My PT Scores</h1>
             <table style="width: 90%">
             <tr>
-                
+                <td>Date</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
+                <td>Raw Sit Ups</td> <td>Sit Up Score</td>
+                <td>Raw Run</td> <td>Run Score</td> <td>Overall Score</td> 
             </tr>
             <?php
                 #search the database for any existing pt scores according to user id
@@ -36,8 +38,7 @@ $userid=$_SESSION ['userid'];
                 #if a non zero number of rows is returned, fetch each row for display
                 if($query->num_rows > 0) {
                     while($row = mysqli_fetch_assoc($query)) {
-                        echo"blue";
-                        #while data can be fetched, create HTML Table
+                        #while data can be fetched, create HTML Table of PT Scores
                         echo "<tr>" . 
                         "<td>" . $row["Date"] . "</td>" .
                         "<td>" . $row["Push_Ups_Raw"] . "</td>" .
@@ -57,12 +58,11 @@ $userid=$_SESSION ['userid'];
             </table>
             
             <p>Please fill out the form below to add a PT Score. Your score will be
-            calculated from raw scores (ex. You did 80 push ups, enter 80)</p>
+            calculated from raw scores (ex. You did 80 push ups, enter 80).</p>
             <!--Note that this form calls a Javascript function. Thus, action is 
                 null and the normal "submit" is replaced with "button". See pt.css
                 and pt.js for more details.-->
-            <form action="" method="POST">
-            <fieldset>
+            <form action="ptSubmit.php" method="POST">
             <label>Date of PT test (ex. 09-24-2015) </label>
             <input type="text" name="date" maxlength="15"/>
             <label>Raw Push Ups (ex. 80) </label>
@@ -75,39 +75,85 @@ $userid=$_SESSION ['userid'];
             <input type="radio" name="gender" value="male" checked>Male
             <br>
             <input type="radio" name="gender" value="female">Female
+<<<<<<< HEAD
+            <br>
+            <input type="submit">
+=======
             <br></br>
-            <input type="button" class="imSpecial">
+            <p><input type="button" class="imSpecial"></p>
             </fieldset>
+>>>>>>> e1d63675606e5f30d4549b001b4d605ff75dbedc
             </form>       
-			
+			<br>
 
-            <?php
-                
+            <?php /*
+                #collect score data from the above form
+                $date = $_POST['date'];
+                $pushUpsRaw = intval($_POST['pushUpsRaw']);
+                $sitUpsRaw = intval($_POST['sitUpsRaw']);
+                $runRaw = intval($_POST['runRaw']);
+                #for the run Score, convert to seconds
+                #substr picks off the minutes and the seconds from the form run input xx:xx
+                #for the minutes, convert to seconds by multiplying by 60,
+                #both minutes and seconds converted to integers, add!!!!
+                $runRaw = (intval(substr($runRaw,0,2))*60) + intval(substr($runRaw,3,2));
+
                 #if the form has been set, do some calculations and communicate with
-                #the PT table in the database. Note if statement for male or female.
-                /*
-                if(check if form is set isset()  1) {
+                #the PT table in the database. Notice if statements for male or female.
+                if(isset($_POST['pressButton'])) {
                     if($_POST['gender'] == "male") {
                     #raw push ups to score using linear regression on score tables
                     #from military.com
                         if($pushUpsRaw <= 71) { 
-                        $pushUpsScore = ($pushUpsRaw*1.37925) + 2.06930;
+                            $pushUpsScore = ($pushUpsRaw*1.37925) + 2.06930;
                         } else {
                             #calculate score over 100
                             $pushUpsScore = 100 + ($pushUpsRaw - 71);
                         }
+
+                        #regression for mens running scores
+                        if ($runScore >= 780) {
+                            $runScore = ($runRaw * -.22988) + 279.298; 
+                        } else {
+                            #extra point for every 6 seconds below 13:00 or 780 secs
+                            #5 is negative to increase score rather than decrease
+                            $runScore = 100 + (($runScore - 780) / -5);
+                        }
+                        
+                        #sit Ups Scores calculated same way for both genders, done at end
                     } else {
                         #female so new regression
-                        if($pushUpsRaw <= 71) { 
-                        $pushUpsScore = ($pushUpsRaw*1.37925) + 2.06930;
+                        if($pushUpsRaw <= 42) { 
+                            $pushUpsScore = ($pushUpsRaw*1.73996) + 26.9508;
                         } else {
                             #calculate score over 100
-                            $pushUpsScore = 100 + ($pushUpsRaw - 71);
+                            $pushUpsScore = 100 + ($pushUpsRaw - 42);
                         }
+
+                        if ($runScore >= 936) {
+                            $runScore = ($runSecsRaw*-.2020765) + 289.1643;
+                        } else {
+                            #extra point for every 6 seconds below 15:36 or 936 secs
+                            #5 is negative to increase score rather than decrease
+                            $runScore = 100 + (($runScore - 936) / -5);
+                        }
+
                     }
+
+                    #finally calculate sit Ups Score
+                    if($sitUpsRaw < 21) {
+		                $sitUpsScore = 0;
+	                } elseif($sitUpsRaw >=21 && $sitUpsRaw <= 78) {
+		                $sitUpsScore = (1.5996*$sitUpsRaw) - 24.786;
+	                } else {
+	                    $sitUpsScore = 100 + ($sitUpsRaw - 78);
+	                }
+
+                    #input data into database 
+                    echo $pushUpsRaw . $pushUpsScore . $sitUpsRaw . $sitUpsScore . $runRaw . $runScore; 
                 }
-                */
-            ?>
+               */ 
+            ?> 
 
 			</div>
 		    </div>

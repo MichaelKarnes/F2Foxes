@@ -10,6 +10,7 @@ $password=strip_tags($_POST['password']);
 $passcheck=strip_tags($_POST['passcheck']);
 $position=strip_tags($_POST['position']);
 $email=strip_tags($_POST['email']);
+$tamu=strip_tags($_POST['tamu']);
 $phone=strip_tags($_POST['phone']);
 $date=date("Y-m-d");
 if ($submit)//beginning of submit
@@ -44,7 +45,7 @@ if ($submit)//beginning of submit
 
                         $queryreg=$db->query("INSERT INTO Registration VALUES ('$date','','$firstname','$lastname','','','$username','$password','$phone','$email','$tamu','','','','')");
                         //order of insert is (date, UserID(leave blank), firstname, lastname, position,class year,username, password, phone, email, address, state, zip, county
-                        die("You have been register! <a href='index.php'>Return to the home page</a>");
+                        die("You have been register! Please Wait for an Admin to activate your Account. <a href='index.php'>Return to the home page</a>");
                     }
                 }
             }//end of password check
@@ -93,7 +94,7 @@ if ($submit)//beginning of submit
     <input type="email" id="email" name="email" value="<?php echo $email ?>" maxlength="50" />
     </p>
     <p>
-    <label for="tamu">Tamu email</label>
+    <label for="tamu">Tamu email(for students only)</label>
     <input type="email" id="tamu" name="tamu" value="<?php echo $tamu ?>" maxlength="50" />
     </p>
     <!--Phone--><p>
@@ -111,11 +112,11 @@ if ($submit)//beginning of submit
     <p>
     <!--Password--><p>
     <label for="password">password you would like</label>
-    <input type="password" id="password" name="password" value="<?php echo $password ?>" maxlength="50" />
+    <input type="password" id="password" name="password"  maxlength="50" />
     </p>
     <p>
     <label for="passcheck">please enter your password again</label>
-    <input type="password" id="passcheck" name="passcheck" value="<?php echo $passcheck ?>" maxlength="50" />
+    <input type="password" id="passcheck" name="passcheck"  maxlength="50" />
     </p>
     <!--State--><!--<p>
     <label for="state">state of residence</label>

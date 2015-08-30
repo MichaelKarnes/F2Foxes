@@ -154,7 +154,7 @@ if ($delete)
     </tr >
     <?php  } ?>
            <?php
-            $query3=$db->query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 15 ORDER BY LastName" );
+            $query3=$db->query("SELECT * FROM Account_info WHERE PositionID BETWEEN 4 AND 14 ORDER BY LastName" );
             while ($rows3=mysqli_fetch_assoc($query3))  { 
                 $temp_ul=$rows3['LastName'];
                 $temp_uf=$rows3['FirstName'];

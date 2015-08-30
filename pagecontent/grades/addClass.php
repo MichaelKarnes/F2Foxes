@@ -1,5 +1,6 @@
 <?php
-    //when online use this //$db = mysqli_connect("localhost", "km310765_admin", "Aftermath2015", "km310765_f2foxes") or die($connect_error);
+    //when online use this 
+    //$db = mysqli_connect("localhost", "km310765_admin", "Aftermath2015", "km310765_f2foxes") or die($connect_error);
 
     session_start();
     $username=$_SESSION ['username'];
