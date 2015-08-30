@@ -24,7 +24,8 @@ $username=$_SESSION ['username'];?>
                             <ul >
                                 <li><a href="about.php">About Us</a></li>
                                 <li><a href="recruiting.php">Join F-2</a></li>
-                                <li><a href="events.php">Events</a></li>
+                                <?php if ($_SESSION ['username']){ ?><li><a href="events.php">Events</a></li>
+                                <?php } ?>
                             </ul>
                         <li><a href="http://foxcompany.core-image.net/">Shop</a></li>
                         <?php
