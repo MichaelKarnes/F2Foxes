@@ -21,9 +21,8 @@ if ($submit)//beginning of submit
            // mysql_query("DELETE FROM Account_info,Contat_Info,Authentication WHERE UserID='$delete_value'") or die("Could not delete ");
             $db->query("DELETE FROM Contact_Info WHERE UserID='$delete_value'")or die("Could not delete from Contact_info");
             $db->query("DELETE FROM Authentication WHERE UserID='$delete_value'")or die("Could not delete from Authentication");
-            $db->query("DELETE FROM Signout WHERE UserID='$delete_value'")or die("Could not delete from Grades");
+            $db->query("DELETE FROM Signout WHERE UserID='$delete_value'")or die("Could not delete from signout");
             $db->query("DELETE FROM Grades_Classes WHERE UserID='$delete_value'")or die("Could not delete from Grades");
-            $db->query("DELETE FROM Grade_Assignment WHERE UserID='$delete_value'")or die("Could not delete from Grades");
             $db->query("DELETE FROM Grade_Div WHERE UserID='$delete_value'")or die("Could not delete from Grades");
          }
          else if ($position_value && $change_value)
@@ -45,7 +44,6 @@ if ($submit)//beginning of submit
             if ($c7&&$c8)
             {
                $db->query("DELETE FROM Grades_Classes WHERE UserID='$user'") or die("Could not delete from Grades_Classes");
-               $db->query("DELETE FROM Grade_Assignment WHERE UserID='$user'") or die("Could not delete from Grades_Assignment");
                $db->query("DELETE FROM Grade_Div WHERE UserID='$user'") or die("Could not delete from Grades_Div");
                $db->query("DELETE FROM Signout WHERE UserID='$user'") or die("Could not delete from Signout");
                echo "<p>UserID $user Deleted from grades</p>";
