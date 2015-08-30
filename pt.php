@@ -75,8 +75,14 @@ $userid=$_SESSION ['userid'];
             <input type="radio" name="gender" value="male" checked>Male
             <br>
             <input type="radio" name="gender" value="female">Female
+<<<<<<< HEAD
             <br>
             <input type="submit">
+=======
+            <br></br>
+            <p><input type="button" class="imSpecial"></p>
+            </fieldset>
+>>>>>>> e1d63675606e5f30d4549b001b4d605ff75dbedc
             </form>       
 			<br>
 
