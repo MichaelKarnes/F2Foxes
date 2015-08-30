@@ -59,9 +59,9 @@ if ($delete)
         }
     } 
 } ?>
-<br><h1>week of <?php echo $date ?></h1>
+<br><h1>week of <?php echo $date ?>
 <li ><a href="lastweek.php"> &larr;Previous Week</a></li>
-<li ><a href="nextweek.php"> Next Week&rarr;</a></li>
+<li ><a href="nextweek.php"> Next Week&rarr;</a></li></h1>
 <form action="signoutsheet.php" method="POST">
 <table class="styled_select">
     <tr>
