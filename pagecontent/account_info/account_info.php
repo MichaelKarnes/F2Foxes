@@ -6,11 +6,11 @@ $submit=$_POST['contactinfo'];
 if ($submit)
 {   
     
-    $newfirstname=$_POST['firstname'];
-    $newlastname=$_POST['lastname'];
-    $newclassyear=$_POST['classyear'];
-    $newphone=$_POST['phone'];
-    $newemail=$_POST['email'];
+    $newfirstname=strip_tags($_POST['firstname']);
+    $newlastname=strip_tags($_POST['lastname']);;
+    $newclassyear=strip_tags($_POST['classyear']);
+    $newphone=strip_tags($_POST['phone']);
+    $newemail=strip_tags($_POST['email']);
     $comma=", ";
     $newlast_f=$newlastname.$comma.$newfirstname[0];
     
