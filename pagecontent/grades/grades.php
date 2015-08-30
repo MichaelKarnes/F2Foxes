@@ -179,9 +179,11 @@
                     <div style="width:30%; height:100%; padding: 10px 20px; float: left; border-right: 1px solid #aaa;">
                         <h2 style="text-align: center;">My Grades</h2>
                         <?php foreach($classes as $thisclass) { ?>
-                        <?php /* <?php if ($_SESSION['grades']==1){ ?><a href="?id=<?php echo $thisclas['ID']; ?><?php echo "?class=".$thisclass['ID']; ?>" style="text-decoration: none;"> <?php } 
-                            else { ?><a href="<?php echo "?class=".$thisclass['ID']; ?>" style="text-decoration: none;"><?php   } ?>*/ ?>
+                        <?php if($_SESSION['grades'] == 1) { ?>
+                        <a href="?id=<?php echo $userid; ?>&class=<?php echo $thisclass['ID']; ?>" style="text-decoration: none;">
+                        <?php } else { ?>
                         <a href="<?php echo "?class=".$thisclass['ID']; ?>" style="text-decoration: none;">
+                        <?php } ?>
                             <div style="background-color: #eee; border-radius: 5px; border: 1px solid #aaa; padding: 10px 20px; margin-bottom: 5px;">
                                 <?php if($canedit) { ?>
                                 <form action="" method="post">
