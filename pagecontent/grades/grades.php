@@ -159,7 +159,7 @@
                     <tr class="user" style="border-bottom: 1px solid #ccc; height: 20px; line-height: 20px; position: relative;">
                         <td class="user-name" style="padding: 10px 20px 5px 20px; font-size: 8pt; font-weight: bold;"><a href="?id=<?php echo $user['UserID']; ?>"><?php echo $user['LastName'].", ".$user['FirstName']; ?></a></td>
                         <td class="user-updated" style="padding: 10px 20px 5px 20px; font-size: 8pt;"><?php echo empty($lastupdated) ? "N/A" : $lastupdated; ?></td>
-                        <td class="user-gpa" style="padding: 10px 20px 5px 20px; font-size: 8pt; font-weight: bold; text-align: right;"><?php echo empty($user['SemesterGPA']) ? "N/A" : number_format($user['SemesterGPA'], 2, '.', ''); ?></td>
+                        <td class="user-gpa" style="padding: 10px 20px 5px 20px; font-size: 8pt; font-weight: bold; text-align: right;"><?php echo !isset($user['SemesterGPA']) ? "N/A" : number_format($user['SemesterGPA'], 2, '.', ''); ?></td>
                     </tr>
                     <?php } ?>
                 </table>
@@ -192,7 +192,7 @@
                                 </form>
                                 <?php } ?>
                                 <span><?php echo $thisclass['Name']." (".$thisclass['Credits'].")"; ?></span>
-                                <h4 style="width: 50%; text-align: right; float: right;"><?php echo empty($thisclass['Grade']) ? "--" : number_format($thisclass['Grade'], 2, '.', '')."%"; ?></h4>
+                                <h4 style="width: 50%; text-align: right; float: right;"><?php echo !isset($thisclass['Grade']) ? "--" : number_format($thisclass['Grade'], 2, '.', '')."%"; ?></h4>
                             </div>
                         </a>
                         <?php } ?>
@@ -209,7 +209,7 @@
                             </form>
                         </div>
                         <?php } ?>
-                        <h4>GPA: <?php echo empty($gpa) ? "N/A" : number_format($gpa, 2, '.', ''); ?><?php if($canedit) { ?><button id="new-class-btn" style="float: right;" onclick="$('#new-class-btn').hide(); $('#new-class').show();">New</button><?php } ?></h4>
+                        <h4>GPA: <?php echo !isset($gpa) ? "N/A" : number_format($gpa, 2, '.', ''); ?><?php if($canedit) { ?><button id="new-class-btn" style="float: right;" onclick="$('#new-class-btn').hide(); $('#new-class').show();">New</button><?php } ?></h4>
                     </div>
                     <div style="width:70%; height:100%; padding: 10px 20px; float: right; border-left: 1px solid #aaa;">
                         <h2 style="text-align: center;"><?php echo empty($class) ? "N/A" : $class['Name']; ?></h2>
