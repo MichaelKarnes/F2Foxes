@@ -61,7 +61,7 @@
 						<div class="6u 12u(mobile)">
 							<section>
 								<header class="major">
-									<h2>Get Conected</h2>
+									<h2>Get Connected</h2>
 									<p>F-2 is always looking for support and involvement</p>
 								</header>
 								<p>Click the button below to visit the Fox Company Facebook page.</p>
