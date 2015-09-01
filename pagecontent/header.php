@@ -37,7 +37,7 @@ $username=$_SESSION ['username'];
                                 <ul>
                                     <li><a href="announcements.php">Announcements</a></li>
                                     <li><a href="grades.php">Grades</a></li>
-                                    <?php //<li><a href="pt.php">PT Scores</a></li> ?>
+                                    <li><a href="pt.php">PT Scores</a></li> 
                                     <li><a href="signoutstartdate.php">Signout Sheet</a></li>
                                     <li><a href="training.php">Training</a></li>
                                 </ul></li>

@@ -12,6 +12,7 @@
 	<div class="row">
 	<div class="12u">
 	<header class="first major">
+        <br></br>
 		<h2><img src="images/favicon.ico" class="faviconhome"alt="auto">Fox Company<img src="images/favicon.ico" class="faviconhome" alt="auto"></h2>
 		<p><strong>Where Cadets Become Leaders</strong> </p>
 		</header>
@@ -59,6 +60,7 @@
 				<section class="container box feature2">
                     <div class="row">
 						<div class="6u 12u(mobile)">
+                            <br></br>
 							<section>
 								<header class="major">
 									<h2>Get Connected</h2>
@@ -68,10 +70,12 @@
 								<footer>
 									<a href="https://www.facebook.com/TexasAmCorpsOfCadetsCompanyF2Foxes" class="button medium alt icon fa-info-circle">VISIT FACEBOOK</a>
                                     <br></br>
+                                    <br></br>
 								</footer>
 							</section>
 						</div>
 						<div class="6u 12u(mobile)">
+                            <br></br>
 							<section>
 								<header class="major">
 									<h2>Represent F-2</h2>
@@ -80,6 +84,7 @@
 								<p>The Fox Company Store contains F-2 merchandise for cadets and parents.</p>
 								<footer>
 									<a href="http://foxcompany.core-image.net/" class="button medium alt icon fa-info-circle">FOX COMPANY STORE</a>
+                                    <br></br>
                                     <br></br>
 								</footer>
 							</section>

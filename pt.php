@@ -25,12 +25,14 @@ $userid=$_SESSION ['userid'];
 		    <div class="inner">
 			<div class="container">
 			
+            <br>
             <h1>My PT Scores</h1>
             <table style="width: 90%">
             <tr>
                 <td>Date</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
                 <td>Raw Sit Ups</td> <td>Sit Up Score</td>
                 <td>Raw Run</td> <td>Run Score</td> <td>Overall Score</td> 
+                <td>Pass/Fail</td>
             </tr>
             <?php
                 #search the database for any existing pt scores according to user id
@@ -45,18 +47,20 @@ $userid=$_SESSION ['userid'];
                         "<td>" . $row["Push_Ups_Score"] . "</td>" .
                         "<td>" . $row["Sit_Ups_Raw"] . "</td>" .
                         "<td>" . $row["Sit_Ups_Score"] . "</td>" .
-                        "<td>" . $row["Run_Raw"] . "</td>" .
+                        "<td>" . $row["Run_Time"] . "</td>" .
                         "<td>" . $row["Run_Score"] . "</td>" .
                         "<td>" . $row["Overall_Score"] . "</td>" .
+                        "<td>" . $row["Pass"] . "</td>" .
                         "</tr>"; 
                     } 
                 } else {
-                    echo "No PT Scores to Date!";
+                    echo "<br>" . "No PT Scores to Date!";
                 }
                 
             ?> 
             </table>
             
+            <br>
             <p>Please fill out the form below to add a PT Score. Your score will be
             calculated from raw scores (ex. You did 80 push ups, enter 80).</p>
             <!--Note that this form calls a Javascript function. Thus, action is 
@@ -75,14 +79,9 @@ $userid=$_SESSION ['userid'];
             <input type="radio" name="gender" value="male" checked>Male
             <br>
             <input type="radio" name="gender" value="female">Female
-<<<<<<< HEAD
             <br>
             <input type="submit">
-=======
             <br></br>
-            <p><input type="button" class="imSpecial"></p>
-            </fieldset>
->>>>>>> e1d63675606e5f30d4549b001b4d605ff75dbedc
             </form>       
 			<br>
 
