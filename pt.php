@@ -25,8 +25,32 @@ $userid=$_SESSION ['userid'];
 		    <div class="inner">
 			<div class="container">
 			
+
+            <!--begin section of NO debugging, 9/2/2015-->
+            <?php
+                //if admin/ CO / 1SG / display PT Scores need others besides admin
+                    
+                if ($_SESSION['admin'] == 1 ) {
+                    echo '<form action = "" method = "post">' .
+                    '<input type = "button" name = "viewPT" value = 
+                    "View Outfit PT Scores" > </input>' . '</form>';
+                
+                    if ($_POST['viewPT'] == 1) {
+                        $queryAllPT = $db->query("SELECT * FROM PT");
+                    
+                        if ($queryAllPT->num_rows > 0) {
+                            while ($rowLoop = $queryAllPT->fetch_assoc()) {
+
+                            }
+                            
+                        }
+                        
+                    }
+                }
+            ?>
+            <!--end no debug. YOu really need to get XAMPP dude-->
             <br>
-            <h1>My PT Scores</h1>
+            <h1> <?php echo $username . "'s "; ?> PT Scores</h1>
             <table style="width: 90%">
             <tr>
                 <td>Date</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
@@ -84,75 +108,6 @@ $userid=$_SESSION ['userid'];
             <br></br>
             </form>       
 			<br>
-
-            <?php /*
-                #collect score data from the above form
-                $date = $_POST['date'];
-                $pushUpsRaw = intval($_POST['pushUpsRaw']);
-                $sitUpsRaw = intval($_POST['sitUpsRaw']);
-                $runRaw = intval($_POST['runRaw']);
-                #for the run Score, convert to seconds
-                #substr picks off the minutes and the seconds from the form run input xx:xx
-                #for the minutes, convert to seconds by multiplying by 60,
-                #both minutes and seconds converted to integers, add!!!!
-                $runRaw = (intval(substr($runRaw,0,2))*60) + intval(substr($runRaw,3,2));
-
-                #if the form has been set, do some calculations and communicate with
-                #the PT table in the database. Notice if statements for male or female.
-                if(isset($_POST['pressButton'])) {
-                    if($_POST['gender'] == "male") {
-                    #raw push ups to score using linear regression on score tables
-                    #from military.com
-                        if($pushUpsRaw <= 71) { 
-                            $pushUpsScore = ($pushUpsRaw*1.37925) + 2.06930;
-                        } else {
-                            #calculate score over 100
-                            $pushUpsScore = 100 + ($pushUpsRaw - 71);
-                        }
-
-                        #regression for mens running scores
-                        if ($runScore >= 780) {
-                            $runScore = ($runRaw * -.22988) + 279.298; 
-                        } else {
-                            #extra point for every 6 seconds below 13:00 or 780 secs
-                            #5 is negative to increase score rather than decrease
-                            $runScore = 100 + (($runScore - 780) / -5);
-                        }
-                        
-                        #sit Ups Scores calculated same way for both genders, done at end
-                    } else {
-                        #female so new regression
-                        if($pushUpsRaw <= 42) { 
-                            $pushUpsScore = ($pushUpsRaw*1.73996) + 26.9508;
-                        } else {
-                            #calculate score over 100
-                            $pushUpsScore = 100 + ($pushUpsRaw - 42);
-                        }
-
-                        if ($runScore >= 936) {
-                            $runScore = ($runSecsRaw*-.2020765) + 289.1643;
-                        } else {
-                            #extra point for every 6 seconds below 15:36 or 936 secs
-                            #5 is negative to increase score rather than decrease
-                            $runScore = 100 + (($runScore - 936) / -5);
-                        }
-
-                    }
-
-                    #finally calculate sit Ups Score
-                    if($sitUpsRaw < 21) {
-		                $sitUpsScore = 0;
-	                } elseif($sitUpsRaw >=21 && $sitUpsRaw <= 78) {
-		                $sitUpsScore = (1.5996*$sitUpsRaw) - 24.786;
-	                } else {
-	                    $sitUpsScore = 100 + ($sitUpsRaw - 78);
-	                }
-
-                    #input data into database 
-                    echo $pushUpsRaw . $pushUpsScore . $sitUpsRaw . $sitUpsScore . $runRaw . $runScore; 
-                }
-               */ 
-            ?> 
 
 			</div>
 		    </div>
