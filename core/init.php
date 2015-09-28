@@ -2,6 +2,8 @@
 error_reporting(E_ERROR | E_PARSE);
 session_start();
 
+echo "Start Session<br>";
+
 $GLOBALS['config'] = array(
 	'mysql' => array(
 		'host' => '192.232.249.164',
