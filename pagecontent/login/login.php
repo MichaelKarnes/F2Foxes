@@ -37,7 +37,7 @@ if ($username && $password)
             $_SESSION['root']=$row['Root'];
             $_SESSION['upperclassmen']=$row['Upperclassmen'];
             $_SESSION['public_relations']=$row['Public_Relations']; 
-           // header("Location: index.php");
+            header("Location: index.php");
         }
         else
             echo " incorrect password";

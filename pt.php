@@ -3,7 +3,7 @@ include 'boot/session.php';
 $username=$_SESSION ['username'];
 $userid=$_SESSION ['userid'];
 ?>
-<!DOCTYPE HTML>
+<!DOCTYPE HTML> 
 <html>
 	<head>
 		<title>PT</title>
