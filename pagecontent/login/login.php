@@ -57,10 +57,15 @@ else{
 <fieldset>
 <label for="username">Username</label>
 <input type="text" id="username" name="username" value="" maxlength="20" />
-<label for="password">Password  </label>
+<label for="password">Password </label>
 <input type="password" id="password" name="password" value="" maxlength="20" />
 <br></br>
 <input type="submit" value="Login" />
 </fieldset>
 </form>
-<p><a href="forgot.php"> (Forgot Password?)</a>     <a href="register.php">Not Registered? Click here.</a></p>
+<br>
+<a href="forgot.php"> Forgot Password? Click here</a> 
+<br></br>
+<a href="register.php">Not Registered? Click here</a>
+<br></br>
+<br>
