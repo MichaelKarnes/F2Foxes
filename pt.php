@@ -13,6 +13,14 @@ $userid=$_SESSION ['userid'];
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+        <style>
+            table,td,th {border: 1px solid black; text-align: center;}
+            tr:nth-child(odd) {color: white; background-color: DarkRed; text-shadow: 1px 1px blue;} 
+            tr:nth-child(even) {text-shadow: 1px 1px gray;}
+            td,th {padding: 2px 1px 2px 1px;}
+            #formIn {width: 20em;}
+        </style>
+        
 	</head>
 	<body class="no-sidebar">
 		<div id="page-wrapper">
@@ -24,31 +32,8 @@ $userid=$_SESSION ['userid'];
 	        <div class="wrapper style3">
 		    <div class="inner">
 			<div class="container">
-			
+			<br>
 
-            <!--begin section of NO debugging, 9/2/2015-->
-            <?php
-                //if admin/ CO / 1SG / display PT Scores need others besides admin
-                    
-                if ($_SESSION['admin'] == 1 ) {
-                    echo '<form action = "" method = "post">' .
-                    '<input type = "button" name = "viewPT" value = 
-                    "View Outfit PT Scores" > </input>' . '</form>';
-                
-                    if ($_POST['viewPT'] == 1) {
-                        $queryAllPT = $db->query("SELECT * FROM PT");
-                    
-                        if ($queryAllPT->num_rows > 0) {
-                            while ($rowLoop = $queryAllPT->fetch_assoc()) {
-
-                            }
-                            
-                        }
-                        
-                    }
-                }
-            ?>
-            <!--end no debug. YOu really need to get XAMPP dude-->
             <br>
             <h1> <?php echo $username . "'s "; ?> PT Scores</h1>
             <table style="width: 90%">
@@ -56,7 +41,7 @@ $userid=$_SESSION ['userid'];
                 <td>Date</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
                 <td>Raw Sit Ups</td> <td>Sit Up Score</td>
                 <td>Raw Run</td> <td>Run Score</td> <td>Overall Score</td> 
-                <td>Pass/Fail</td>
+                <td>Pass/Fail</td> <td>Delete</td>
             </tr>
             <?php
                 #search the database for any existing pt scores according to user id
@@ -75,6 +60,12 @@ $userid=$_SESSION ['userid'];
                         "<td>" . $row["Run_Score"] . "</td>" .
                         "<td>" . $row["Overall_Score"] . "</td>" .
                         "<td>" . $row["Pass"] . "</td>" .
+
+                        "<td>" .   
+                            '<form action = "ptDelete.php" method = "post">' .
+                            '<input type = "submit" value = "X" class = "tableSub" 
+                            name = "delete[' . $row["ID"] . ']" />' . '</form>' .
+                        "</td>" .  
                         "</tr>"; 
                     } 
                 } else {
@@ -87,27 +78,28 @@ $userid=$_SESSION ['userid'];
             <br>
             <p>Please fill out the form below to add a PT Score. Your score will be
             calculated from raw scores (ex. You did 80 push ups, enter 80).</p>
-            <!--Note that this form calls a Javascript function. Thus, action is 
-                null and the normal "submit" is replaced with "button". See pt.css
-                and pt.js for more details.-->
+            <br>
+           
             <form action="ptSubmit.php" method="POST">
-            <label>Date of PT test (ex. 09-24-2015) </label>
-            <input type="text" name="date" maxlength="15"/>
-            <label>Raw Push Ups (ex. 80) </label>
-            <input type="text" name="pushUpsRaw" maxlength="3"/>
-            <label>Raw Sit Ups (ex. 90) </label>
-            <input type="text" name="sitUpsRaw" maxlength="3"/>
-            <label>Run Time (ex. 12:30) </label>
-            <input type="text" name="runRaw" maxlength="15"/>
-            <label>Male or Female? </label>
+            <label>Date of PT test (ex. 09-24-2015):  </label>
+            <input type="text" id="formIn" name="date" maxlength="15"/>
+            
+            <label>Raw Push Ups (ex. 80):  </label>
+            <input type="text" id="formIn" name="pushUpsRaw" maxlength="3"/>
+          
+            <label>Raw Sit Ups (ex. 90):  </label>
+            <input type="text" id="formIn" name="sitUpsRaw" maxlength="3"/>
+           
+            <label>Run Time (ex. 12:30):  </label>
+            <input type="text" id="formIn" name="runRaw" maxlength="10"/>
+          
+            <label>Male or Female?:  </label>
             <input type="radio" name="gender" value="male" checked>Male
-            <br>
             <input type="radio" name="gender" value="female">Female
-            <br>
+            <br><br>
             <input type="submit">
-            <br></br>
             </form>       
-			<br>
+			<br></br>
 
 			</div>
 		    </div>

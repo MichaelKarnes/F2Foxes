@@ -56,9 +56,9 @@ else{
 <form action= "login.php" method="post">
 <fieldset>
 <label for="username">Username</label>
-<input type="text" id="username" name="username" value="" maxlength="20" />
+<input type="text" id="username" name="username" value="" maxlength="20" style="width: 20em"/>
 <label for="password">Password </label>
-<input type="password" id="password" name="password" value="" maxlength="20" />
+<input type="password" id="password" name="password" value="" maxlength="20" style="width: 20em"/>
 <br></br>
 <input type="submit" value="Login" />
 </fieldset>
