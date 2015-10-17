@@ -16,7 +16,7 @@ $userid=$_SESSION ['userid'];
         <style>
             table,td,th {border: 1px solid black; text-align: center;}
             tr:nth-child(odd) {color: white; background-color: DarkRed; text-shadow: 1px 1px blue;} 
-            tr:nth-child(even) {text-shadow: 1px 1px gray;}
+            /*tr:nth-child(even) {text-shadow: 1px 1px DarkGray;}*/
             td,th {padding: 2px 1px 2px 1px;}
             #formIn {width: 20em;}
         </style>
@@ -34,6 +34,22 @@ $userid=$_SESSION ['userid'];
 			<div class="container">
 			<br>
 
+            <?php
+                #check to see if admin,CO,PL,1SG, or training. Can see outfit scores.
+            $query = $db->query("SELECT PositionID FROM Account_info WHERE UserID='$userid'");
+            if($query->num_rows > 0) {
+                    while($row = mysqli_fetch_assoc($query)) {
+                       
+                        if ($row["PositionID"] == 5 || $row["PositionID"] == 4 || $row["PositionID"] == 7 || $row["PositionID"] == 6 || $row["PositionID"] == 8 || $row["PositionID"] == 12) {
+                            echo "Hey, Listen! Your position warrants the ability to view outfit
+                            pt scores. Click the button below" . '<br>' .
+                            '<form action="adminOutfitPT.php" method="post">' . 
+                            '<input type="submit" value = "View Outfit PT Scores!"/>' . 
+                            '</form>'; 
+                        }
+                    }
+            }
+            ?>
             <br>
             <h1> <?php echo $username . "'s "; ?> PT Scores</h1>
             <table style="width: 90%">

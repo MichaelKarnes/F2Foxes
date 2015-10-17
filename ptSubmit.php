@@ -36,6 +36,15 @@
         break;
     }
 
+    #now obtain the first and last names based off User ID!
+    $query = $db->query("SELECT * FROM Account_info WHERE UserID='$userid'");
+    if($query->num_rows > 0) {
+        while($row = mysqli_fetch_assoc($query)) {
+            $lastName = $row["LastName"];
+            $firstName = $row["FirstName"];
+        }
+    }
+
     #for the run Score, convert to seconds and the integer data type
     #substr picks off the minutes and the seconds from the form run input xx:xx
     #runRaw = first two characters (minutes->secs) + last two characters (already secs) 
@@ -99,6 +108,11 @@
 
            }
 
+           #check for negative run score which is not allowed!
+           if ($runScore < 0) {
+               $runScore = 0;
+           }
+
            #finally calculate sit Ups Score
            if($sitUpsRaw < 21) {
 		        $sitUpsScore = 0;
@@ -113,7 +127,7 @@
            $overallScore = $pushUpsScore + $sitUpsScore + $runScore;
 
            #check if any event has been failed, ie < 60.
-           if ($pushUpsScore >= 60 || $sitUpsScore >= 60 || $runScore >= 60) {
+           if ($pushUpsScore >= 60 && $sitUpsScore >= 60 && $runScore >= 60) {
                $passOrF = "Pass";
            } else {
                $passOrF = "Fail";
@@ -124,7 +138,8 @@
            #the null field is for the auto increment unique row key
            #runTime was set near the very top of this file
            $query = $db->query("INSERT INTO PT VALUES('',
-           '$userid', '$date', '$pushUpsRaw','$pushUpsScore', '$sitUpsRaw',
+           '$userid', '$lastName', '$firstName', '$date', '$pushUpsRaw',
+           '$pushUpsScore', '$sitUpsRaw',
            '$sitUpsScore', '$runRaw', '$runTime', '$runScore',
            '$overallScore', '$passOrF')");
 
