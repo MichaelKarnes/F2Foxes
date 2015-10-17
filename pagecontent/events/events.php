@@ -6,7 +6,8 @@
 				<div id="content">
 
 					<!-- Content -->
-
+                        <br>
+                        <br>
 						<article>
 							<header class="major">
 								<h2>Events</h2>
