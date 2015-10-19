@@ -10,7 +10,8 @@
             $gradexplode = array_filter(explode("@", $current[$i]));
             $grade += $gradexplode[2];
         }
-        $grade = $grade/$totalnum;
+        if($totalnum > 0)
+            $grade = $grade/$totalnum;
         $assignment['Grade'] = $grade;
         $db->query("UPDATE Grade_Assignment SET Grade = $grade WHERE ID = $id");
     }
