@@ -53,7 +53,7 @@ class User {
 			Session::put($this->_sessionName, $this->data()->id);
 		} else {
 			if($user) {
-				if($this->data()->password == Hash::make($password, utf8_decode($this->data()->salt))) {
+				if($this->data()->password == Hash::make($password, $this->data()->salt)) {
 					Session::put($this->_sessionName, $this->data()->id);
 
 					if($remember) {

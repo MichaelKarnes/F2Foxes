@@ -37,6 +37,7 @@
 
 		// Dropdowns.
 			$('#nav > ul').dropotron({
+                globalOffsetY: -7,
 				offsetY: -22,
 				mode: 'fade',
 				noOpenerFade: true,

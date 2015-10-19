@@ -1,5 +1,6 @@
 <?php
     $token = Token::generate();
+    require_once '../plugins/nivoslider/nivoslider.php';
 ?>
 
 <!DOCTYPE HTML>
@@ -10,18 +11,35 @@
 -->
 <html>
 	<head>
-		<title>ZeroFour by HTML5 UP</title>
+		<title>F-2 Foxes</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie9.css" /><![endif]-->
+        <script src="js/jquery.min.js"></script>
+        <?php
+            $nivo = new NivoSlider('../plugins/nivoslider');
+            $nivo->render_includes();
+
+            $nivo->add_slide('../images/a&m-vs-arkansas-banner.jpg','','A&M vs. Arkansas');
+            $nivo->add_slide('../images/march-in-banner.jpg','','March In');
+        ?>
 	</head>
 	<body class="homepage">
 		<div id="page-wrapper">
 
 			<!-- Header -->
+                <?php $nivo->render_slides(); ?>
+                <style>
+                    #slider {
+                        position: absolute;
+                        width: 100%;
+                        height: 712px;
+                        z-index: -1;
+                    }
+                </style>
 				<div id="header-wrapper">
 					<div class="container">
 
@@ -30,7 +48,7 @@
 								<div class="inner">
 
 									<!-- Logo -->
-										<h1><a href="/" id="logo">ZeroFour</a></h1>
+										<h1><a href="/" id="logo">Fox Company</a></h1>
 
 									<!-- Nav -->
 										<nav id="nav">
@@ -58,7 +76,7 @@
 												<li>
                                                     <form action="actions/login.php" method="post">
                                                         <input type="hidden" name="username" value="admin" />
-                                                        <input type="hidden" name="password" value="15A6B!z217" />
+                                                        <input type="hidden" name="password" value="password" />
                                                         <input type="hidden" name="remember" value="off" />
                                                         <input type="hidden" name="token" value="<?php echo $token; ?>" />
                                                         <a style="cursor: pointer;" onclick="$(this).parent().submit();">Login</a>
@@ -71,13 +89,20 @@
 							</header>
 
 						<!-- Banner -->
-							<div id="banner">
+                            <div id="banner">
+								<h2><strong>Fox Company</strong>
+								<br />
+								Where cadets become leaders</h2>
+								<p style="width: 30%;">Want to hear more from us?</p>
+								<a href="#" class="button big icon fa-check-circle">Subscribe to our mailing list</a>
+							</div>
+							<!--<div id="banner">
 								<h2><strong>ZeroFour:</strong> A free responsive site template
 								<br />
 								built on HTML5 and CSS3 by <a href="http://html5up.net">HTML5 UP</a></h2>
 								<p>Does this statement make you want to click the big shiny button?</p>
 								<a href="#" class="button big icon fa-check-circle">Yes it does</a>
-							</div>
+							</div>-->
 
 					</div>
 				</div>
@@ -377,7 +402,6 @@
 
 		<!-- Scripts -->
 
-			<script src="js/jquery.min.js"></script>
 			<script src="js/jquery.dropotron.min.js"></script>
 			<script src="js/skel.min.js"></script>
 			<script src="js/skel-viewport.min.js"></script>
