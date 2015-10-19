@@ -31,6 +31,7 @@
 
             $nivo->add_slide('../images/a&m-vs-arkansas-banner.jpg','','A&M vs. Arkansas');
             $nivo->add_slide('../images/march-in-banner.jpg','','March In');
+            $nivo->add_slide('../images/senior-picture-banner.jpg','','March In');
         ?>
 	</head>
 	<body class="homepage">
@@ -215,47 +216,47 @@
 
 										<!-- Article list -->
 											<section class="box article-list">
-												<h2 class="icon fa-file-text-o">Recent Posts</h2>
+												<h2 class="icon fa-newspaper-o">Recent Events</h2>
 
 												<!-- Excerpt -->
 													<article class="box excerpt">
-														<a href="#" class="image left"><img src="images/pic04.jpg" alt="" /></a>
+														<span class="image left"><img src="images/news-btho-arkansas.jpg" alt="" /></span>
 														<div>
 															<header>
-																<span class="date">July 24</span>
-																<h3><a href="#">Repairing a hyperspace window</a></h3>
+																<span class="date">September 26</span>
+																<h3>BTHO Arkansas</h3>
 															</header>
-															<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-															semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-															feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
+															<p>Your very own Fightin' Foxes got to participate as Officers of the Day for the A&M
+                                                            vs. Arkansas game. The current seniors (Class of 2016) had the privilege of being
+                                                            on the field as we beat the hell out of Arkansas! (28-21)</p>
 														</div>
 													</article>
 
 												<!-- Excerpt -->
 													<article class="box excerpt">
-														<a href="#" class="image left"><img src="images/pic05.jpg" alt="" /></a>
+														<span class="image left"><img src="images/news-aggie-ring-day-sept-2015.jpg" alt="" /></span>
 														<div>
 															<header>
-																<span class="date">July 18</span>
-																<h3><a href="#">Adventuring with a knee injury</a></h3>
+																<span class="date">September 25</span>
+																<h3>Fightin' Texas Aggie Ring Day</h3>
 															</header>
-															<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-															semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-															feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
+															<p>Several Foxes got their rings this weekend, including our very own Commanding Officer, Cole Bishop.
+                                                            The Aggie Ring is a symbol of accomplishment that is earned once an Aggie completes 90
+                                                            hours of coursework. It also symbolizes every Aggie's connection to the vast Aggie Network.</p>
 														</div>
 													</article>
 
 												<!-- Excerpt -->
 													<article class="box excerpt">
-														<a href="#" class="image left"><img src="images/pic06.jpg" alt="" /></a>
+														<span class="image left"><img src="images/news-fow-2015.jpg" alt="" /></span>
 														<div>
 															<header>
-																<span class="date">July 14</span>
-																<h3><a href="#">Preparing for Y2K38</a></h3>
+																<span class="date">August 29</span>
+																<h3>Freshman Orientation Week Culmination</h3>
 															</header>
-															<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-															semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-															feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
+															<p>Freshmen Orientation Week has been both exhausting and exhilarating for
+                                                            upperclassmen and fish alike. However, all of our work has finally paid off, and
+                                                            we can confidently welcome the Class of 2019 into the family as Fightin' Foxes!</p>
 														</div>
 													</article>
 
@@ -265,22 +266,21 @@
 
 										<!-- Spotlight -->
 											<section class="box spotlight">
-												<h2 class="icon fa-file-text-o">Spotlight</h2>
+												<h2 class="icon fa-star">Awards</h2>
 												<article>
-													<a href="#" class="image featured"><img src="images/pic07.jpg" alt=""></a>
+													<span class="image featured"><img src="images/junie-award.jpg" alt=""></span>
 													<header>
-														<h3><a href="#">Neural Implants</a></h3>
-														<p>The pros and cons. Mostly cons.</p>
+														<h3>George P.F. Jouine Award</h3>
 													</header>
-													<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus semper mod
-													quisturpis nisi consequat ornare in, hendrerit in lectus semper mod quis eget mi quat etiam
-													lorem. Phasellus quam turpis, feugiat sed et lorem ipsum dolor consequat dolor feugiat sed
-													et tempus consequat etiam.</p>
-													<p>Lorem ipsum dolor quam turpis, feugiat sit amet ornare in, hendrerit in lectus semper
-													mod quisturpis nisi consequat etiam lorem sed amet quam turpis.</p>
-													<footer>
-														<a href="#" class="button alt icon fa-file-o">Continue Reading</a>
-													</footer>
+													<p>This award is given to the most outstanding outfit in scholastic achievement.
+                                                    We earned this award through our strong emphasis on academics.</p>
+                                                    <p>Throughout the year, we supported our people by providing them with the tools
+                                                    that they needed to succeed. This includes giving freshmen access to help from
+                                                    upperclassmen, maintaining a proper study environment throughout the day, and
+                                                    monitoring our progress throughout the year.</p>
+                                                    <p>Through our hard work and dedication, we achieved the highest average GPA in
+                                                    the entire Corps. We are very proud of our hard work and hope to continue this
+                                                    tradition for many years to come.</p>
 												</article>
 											</section>
 
@@ -294,33 +294,11 @@
 			<!-- Footer Wrapper -->
 				<div id="footer-wrapper">
 					<footer id="footer" class="container">
-						<div class="row">
-							<div class="3u 12u(mobile)">
+						<!--<div class="row">
+							<div class="4u 12u(mobile)">
 
-								<!-- Links -->
 									<section>
 										<h2>Filler Links</h2>
-										<ul class="divided">
-											<li><a href="#">Quam turpis feugiat dolor</a></li>
-											<li><a href="#">Amet ornare in hendrerit </a></li>
-											<li><a href="#">Semper mod quisturpis nisi</a></li>
-											<li><a href="#">Consequat etiam phasellus</a></li>
-											<li><a href="#">Amet turpis, feugiat et</a></li>
-											<li><a href="#">Ornare hendrerit lectus</a></li>
-											<li><a href="#">Semper mod quis et dolore</a></li>
-											<li><a href="#">Amet ornare in hendrerit</a></li>
-											<li><a href="#">Consequat lorem phasellus</a></li>
-											<li><a href="#">Amet turpis, feugiat amet</a></li>
-											<li><a href="#">Semper mod quisturpis</a></li>
-										</ul>
-									</section>
-
-							</div>
-							<div class="3u 12u(mobile)">
-
-								<!-- Links -->
-									<section>
-										<h2>More Filler</h2>
 										<ul class="divided">
 											<li><a href="#">Quam turpis feugiat dolor</a></li>
 											<li><a href="#">Amet ornare in in lectus</a></li>
@@ -329,7 +307,9 @@
 										</ul>
 									</section>
 
-								<!-- Links -->
+							</div>
+							<div class="4u 12u(mobile)">
+
 									<section>
 										<h2>Even More Filler</h2>
 										<ul class="divided">
@@ -341,59 +321,24 @@
 									</section>
 
 							</div>
-							<div class="6u 12u(mobile)">
+							<div class="4u 12u(mobile)">
 
-								<!-- About -->
-									<section>
-										<h2><strong>ZeroFour</strong> by HTML5 UP</h2>
-										<p>Hi! This is <strong>ZeroFour</strong>, a free, fully responsive HTML5 site
-										template by <a href="http://n33.co/">AJ</a> for <a href="http://html5up.net/">HTML5 UP</a>.
-										It's <a href="http://html5up.net/license/">Creative Commons Attribution</a>
-										licensed so use it for any personal or commercial project (just credit us
-										for the design!).</p>
-										<a href="#" class="button alt icon fa-arrow-circle-right">Learn More</a>
-									</section>
-
-								<!-- Contact -->
 									<section>
 										<h2>Get in touch</h2>
-										<div>
-											<div class="row">
-												<div class="6u 12u(mobile)">
-													<dl class="contact">
-														<dt>Twitter</dt>
-														<dd><a href="#">@untitled-corp</a></dd>
-														<dt>Facebook</dt>
-														<dd><a href="#">facebook.com/untitled</a></dd>
-														<dt>WWW</dt>
-														<dd><a href="#">untitled.tld</a></dd>
-														<dt>Email</dt>
-														<dd><a href="#">user@untitled.tld</a></dd>
-													</dl>
-												</div>
-												<div class="6u 12u(mobile)">
-													<dl class="contact">
-														<dt>Address</dt>
-														<dd>
-															1234 Fictional Rd<br />
-															Nashville, TN 00000-0000<br />
-															USA
-														</dd>
-														<dt>Phone</dt>
-														<dd>(000) 000-0000</dd>
-													</dl>
-												</div>
-											</div>
-										</div>
+										<dl class="contact">
+											<dt>Facebook</dt>
+											<dd><a href="#"><i class="fa fa-lg fa-facebook"></i></a></dd>
+										</dl>
+                                        <a href="#" class="button alt icon fa-check-circle">Subscribe</a>
 									</section>
 
 							</div>
-						</div>
+						</div>-->
 						<div class="row">
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+										<li>&copy; Company F-2. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li><li><a href="https://www.facebook.com/TexasAmCorpsOfCadetsCompanyF2Foxes">Find us on Facebook</a></li>
 									</ul>
 								</div>
 							</div>
