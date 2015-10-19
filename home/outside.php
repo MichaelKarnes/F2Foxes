@@ -99,8 +99,8 @@
 								<h2><strong>Fox Company</strong>
 								<br />
 								Where cadets become leaders</h2>
-								<p>Want to hear more from us?</p>
-								<a href="#" class="button big icon fa-check-circle">Subscribe to our mailing list</a>
+								<p>Want to stay updated on our upcoming events?</p>
+								<a href="#" class="button big icon fa-check-circle">Subscribe</a>
 							</div>
 							<!--<div id="banner">
 								<h2><strong>ZeroFour:</strong> A free responsive site template
