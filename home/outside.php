@@ -123,46 +123,45 @@
 									<div class="row">
 										<div class="12u">
 											<header class="first major">
-												<h2>This is an important heading</h2>
-												<p>And this is where we talk about why we’re <strong>pretty awesome</strong> ...</p>
+												<h2>The best outfit on the Quad</h2>
+												<p>Upholding the highest standards for our Nation and the Corps</p>
 											</header>
 										</div>
 									</div>
 									<div class="row">
 										<div class="4u 12u(mobile)">
 											<section>
-												<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-												<header class="second icon fa-user">
-													<h3>Here's a Heading</h3>
-													<p>And a subtitle</p>
+												<a href="#" class="image featured"><img src="images/rozelle-commissioning-small.jpg" alt="" /></a>
+												<header class="second">
+													<h3>Officers</h3>
+													<p>Leading America's Army</p>
 												</header>
 											</section>
 										</div>
 										<div class="4u 12u(mobile)">
 											<section>
-												<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-												<header class="second icon fa-cog">
-													<h3>Also a Heading</h3>
-													<p>And another subtitle</p>
+												<a href="#" class="image featured"><img src="images/final-review-2015-small.jpg" alt="" /></a>
+												<header class="second">
+													<h3>Students</h3>
+													<p>Achieving greatness</p>
 												</header>
 											</section>
 										</div>
 										<div class="4u 12u(mobile)">
 											<section>
-												<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-												<header class="second icon fa-bar-chart-o">
-													<h3>Another Heading</h3>
-													<p>And yes, a subtitle</p>
+												<a href="#" class="image featured"><img src="images/arkansas-officers-of-the-day-small.jpg" alt="" /></a>
+												<header class="second">
+													<h3>Professionals</h3>
+													<p>Prepared to face any challenge</p>
 												</header>
 											</section>
 										</div>
 									</div>
 									<div class="row">
 										<div class="12u">
-											<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus. Praesent semper
-											bibendum ipsum, et tristique augue fringilla eu. Vivamus id risus vel dolor auctor euismod
-											quis eget mi. Etiam eu ante risus. Aliquam erat volutpat. Aliquam luctus mattis lectus sit
-											amet pulvinar. Nam nec turpis.</p>
+											<p>Company F-2 strives for excellence in all we do. We train future officers of the United States military,
+                                            develop students who are known across the quad for their outstanding grades, and create future leaders
+                                            of America who are prepared to face any challenge that lies before them.</p>
 										</div>
 									</div>
 								</section>
@@ -178,30 +177,28 @@
 										<div class="6u 12u(mobile)">
 											<section>
 												<header class="major">
-													<h2>And this is a subheading</h2>
-													<p>It’s important but clearly not *that* important</p>
+													<h2>What can I do to help?</h2>
+													<p>Buy some of our merchandise!</p>
 												</header>
-												<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-												Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-												Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-												consequat etiam.</p>
+												<p>By buying our merchandise, you are giving F-2 the opportunity to give back to
+                                                you. Every year, we host public tailgates, banquets, and cookouts. The money that
+                                                we get from you helps contribute to these events and make them as awesome as possible!</p>
 												<footer>
-													<a href="#" class="button medium icon fa-arrow-circle-right">Let's do this</a>
+													<a href="#" class="button medium icon fa-arrow-circle-right">To the shop!</a>
 												</footer>
 											</section>
 										</div>
 										<div class="6u 12u(mobile)">
 											<section>
 												<header class="major">
-													<h2>This is also a subheading</h2>
-													<p>And is as unimportant as the other one</p>
+													<h2>Ol' Foxes looking to reconnect</h2>
+													<p>Apply to be included in the Fox Hall of Fame</p>
 												</header>
-												<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-												Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-												Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-												consequat etiam.</p>
+												<p>When you submit your information to our database of Ol' Foxes, you'll be included in our
+                                                <a href="#">Fox Hall of Fame</a> with all of the other great Foxes. We'll also keep
+                                                you informed of our latest achievements, as well as ways to help out current foxes.</p>
 												<footer>
-													<a href="#" class="button medium alt icon fa-info-circle">Wait, what?</a>
+													<a href="#" class="button medium icon fa-arrow-circle-right">Apply for the Hall of Fame</a>
 												</footer>
 											</section>
 										</div>

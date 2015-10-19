@@ -1615,10 +1615,10 @@
 		.box.feature1 header.second {
 			position: relative;
 			display: inline-block;
-			text-align: left;
+			/*text-align: left;*/
 			margin: 0 auto;
 			white-space: nowrap;
-			left: 24px;
+			/*left: 24px;*/
 		}
 
 			.box.feature1 header.second p {
