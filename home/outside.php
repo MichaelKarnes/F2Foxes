@@ -19,6 +19,12 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie9.css" /><![endif]-->
         <script src="js/jquery.min.js"></script>
+		<script src="js/jquery.dropotron.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-viewport.min.js"></script>
+		<script src="js/util.js"></script>
+		<!--[if lte IE 8]><script src="js/ie/respond.min.js"></script><![endif]-->
+		<script src="js/main.js"></script>
         <?php
             $nivo = new NivoSlider('../plugins/nivoslider');
             $nivo->render_includes();
@@ -93,7 +99,7 @@
 								<h2><strong>Fox Company</strong>
 								<br />
 								Where cadets become leaders</h2>
-								<p style="width: 30%;">Want to hear more from us?</p>
+								<p>Want to hear more from us?</p>
 								<a href="#" class="button big icon fa-check-circle">Subscribe to our mailing list</a>
 							</div>
 							<!--<div id="banner">
@@ -399,15 +405,5 @@
 				</div>
 
 		</div>
-
-		<!-- Scripts -->
-
-			<script src="js/jquery.dropotron.min.js"></script>
-			<script src="js/skel.min.js"></script>
-			<script src="js/skel-viewport.min.js"></script>
-			<script src="js/util.js"></script>
-			<!--[if lte IE 8]><script src="js/ie/respond.min.js"></script><![endif]-->
-			<script src="js/main.js"></script>
-
 	</body>
 </html>

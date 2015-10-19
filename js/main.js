@@ -4,59 +4,49 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-(function($) {
+(function ($) {
 
-	skel
+    skel
 		.breakpoints({
-			desktop: '(min-width: 737px)',
-			tablet: '(min-width: 737px) and (max-width: 1200px)',
-			mobile: '(max-width: 736px)'
+		    desktop: '(min-width: 737px)',
+		    tablet: '(min-width: 737px) and (max-width: 1200px)',
+		    mobile: '(max-width: 736px)'
 		})
 		.viewport({
-			breakpoints: {
-				tablet: {
-					width: 1080
-				}
-			}
+		    breakpoints: {
+		        tablet: {
+		            width: 1080
+		        }
+		    }
 		});
 
-	$(function() {
+    $(function () {
 
-		var	$window = $(window),
+        var $window = $(window),
 			$body = $('body');
 
-		// Disable animations/transitions until the page has loaded.
-			$body.addClass('is-loading');
+        // Disable animations/transitions until the page has loaded.
+        $body.addClass('is-loading');
 
-			$window.on('load', function() {
-				$body.removeClass('is-loading');
-			});
+        $window.load(function () {
+            $body.removeClass('is-loading');
+        });
 
-		// Fix: Placeholder polyfill.
-			$('form').placeholder();
+        // Fix: Placeholder polyfill.
+        $('form').placeholder();
 
-		// Dropdowns.
-			$('#nav > ul').dropotron({
-                globalOffsetY: -7,
-				offsetY: -22,
-				mode: 'fade',
-				noOpenerFade: true,
-				speed: 300,
-				detach: false
-			});
-
-		// Prioritize "important" elements on mobile.
-			skel.on('+mobile -mobile', function() {
-				$.prioritize(
+        // Prioritize "important" elements on mobile.
+        skel.on('+mobile -mobile', function () {
+            $.prioritize(
 					'.important\\28 mobile\\29',
 					skel.breakpoint('mobile').active
 				);
-			});
+        });
 
-		// Off-Canvas Navigation.
+        // Off-Canvas Navigation.
 
-			// Title Bar.
-				$(
+        // Title Bar.
+        $(
 					'<div id="titleBar">' +
 						'<a href="#navPanel" class="toggle"></a>' +
 						'<span class="title">' + $('#logo').html() + '</span>' +
@@ -64,8 +54,8 @@
 				)
 					.appendTo($body);
 
-			// Navigation Panel.
-				$(
+        // Navigation Panel.
+        $(
 					'<div id="navPanel">' +
 						'<nav>' +
 							$('#nav').navList() +
@@ -74,21 +64,31 @@
 				)
 					.appendTo($body)
 					.panel({
-						delay: 500,
-						hideOnClick: true,
-						hideOnSwipe: true,
-						resetScroll: true,
-						resetForms: true,
-						side: 'left',
-						target: $body,
-						visibleClass: 'navPanel-visible'
+					    delay: 500,
+					    hideOnClick: true,
+					    hideOnSwipe: true,
+					    resetScroll: true,
+					    resetForms: true,
+					    side: 'left',
+					    target: $body,
+					    visibleClass: 'navPanel-visible'
 					});
+        
+        // Dropdowns.
+        $('#nav > ul').dropotron({
+            globalOffsetY: -7,
+            offsetY: -22,
+            mode: 'fade',
+            noOpenerFade: true,
+            speed: 300,
+            detach: false
+        });
 
-			// Fix: Remove navPanel transitions on WP<10 (poor/buggy performance).
-				if (skel.vars.os == 'wp' && skel.vars.osVersion < 10)
-					$('#titleBar, #navPanel, #page-wrapper')
+        // Fix: Remove navPanel transitions on WP<10 (poor/buggy performance).
+        if (skel.vars.os == 'wp' && skel.vars.osVersion < 10)
+            $('#titleBar, #navPanel, #page-wrapper')
 						.css('transition', 'none');
 
-	});
+    });
 
 })(jQuery);

@@ -98,7 +98,7 @@
 
         //Add initial slices
         for (var i = 0; i < settings.slices; i++) {
-            var sliceWidth = Math.round(slider.width() / settings.slices);
+            var sliceWidth = Math.ceil(slider.width() / settings.slices);
             if (i == settings.slices - 1) {
                 slider.append(
                     $('<div class="nivo-slice"></div>').css({ left: (sliceWidth * i) + 'px', width: (slider.width() - (sliceWidth * i)) + 'px' })
@@ -340,7 +340,7 @@
 
             //Set new slice backgrounds
             var i = 0;
-            var sliceWidth = Math.round(slider.width() / settings.slices);
+            var sliceWidth = Math.ceil(slider.width() / settings.slices);
             var imgWidth = vars.currentImage.attr('width');
             var imgHeight = vars.currentImage.attr('height');
             if (settings.fit == 'fill') {
@@ -348,7 +348,7 @@
                     imgWidth = slider.width();
                     $('.nivo-slice', slider).each(function () {
                         $(this).css({ height: '0px', opacity: '0',
-                            background: 'url(' + vars.currentImage.attr('src') + ') no-repeat ' + -(((sliceWidth + (i * sliceWidth)) - sliceWidth) + Math.round((imgWidth - slider.width()) / 2)) + 'px center'
+                            background: 'url(' + vars.currentImage.attr('src') + ') no-repeat ' + -(((sliceWidth + (i * sliceWidth)) - sliceWidth) + Math.ceil((imgWidth - slider.width()) / 2)) + 'px center'
                         });
                         $(this).css('background-size', slider.width() + 'px auto');
                         i++;
@@ -357,7 +357,7 @@
                     imgWidth *= slider.height() / imgHeight;
                     $('.nivo-slice', slider).each(function () {
                         $(this).css({ height: '0px', opacity: '0',
-                            background: 'url(' + vars.currentImage.attr('src') + ') no-repeat ' + -(((sliceWidth + (i * sliceWidth)) - sliceWidth) + Math.round((imgWidth - slider.width()) / 2)) + 'px center'
+                            background: 'url(' + vars.currentImage.attr('src') + ') no-repeat ' + -(((sliceWidth + (i * sliceWidth)) - sliceWidth) + Math.ceil((imgWidth - slider.width()) / 2)) + 'px center'
                         });
                         $(this).css('background-size', 'auto ' + slider.height() + 'px');
                         i++;
@@ -388,7 +388,7 @@
                 slices.each(function () {
                     var slice = $(this);
                     slice.css('top', '0px');
-                    var sliceWidth = Math.round(slider.width() / settings.slices);
+                    var sliceWidth = Math.ceil(slider.width() / settings.slices);
                     $(this).css('height', '100%');
                     $(this).css('width', sliceWidth + 'px');
                     $(this).css('left', sliceWidth * i);
@@ -414,7 +414,7 @@
                 slices.each(function () {
                     var slice = $(this);
                     slice.css('bottom', '0px');
-                    var sliceWidth = Math.round(slider.width() / settings.slices);
+                    var sliceWidth = Math.ceil(slider.width() / settings.slices);
                     $(this).css('height', '100%');
                     $(this).css('width', sliceWidth + 'px');
                     $(this).css('left', sliceWidth * i);
@@ -440,7 +440,7 @@
                 if (settings.effect == 'sliceUpDownLeft' || vars.randAnim == 'sliceUpDownLeft') slices = $('.nivo-slice', slider)._reverse();
                 slices.each(function () {
                     var slice = $(this);
-                    var sliceWidth = Math.round(slider.width() / settings.slices);
+                    var sliceWidth = Math.ceil(slider.width() / settings.slices);
                     $(this).css('width', sliceWidth + 'px');
                     $(this).css('left', sliceWidth * i);
                     if (i == 0) {
@@ -469,7 +469,7 @@
                 var i = 0;
                 $('.nivo-slice', slider).each(function () {
                     var slice = $(this);
-                    var sliceWidth = Math.round(slider.width() / settings.slices);
+                    var sliceWidth = Math.ceil(slider.width() / settings.slices);
                     slice.css({ top: '0px', height: '100%', width: '0px', left: sliceWidth * i + 'px' });
                     if (i == settings.slices - 1) {
                         setTimeout(function () {
@@ -487,7 +487,7 @@
             else if (settings.effect == 'fade' || vars.randAnim == 'fade') {
                 var i = 0;
                 $('.nivo-slice', slider).each(function () {
-                    var sliceWidth = Math.round(slider.width() / settings.slices);
+                    var sliceWidth = Math.ceil(slider.width() / settings.slices);
                     $(this).css('height', '100%');
                     $(this).css('width', sliceWidth + 'px');
                     $(this).css('left', sliceWidth * i);
