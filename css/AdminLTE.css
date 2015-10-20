@@ -291,13 +291,14 @@ a:focus {
   display: block;
   float: left;
   height: 50px;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 50px;
   text-align: center;
+  text-transform: uppercase;
   width: 230px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", sans-serif;
   padding: 0 15px;
-  font-weight: 300;
+  font-weight: 800;
   overflow: hidden;
 }
 .main-header .logo .logo-lg {

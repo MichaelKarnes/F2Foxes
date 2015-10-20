@@ -14,8 +14,8 @@
     print_r($user);
     die();*/
     if($user->isLoggedIn()) {
-        require_once 'home/inside.php';
+        require_once 'pages/home/inside.php';
     } else {
-        require_once 'home/outside.php';
+        require_once 'pages/home/outside.php';
     }
 ?>
