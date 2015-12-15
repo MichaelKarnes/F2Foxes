@@ -97,6 +97,10 @@ $userid=$_SESSION ['userid'];
             <br>
            
             <form action="ptSubmit.php" method="POST">
+            <label>Type of PT test</label>
+            <input type="radio" name="type" value="army" checked>Army
+            <input type="radio" name="type" value="corps">Corps
+
             <label>Date of PT test (ex. 09-24-2015):  </label>
             <input type="text" id="formIn" name="date" maxlength="15"/>
             

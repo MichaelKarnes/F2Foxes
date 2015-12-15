@@ -66,19 +66,22 @@
             }
 
             #regression for mens running scores
-            if ($runRaw >= 780) {
-                #make sure that runRaw is divisible by 6. Otherwise regression will error
-                 if($runRaw % 6 != 0) {
-                    #go to the next highest time divisible by 6 to calculate score
-                    $runRaw = $runRaw + (6 - ($runRaw % 6));
-                 }
-                 $runScore = round(($runRaw * -.229754412) + 279.18682); 
+            if ($_POST['type'] == "army") {
+                if ($runRaw >= 780) {
+                    #make sure that runRaw is divisible by 6. Otherwise regression will error
+                    if($runRaw % 6 != 0) {
+                        #go to the next highest time divisible by 6 to calculate score
+                        $runRaw = $runRaw + (6 - ($runRaw % 6));
+                    }
+                        $runScore = round(($runRaw * -.229754412) + 279.18682); 
+                } else {
+                    #Above 100! extra point for every 5 seconds below 13:00 or 780 secs
+                    #5 is negative to increase score rather than decrease
+                    $runRaw = $runRaw + (5 - ($runRaw % 5));
+                    $runScore = 100 + (($runRaw - 780) / -5); 
+                }
             } else {
-                 #Above 100! extra point for every 5 seconds below 13:00 or 780 secs
-                 #5 is negative to increase score rather than decrease
-                 $runRaw = $runRaw + (5 - ($runRaw % 5));
-                 $runScore = 100 + (($runRaw - 780) / -5);
-                 
+                //enter regression code here
             }
                         
             #sit Ups Scores calculated same way for both genders, done at end
@@ -93,19 +96,22 @@
                     $pushUpsScore = 100 + ($pushUpsRaw - 42);
                 }
 
-                if ($runRaw >= 936) {
-                    if($runRaw % 6 != 0) {
-                        #go to the next highest time divisible by 6 to calculate score
-                        $runRaw = $runRaw + (6 - ($runRaw % 6));
+                if ($_POST['type'] == "army") {
+                    if ($runRaw >= 936) {
+                        if($runRaw % 6 != 0) {
+                            #go to the next highest time divisible by 6 to calculate score
+                            $runRaw = $runRaw + (6 - ($runRaw % 6));
+                        }
+                        $runScore = round(($runRaw * -.2020765) + 289.1643);
+                    } else {
+                        #extra point for every 5 seconds below 15:36 or 936 secs
+                        #5 is negative to increase score rather than decrease
+                        $runRaw = $runRaw + (5 - ($runRaw % 5));
+                        $runScore = 100 + (($runRaw - 936) / -5);
                     }
-                    $runScore = round(($runRaw * -.2020765) + 289.1643);
                 } else {
-                    #extra point for every 5 seconds below 15:36 or 936 secs
-                    #5 is negative to increase score rather than decrease
-                    $runRaw = $runRaw + (5 - ($runRaw % 5));
-                    $runScore = 100 + (($runRaw - 936) / -5);
+                    //enter regression code here
                 }
-
            }
 
            #check for negative run score which is not allowed!
@@ -126,6 +132,21 @@
            #overall score is useful to have!
            $overallScore = $pushUpsScore + $sitUpsScore + $runScore;
 
+           //if user does not max all events, user cannot acheive over 300!!!
+           if ($overallScore > 300 && ($pushUpsScore < 100 || $sitUpsScore < 100 || $runScore < 100)) {
+               if ($pushUpsScore > 100) {
+                   $pushUpsScore = 100;
+               }
+               if ($sitUpsScore > 100) {
+                   $sitUpsScore = 100;
+               }
+               if ($runScore > 100) {
+                   $runScore = 100;
+               }
+               $overallScore = $pushUpsScore + $sitUpsScore + $runScore;
+           }
+                    
+          
            #check if any event has been failed, ie < 60.
            if ($pushUpsScore >= 60 && $sitUpsScore >= 60 && $runScore >= 60) {
                $passOrF = "Pass";
