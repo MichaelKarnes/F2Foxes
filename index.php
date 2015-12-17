@@ -1,7 +1,7 @@
 <?php
     include_once 'core/init.php';
     $user = new User();
-    /*$salt = utf8_decode(utf8_encode(Hash::salt(32)));
+    /*$salt = utf8_encode(Hash::salt(32));
     echo $salt."<br>";
     $user->create(array(
         'username' => 'admin',

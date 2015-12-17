@@ -1,3 +1,6 @@
+<?php
+    $weather = new Weather();
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,16 +10,13 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="css/AdminLTE.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="css/skins/_all-skins.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
     <!-- Morris chart -->
@@ -29,13 +29,44 @@
     <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+     <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Morris.js charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="plugins/morris/morris.min.js"></script>
+    <!-- Sparkline -->
+    <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!-- jvectormap -->
+    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="plugins/knob/jquery.knob.js"></script>
+    <!-- daterangepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+    <script src="plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- datepicker -->
+    <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="js/app.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="js/demo.js"></script>
+    <!-- FLOT CHARTS -->
+    <script src="plugins/flot/jquery.flot.min.js"></script>
+    <script src="plugins/flot/jquery.flot.time.min.js"></script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -70,7 +101,7 @@
                       <li><!-- start message -->
                         <a href="#">
                           <div class="pull-left">
-                            <img src="images/staff-sgt-160x160.jpg" class="img-circle" alt="User Image">
+                            <img src="images/rank-ssg.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Support Team
@@ -246,15 +277,15 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="images/staff-sgt-160x160.jpg" class="user-image" alt="User Image">
-                  <span class="hidden-xs">Alexander Pierce</span>
+                  <img src="images/rank-ssg.jpg" class="user-image" alt="User Image">
+                  <span class="hidden-xs"><?php echo $user->data()->first." ".$user->data()->last; ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="images/staff-sgt-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="images/rank-ssg.jpg" class="img-circle" alt="User Image">
                     <p>
-                      Alexander Pierce - Web Developer
+                      <?php echo $user->data()->first." ".$user->data()->last; ?> - Web Developer
                       <small>Member since Nov. 2012</small>
                     </p>
                   </li>
@@ -296,10 +327,10 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="images/staff-sgt-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="images/rank-ssg.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p><?php echo $user->data()->first." ".$user->data()->last; ?></p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
@@ -411,6 +442,62 @@
                     <i class="icon fa fa-ban"></i> Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.
                 </div>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-yellow-gradient">
+                    <div class="inner">
+                      <h3><?php echo $weather->getTempF(); ?><sup style="font-size: 19px;">°F</sup></h3>
+                        <i>Feels like <?php echo $weather->getFeelsLikeF(); ?>°</i>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-ios-<?php echo $weather->getIcon(); ?>"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">
+                      More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-yellow-gradient">
+                    <div class="inner">
+                      <h3>Vixen Run</sup></h3>
+                        <i>1800 Sat Oct 31</i>
+                    </div>
+                    <div class="icon">
+                      <i class="ion ion-android-calendar"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">
+                      More info <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6"></div>
+            <div class="col-lg-3 col-xs-6"></div>
+          </div>
+          <div class="row">
+            <section class="col-lg-6 connectedSortable">
+                <div class="box box-warning">
+                    <div class="box-header">
+                      <i class="fa fa-graduation-cap"></i>
+
+                      <h3 class="box-title">Grades</h3>
+
+                      <select class="pull-right" onchange="linechart($(this).val());">
+                          <option>Platoon</option>
+                          <option>Squad 1-1</option>
+                          <option>Squad 1-2</option>
+                          <option>Squad 1-3</option>
+                      </select>
+
+                    </div>
+                    <div class="box-body">
+                      <div id="line-chart" style="height: 300px;"></div>
+                    </div>
+                  </div>
+            </section>
+            <section class="col-lg-6 connectedSortable">
+            </section>
           </div>
 
         </section><!-- /.content -->
@@ -588,43 +675,123 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-
-    <!-- jQuery 2.1.4 -->
-    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-      $.widget.bridge('uibutton', $.ui.button);
+        function gd(year, month, day) {
+            return new Date(year, month - 1, day).getTime();
+        }
+        function gl(time) {
+            var d = new Date();
+            d.setTime(time);
+            var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            return d.getDate() + '' + monthNames[d.getMonth()] + '' + d.getFullYear();
+        }
+        //LINE randomly generated data
+        var sqd1 = [[gd(2015, 8, 16), 2.81], [gd(2015, 8, 23), 2.87], [gd(2015, 8, 30), 3.82], [gd(2015, 9, 6), 2.82], [gd(2015, 9, 13), 3.01], [gd(2015, 9, 20), 2.93], [gd(2015, 9, 27), 2.96], [gd(2015, 10, 4), 3.88], [gd(2015, 10, 11), 2.90], [gd(2015, 10, 18), 3.36], [gd(2015, 10, 25), 2.58], [gd(2015, 11, 1), 3.60], [gd(2015, 11, 8), 3.21], [gd(2015, 11, 15), 3.61], [gd(2015, 11, 22), 3.03], [gd(2015, 11, 29), 2.72], [gd(2015, 12, 6), 2.20], [gd(2015, 12, 13), 2.30]];
+        var sqd2 = [[gd(2015, 8, 16), 2.98], [gd(2015, 8, 23), 3.10], [gd(2015, 8, 30), 3.74], [gd(2015, 9, 6), 3.17], [gd(2015, 9, 13), 3.98], [gd(2015, 9, 20), 2.13], [gd(2015, 9, 27), 3.07], [gd(2015, 10, 4), 3.24], [gd(2015, 10, 11), 3.30], [gd(2015, 10, 18), 3.83], [gd(2015, 10, 25), 2.89], [gd(2015, 11, 1), 2.58], [gd(2015, 11, 8), 2.91], [gd(2015, 11, 15), 2.41], [gd(2015, 11, 22), 2.33], [gd(2015, 11, 29), 2.46], [gd(2015, 12, 6), 2.58], [gd(2015, 12, 13), 3.82]];
+        var sqd3 = [[gd(2015, 8, 16), 2.32], [gd(2015, 8, 23), 2.71], [gd(2015, 8, 30), 2.07], [gd(2015, 9, 6), 3.56], [gd(2015, 9, 13), 3.60], [gd(2015, 9, 20), 3.83], [gd(2015, 9, 27), 2.59], [gd(2015, 10, 4), 2.13], [gd(2015, 10, 11), 2.24], [gd(2015, 10, 18), 3.15], [gd(2015, 10, 25), 2.43], [gd(2015, 11, 1), 3.08], [gd(2015, 11, 8), 3.92], [gd(2015, 11, 15), 3.52], [gd(2015, 11, 22), 2.94], [gd(2015, 11, 29), 2.33], [gd(2015, 12, 6), 2.29], [gd(2015, 12, 13), 2.99]];
+        var plat = [[gd(2015, 8, 16), 2.70], [gd(2015, 8, 23), 2.89], [gd(2015, 8, 30), 3.21], [gd(2015, 9, 6), 2.88], [gd(2015, 9, 13), 3.53], [gd(2015, 9, 20), 2.96], [gd(2015, 9, 27), 2.87], [gd(2015, 10, 4), 3.08], [gd(2015, 10, 11), 2.81], [gd(2015, 10, 18), 3.45], [gd(2015, 10, 25), 2.63], [gd(2015, 11, 1), 3.09], [gd(2015, 11, 8), 3.35], [gd(2015, 11, 15), 3.18], [gd(2015, 11, 22), 2.77], [gd(2015, 11, 29), 2.50], [gd(2015, 12, 6), 2.36], [gd(2015, 12, 13), 3.04]];
+        var squad1 = {
+            data: sqd1,
+            color: "#ab172b",
+            label: 'Squad 1-1'
+        };
+        var squad2 = {
+            data: sqd2,
+            color: "#ab172b",
+            label: 'Squad 1-2'
+        };
+        var squad3 = {
+            data: sqd3,
+            color: "#ab172b",
+            label: 'Squad 1-3'
+        };
+        var platoon = {
+            data: plat,
+            color: "#ab172b",
+            label: 'Red Platoon'
+        };
+
+        function linechart(name) {
+            var chart;
+            switch (name) {
+                case 'Squad 1-1':
+                    chart = squad1;
+                    break;
+                case 'Squad 1-2':
+                    chart = squad2;
+                    break;
+                case 'Squad 1-3':
+                    chart = squad3;
+                    break;
+                case 'Platoon':
+                default:
+                    chart = platoon;
+                    break;
+            }
+            /*
+            * LINE CHART
+            * ----------
+            */
+            $.plot("#line-chart", [chart], {
+                grid: {
+                    hoverable: true,
+                    borderColor: "#f3f3f3",
+                    borderWidth: 1,
+                    tickColor: "#f3f3f3"
+                },
+                series: {
+                    shadowSize: 0,
+                    lines: {
+                        show: true
+                    },
+                    points: {
+                        show: false
+                    }
+                },
+                lines: {
+                    fill: false,
+                    color: ["#3c8dbc", "#f56954"]
+                },
+                legend: {
+                    show: false
+                },
+                yaxis: {
+                    label: "GPA",
+                    min: 0,
+                    max: 4
+                },
+                xaxis: {
+                    //ticks: [[1, "16AUG2015"], [2, "23AUG2015"], [3, "30AUG2015"], [4, "06SEP2015"], [5, "13SEP2015"], [6, "20SEP2015"], [7, "27SEP2015"], [8, "04OCT2015"], [9, "11OCT2015"], [10, "18OCT2015"], [11, "25OCT2015"], [12, "01NOV2015"], [13, "08NOV2015"], [14, "15NOV2015"], [15, "22NOV2015"], [16, "29NOV2015"], [17, "06DEC2015"], [18, "13DEC2015"]]
+                    mode: "time",
+                    timeformat: "%m/%d"
+                }
+            });
+            //Initialize tooltip on hover
+            $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
+                position: "absolute",
+                display: "none",
+                opacity: 0.8
+            }).appendTo("body");
+            $("#line-chart").bind("plothover", function (event, pos, item) {
+                if (item) {
+                    var x = item.datapoint[0].toFixed(2),
+                        y = item.datapoint[1].toFixed(2);
+                    //item.series.label
+                    $("#line-chart-tooltip").html(y + "<br>" + gl(x))
+                        .css({ top: item.pageY + 5, left: item.pageX + 5 })
+                        .fadeIn(200);
+                } else {
+                    $("#line-chart-tooltip").hide();
+                }
+            });
+            /* END LINE CHART */
+        };
+
+        $(function () {
+            linechart();
+        });
     </script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- Morris.js charts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="plugins/morris/morris.min.js"></script>
-    <!-- Sparkline -->
-    <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
-    <!-- jvectormap -->
-    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="plugins/knob/jquery.knob.js"></script>
-    <!-- daterangepicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-    <script src="plugins/daterangepicker/daterangepicker.js"></script>
-    <!-- datepicker -->
-    <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
-    <!-- Bootstrap WYSIHTML5 -->
-    <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-    <!-- Slimscroll -->
-    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="js/app.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="js/pages/dashboard.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="js/demo.js"></script>
   </body>
 </html>

@@ -3,6 +3,7 @@
     $user = new User();
     if(!$user->isLoggedIn())
         Redirect::to("../");
+    $db = DB::getInstance();
 ?>
 <!DOCTYPE html>
 <html>
@@ -415,41 +416,102 @@
                   <h3 class="box-title">Users</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="example2" class="table table-bordered table-hover">
+                  <?php
+                  $users = $db->get('users', array('1', '=', '1'))->results();
+                  ?>
+                  <table id="userstable" class="table table-bordered table-hover">
                     <thead>
                       <tr>
-                        <th>id</th>
-                        <th>username</th>
-                        <th>password</th>
-                        <th>salt</th>
-                        <th>first</th>
-                        <th>last</th>
-                        <th>group</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Last Accessed</th>
+                        <th>Password</th>
+                        <th>Role</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      <?php foreach($users as $iuser) { ?>
+                      <tr style="height: 40px;">
+                        <td><?php echo $iuser->first; ?></td>
+                        <td><?php echo $iuser->last; ?></td>
+                        <td><?php echo date('M d', strtotime($iuser->accessed)); ?></td>
+                        <td>
+                          <a href="#" data-toggle="modal" data-target="#passwordmodal">Change Password</a>
+                        </td>
+                        <td>
+                          <?php if($iuser->role < $user->data()->role || $iuser->id == $user->data()->id) { ?>
+                          <select onchange="alert('test');">
+                            <option value="1" <?php if($iuser->role == 4) echo 'selected'; if($user->data()->role < 4) echo 'disabled'; ?>>Super Admin</option>
+                            <option value="2" <?php if($iuser->role == 3) echo 'selected'; if($user->data()->role < 3) echo 'disabled'; ?>>Admin</option>
+                            <option value="3" <?php if($iuser->role == 2) echo 'selected'; ?>>Member</option>
+                            <option value="4" <?php if($iuser->role == 1) echo 'selected'; ?>>Non-Member</option>
+                          </select>
+                          <a href="#" style="margin-left: 10px; visibility: hidden;">Change</a>
+                          <?php } else {
+                            if($iuser->role == 4) echo 'Super Admin';
+                            if($iuser->role == 3) echo 'Admin';
+                            if($iuser->role == 2) echo 'Member';
+                            if($iuser->role == 1) echo 'Non-Member';
+                          } ?>
+                        </td>
+                        <!--<td><a href="#">Change Password</a></td>
+                        <td><a href="#">Change Role</a></td>
+                        <td><a href="#">Delete</a></td>--->
+                      </tr>
+                      <?php } ?>
+                      <!--<tr>
                         <td>1</td>
                         <td>admin</td>
                         <td>password</td>
-                        <td>salt</td>
+                        <td>µ»°ÊÁéGn»‰œždn_¢?rí<*&FÈ)ÖR¯ú</td>
                         <td>Mr.</td>
                         <td>Fox</td>
                         <td>1</td>
-                      </tr>
+                      </tr>-->
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>id</th>
-                        <th>username</th>
-                        <th>password</th>
-                        <th>salt</th>
-                        <th>first</th>
-                        <th>last</th>
-                        <th>group</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Last Accessed</th>
+                        <th>Password</th>
+                        <th>Role</th>
                       </tr>
                     </tfoot>
                   </table>
+                  <div class="modal fade" id="passwordmodal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label style="width: 150px;">Password:</label>
+                            <input id="pw-input" type="password" style="width: 200px;" />
+                            <i id="pw-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                            <a id="pw-input-error" href="#" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none;"><i class="fa fa-exclamation-circle" style="color: #ab172b;"></i></a>
+                            <br>
+                            <label style="width: 150px;">Confirm Password:</label>
+                            <input id="pw-check" type="password" style="width: 200px;" />
+                            <i id="pw-check-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                            <a id="pw-check-error" href="#" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none;"><i class="fa fa-exclamation-circle" style="color: #ab172b;"></i></a>
+                            <br>
+                            <label style="width: 150px;">Strength:</label>
+                            <div id="pw-strength" class="progress" style="width: 200px; display: inline-block; margin: 0 0 -6px 0; position: relative;">
+                            <div id="pw-strength-bar" class="progress-bar progress-bar-red" role="progressbar" style="width: 0%;"></div>
+                            <div id="pw-strength-text" style="text-align: center; position: absolute; width: 100%;">Very Weak (0%)</div>
+                            </div>
+                            <i id="pw-strength-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                            <a id="pw-strength-error" href="#" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none;"><i class="fa fa-exclamation-circle" style="color: #ab172b;"></i></a>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <button id="save" type="button" class="btn btn-primary disabled">Save changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
@@ -648,8 +710,9 @@
     <script src="../../js/demo.js"></script>
     <!-- page script -->
     <script>
+        var passed = false;
         $(function () {
-            $('#example2').DataTable({
+            $('#userstable').DataTable({
                 "paging": true,
                 "lengthChange": false,
                 "searching": false,
@@ -657,6 +720,206 @@
                 "info": true,
                 "autoWidth": false
             });
+        });
+        $('#pw-input').on('keyup', function () {
+            $('#pw-input-check').show();
+            $('#pw-input-error').hide();
+
+            var str = $(this).val();
+            var len = str.length;
+            function upp(str) {
+                return str.replace(/[^A-Z]/g, "").length;
+            }
+            function low(str) {
+                return str.replace(/[^a-z]/g, "").length;
+            }
+            function num(str) {
+                return str.replace(/[^0-9]/g, "").length;
+            }
+            function sym(str) {
+                return str.length - upp(str) - low(str) - num(str);
+            }
+
+            var strength = 0;
+            strength += len * 4;
+            strength += upp(str) > 0 ? (len - upp(str)) * 2 : 0;
+            strength += low(str) > 0 ? (len - low(str)) * 2 : 0;
+            strength += num(str) != len ? num(str) * 4 : 0;
+            strength += sym(str) != len ? sym(str) * 6 : 0;
+            strength += (num(str.substr(1, len - 2)) + sym(str.substr(1, len - 2))) * 2;
+            if (len >= 8) {
+                var reqnum = 0;
+                if (upp(str) >= 1)
+                    reqnum++;
+                if (low(str) >= 1)
+                    reqnum++;
+                if (num(str) >= 1)
+                    reqnum++;
+                if (sym(str) >= 1)
+                    reqnum++;
+                if (reqnum >= 3)
+                    strength += reqnum * 2 + 2;
+            }
+
+            if (upp(str) + low(str) == len)
+                strength -= len;
+            if (num(str) == len)
+                strength -= len;
+
+            var nRepInc = 0;
+            var nRepChar = 0;
+            for (var i = 0; i < len; i++) {
+                var jCharExists = false;
+                for (var j = 0; j < len; j++) {
+                    if (str[i] == str[j] && i != j) {
+                        jCharExists = true;
+                        nRepInc += Math.abs(len / (j - i));
+                    }
+                }
+                if (jCharExists) {
+                    nRepChar++;
+                    var nUnqChar = len - nRepChar;
+                    nRepInc = (nUnqChar) ? Math.ceil(nRepInc / nUnqChar) : Math.ceil(nRepInc);
+                }
+            }
+            strength -= nRepInc;
+
+            var consecUpper = 0;
+            var prevUpper = false;
+            for (var i = 0; i < len; i++) {
+                if (upp(str[i]) == 1) {
+                    if (prevUpper)
+                        consecUpper++;
+                    else
+                        prevUpper = true;
+                } else {
+                    prevUpper = false;
+                }
+            }
+            strength -= consecUpper * 2;
+
+            var consecLower = 0;
+            var prevLower = false;
+            for (var i = 0; i < len; i++) {
+                if (low(str[i]) == 1) {
+                    if (prevLower)
+                        consecLower++;
+                    else
+                        prevLower = true;
+                } else {
+                    prevLower = false;
+                }
+            }
+            strength -= consecLower * 2;
+
+            var consecNum = 0;
+            var prevNum = false;
+            for (var i = 0; i < len; i++) {
+                if (num(str[i]) == 1) {
+                    if (prevNum)
+                        consecNum++;
+                    else
+                        prevNum = true;
+                } else {
+                    prevNum = false;
+                }
+            }
+            strength -= consecNum * 2;
+
+            var sAlphas = "abcdefghijklmnopqrstuvwxyz";
+            var seqLetter = 0;
+            for (var i = 0; i < sAlphas.length - 2; i++) {
+                var sFwd = sAlphas.substr(i, 3);
+                var sRev = sFwd.split("").reverse().join("");
+                if (str.toLowerCase().indexOf(sFwd) != -1 || str.toLowerCase().indexOf(sRev) != -1)
+                    seqLetter++;
+            }
+            strength -= seqLetter * 3;
+
+            var sNumerics = "01234567890";
+            var seqNum = 0;
+            for (var i = 0; i < sNumerics.length - 2; i++) {
+                var sFwd = sNumerics.substr(i, 3);
+                var sRev = sFwd.split("").reverse().join("");
+                if (str.indexOf(sFwd) != -1 || str.indexOf(sRev) != -1)
+                    seqNum++;
+            }
+            strength -= seqNum * 3;
+
+            var sSymbols = ")!@#$%^&*()";
+            var seqSym = 0;
+            for (var i = 0; i < sSymbols.length - 2; i++) {
+                var sFwd = sSymbols.substr(i, 3);
+                var sRev = sFwd.split("").reverse().join("");
+                if (str.indexOf(sFwd) != -1 || str.indexOf(sRev) != -1)
+                    seqSym++;
+            }
+            strength -= seqSym * 3;
+
+            strength = Math.max(0, Math.min(strength, 100));
+
+            $('#pw-strength-bar').width(strength + '%');
+            if (strength < 20) {
+                $('#pw-strength-bar').removeClass();
+                $('#pw-strength-bar').addClass('progress-bar progress-bar-red');
+                $('#pw-strength-text').html('Very Weak (' + strength + '%)');
+            } else if (strength < 40) {
+                $('#pw-strength-bar').removeClass();
+                $('#pw-strength-bar').addClass('progress-bar progress-bar-red');
+                $('#pw-strength-text').html('Weak (' + strength + '%)');
+            } else if (strength < 60) {
+                $('#pw-strength-bar').removeClass();
+                $('#pw-strength-bar').addClass('progress-bar progress-bar-yellow');
+                $('#pw-strength-text').html('OK (' + strength + '%)');
+            } else if (strength < 80) {
+                $('#pw-strength-bar').removeClass();
+                $('#pw-strength-bar').addClass('progress-bar progress-bar-green');
+                $('#pw-strength-text').html('Strong (' + strength + '%)');
+            } else {
+                $('#pw-strength-bar').removeClass();
+                $('#pw-strength-bar').addClass('progress-bar progress-bar-green');
+                $('#pw-strength-text').html('Very Strong (' + strength + '%)');
+            }
+
+            if (len < 8) {
+                $('#pw-input-error').attr('title', 'Password must be at least 8 characters long.');
+                $('#pw-input-check').hide();
+                $('#pw-input-error').show();
+                passed = false;
+                $('.modal-footer #save').removeClass();
+                $('.modal-footer #save').addClass('btn btn-primary disabled');
+            } else if (strength < 25) {
+                $('#pw-input-error').attr('title', 'Password strength must be at least 25.');
+                $('#pw-input-check').hide();
+                $('#pw-input-error').show();
+                passed = false;
+                $('.modal-footer #save').removeClass();
+                $('.modal-footer #save').addClass('btn btn-primary disabled');
+            } else {
+                passed = true;
+                if ($(this).val() == $('#pw-check').val()) {
+                    $('.modal-footer #save').removeClass();
+                    $('.modal-footer #save').addClass('btn btn-primary');
+                } else {
+                    $('.modal-footer #save').removeClass();
+                    $('.modal-footer #save').addClass('btn btn-primary disabled');
+                }
+            }
+        });
+        $('#pw-check').on('keyup', function () {
+            $('#pw-check-check').show();
+            $('#pw-check-error').hide();
+
+            if ($(this).val() != $('#pw-input').val()) {
+                $('#pw-check-error').attr('title', 'The passwords you entered do not match.');
+                $('#pw-check-check').hide();
+                $('#pw-check-error').show();
+                $('.modal-footer #save').removeClass();
+                $('.modal-footer #save').addClass('btn btn-primary disabled');
+            } else if (passed) {
+                $('.modal-footer #save').removeClass();
+                $('.modal-footer #save').addClass('btn btn-primary');
+            }
         });
     </script>
   </body>

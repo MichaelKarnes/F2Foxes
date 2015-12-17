@@ -25,6 +25,9 @@ class User {
 		} else {
 			$this->find($user);
 		}
+        if(isset($this->_db) && isset($this->_data)) {
+            $this->_db->update('users', $this->_data->id, array('accessed' => date('Y-m-d')));
+        }
 	}
 	
 	public function create($fields = array()) {
