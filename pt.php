@@ -54,7 +54,7 @@ $userid=$_SESSION ['userid'];
             <h1> <?php echo $username . "'s "; ?> PT Scores</h1>
             <table style="width: 90%">
             <tr>
-                <td>Date</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
+                <td>Date</td> <td>Type</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
                 <td>Raw Sit Ups</td> <td>Sit Up Score</td>
                 <td>Raw Run</td> <td>Run Score</td> <td>Overall Score</td> 
                 <td>Pass/Fail</td> <td>Delete</td>
@@ -68,6 +68,7 @@ $userid=$_SESSION ['userid'];
                         #while data can be fetched, create HTML Table of PT Scores
                         echo "<tr>" . 
                         "<td>" . $row["Date"] . "</td>" .
+				"<td>" . $row["Type"] . "</td>" . 
                         "<td>" . $row["Push_Ups_Raw"] . "</td>" .
                         "<td>" . $row["Push_Ups_Score"] . "</td>" .
                         "<td>" . $row["Sit_Ups_Raw"] . "</td>" .

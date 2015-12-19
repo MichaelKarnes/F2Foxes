@@ -158,8 +158,8 @@
            #input data into database table called PT, see cPanel for more info
            #the null field is for the auto increment unique row key
            #runTime was set near the very top of this file
-           $query = $db->query("INSERT INTO PT VALUES('',
-           '$userid', '$lastName', '$firstName', '$date', '$pushUpsRaw',
+           $query = $db->query("INSERT INTO PT VALUES('', 
+           '$userid', '$lastName', '$firstName', '$date', '$POST_['type']', '$pushUpsRaw',
            '$pushUpsScore', '$sitUpsRaw',
            '$sitUpsScore', '$runRaw', '$runTime', '$runScore',
            '$overallScore', '$passOrF')");
