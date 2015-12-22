@@ -1,8 +1,12 @@
 <?php
+    // initialize core database connection and import core classes
     include_once '../../core/init.php';
+    // get the current user
     $user = new User();
+     // kick the user out if the he's not logged in
     if(!$user->isLoggedIn())
-        Redirect::to("../");
+        Redirect::to("../../");
+    // store the database connection into $db
     $db = DB::getInstance();
 ?>
 <!DOCTYPE html>
@@ -10,7 +14,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>F-2 Foxes | Grades</title>
+    <title>F-2 Foxes | My Grades</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -77,7 +81,7 @@
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="../../index2.html" class="logo">
+        <a href="../../" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini">F-2</span>
           <!-- logo for regular state and mobile devices -->
@@ -364,7 +368,7 @@
               </a>
               <ul class="treeview-menu" style="display: none;">
                 <li><a href="../../pages/users"><i class="fa fa-circle-o"></i> Users</a></li>
-                <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Groups</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Groups</a></li>
               </ul>
             </li>
             <li>
@@ -380,7 +384,7 @@
             </li>
             <li class="active">
               <a href="../../pages/grades">
-                <i class="fa fa-graduation-cap"></i> <span>Grades</span>
+                <i class="fa fa-graduation-cap"></i> <span>My Grades</span>
               </a>
             </li>
             <li>
@@ -400,9 +404,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Squad 1-1</a></li>
-                <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Team 1-1a</a></li>
-                <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Team 1-1b</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Squad 1-1</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Team 1-1a</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Team 1-1b</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -412,9 +416,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Page 1</a></li>
-                <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Page 2</a></li>
-                <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Page 3</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Page 1</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Page 2</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Page 3</a></li>
               </ul>
             </li>
           </ul>
@@ -431,20 +435,48 @@
             <small>Control panel</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
+            <li><a href="../../"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">My Grades</li>
           </ol>
         </section>
 
         <!-- Main content -->
         <section class="content">
-          <!-- Small boxes (Stat box) -->
+          <!-- Alert -->
           <div class="row">
-            <div class="col-lg-12 col-xs-12">
+            <div class="col-xs-12">
                 <div class="alert alert-warning alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <i class="icon fa fa-ban"></i> Danger alert preview. This alert is dismissable.
                 </div>
+            </div>
+          </div>
+          <!-- Grades stuff -->
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- Custom tabs (Charts with tabs)-->
+              <div class="nav-tabs-custom">
+                <!-- Tabs within a box -->
+                <ul class="nav nav-tabs pull-right">
+                  <li class="active"><a href="#engr-111" data-toggle="tab">ENGR 111</a></li>
+                  <li><a href="kine-198" data-toggle="tab">KINE 198</a></li>
+                  <li><a href="#sales-chart" data-toggle="tab">MATH 152</a></li>
+                  <li><a href="#sales-chart" data-toggle="tab">PHYS 218</a></li>
+                  <li><a href="#sales-chart" data-toggle="tab">POLS 206</a></li>
+                  <li><a href="#sales-chart" data-toggle="tab">+</a></li>
+                  <li class="pull-left header"><i class="fa fa-graduation-cap"></i> My Grades</li>
+                </ul>
+                <div class="tab-content">
+                  <div class="chart tab-pane active" id="engr-111" style="position: relative; height: 300px;">
+                    <h3>Foundations of Engineering I <a href="#"><i class="fa fa-pencil" style="font-size: 12pt; color: #ccc;"></i></a></h3>
+                    <a href="#"><i class="fa fa-trash" style="font-size: 20pt; position: absolute; bottom: 0; right: 0; color: #333;"></i></a>
+                  </div>
+                  <div class="chart tab-pane" id="kine-198" style="position: relative; height: 300px;">
+                      Health & Fitness - Aerobic Walking
+                  </div>
+                </div>
+              </div>
+              <!-- /.nav-tabs-custom -->
             </div>
           </div>
         </section><!-- /.content -->

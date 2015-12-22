@@ -16,21 +16,21 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="css/AdminLTE.css">
+    <link rel="stylesheet" href="../../css/AdminLTE.css">
     <!-- iCheck -->
-    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
+    <link rel="stylesheet" href="../../plugins/iCheck/flat/blue.css">
     <!-- Morris chart -->
-    <link rel="stylesheet" href="plugins/morris/morris.css">
+    <link rel="stylesheet" href="../../plugins/morris/morris.css">
     <!-- jvectormap -->
-    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <link rel="stylesheet" href="../../plugins/jvectormap/jquery-jvectormap-1.2.2.css">
     <!-- Date Picker -->
-    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="../../plugins/datepicker/datepicker3.css">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
+    <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
      <!-- jQuery 2.1.4 -->
-    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="../../plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -41,39 +41,39 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="plugins/morris/morris.min.js"></script>
+    <script src="../../plugins/morris/morris.min.js"></script>
     <!-- Sparkline -->
-    <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="../../plugins/sparkline/jquery.sparkline.min.js"></script>
     <!-- jvectormap -->
-    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="../../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="../../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <!-- jQuery Knob Chart -->
-    <script src="plugins/knob/jquery.knob.js"></script>
+    <script src="../../plugins/knob/jquery.knob.js"></script>
     <!-- daterangepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-    <script src="plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="../../plugins/daterangepicker/daterangepicker.js"></script>
     <!-- datepicker -->
-    <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="../../plugins/datepicker/bootstrap-datepicker.js"></script>
     <!-- Bootstrap WYSIHTML5 -->
-    <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
     <!-- Slimscroll -->
-    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
-    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <script src="../../plugins/fastclick/fastclick.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="js/app.js"></script>
+    <script src="../../js/app.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="js/demo.js"></script>
+    <script src="../../js/demo.js"></script>
     <!-- FLOT CHARTS -->
-    <script src="plugins/flot/jquery.flot.min.js"></script>
-    <script src="plugins/flot/jquery.flot.time.min.js"></script>
+    <script src="../../plugins/flot/jquery.flot.min.js"></script>
+    <script src="../../plugins/flot/jquery.flot.time.min.js"></script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="../../" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini">F-2</span>
           <!-- logo for regular state and mobile devices -->
@@ -101,7 +101,7 @@
                       <li><!-- start message -->
                         <a href="#">
                           <div class="pull-left">
-                            <img src="images/rank-ssg.jpg" class="img-circle" alt="User Image">
+                            <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Support Team
@@ -113,7 +113,7 @@
                       <li>
                         <a href="#">
                           <div class="pull-left">
-                            <img src="images/user3-128x128.jpg" class="img-circle" alt="User Image">
+                            <img src="../../images/user3-128x128.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             AdminLTE Design Team
@@ -125,7 +125,7 @@
                       <li>
                         <a href="#">
                           <div class="pull-left">
-                            <img src="images/user4-128x128.jpg" class="img-circle" alt="User Image">
+                            <img src="../../images/user4-128x128.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Developers
@@ -137,7 +137,7 @@
                       <li>
                         <a href="#">
                           <div class="pull-left">
-                            <img src="images/user3-128x128.jpg" class="img-circle" alt="User Image">
+                            <img src="../../images/user3-128x128.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Sales Department
@@ -149,7 +149,7 @@
                       <li>
                         <a href="#">
                           <div class="pull-left">
-                            <img src="images/user4-128x128.jpg" class="img-circle" alt="User Image">
+                            <img src="../../images/user4-128x128.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Reviewers
@@ -277,13 +277,13 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="images/rank-ssg.jpg" class="user-image" alt="User Image">
+                  <img src="../../images/rank-ssg.jpg" class="user-image" alt="User Image">
                   <span class="hidden-xs"><?php echo $user->data()->first." ".$user->data()->last; ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="images/rank-ssg.jpg" class="img-circle" alt="User Image">
+                    <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
                     <p>
                       <?php echo $user->data()->first." ".$user->data()->last; ?> - Web Developer
                       <small>Member since Nov. 2012</small>
@@ -307,7 +307,7 @@
                       <a href="#" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="actions/logout.php" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="../../actions/logout.php" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -327,7 +327,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="images/rank-ssg.jpg" class="img-circle" alt="User Image">
+              <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p><?php echo $user->data()->first." ".$user->data()->last; ?></p>
@@ -348,7 +348,7 @@
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="active">
-              <a href="#">
+              <a href="../../">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
               </a>
             </li>
@@ -360,7 +360,7 @@
               </a>
               <ul class="treeview-menu" style="display: none;">
                 <li><a href="../pages/users"><i class="fa fa-circle-o"></i> Users</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Groups</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Groups</a></li>
               </ul>
             </li>
             <li>
@@ -376,7 +376,7 @@
             </li>
             <li>
               <a href="../pages/grades">
-                <i class="fa fa-graduation-cap"></i> <span>Grades</span>
+                <i class="fa fa-graduation-cap"></i> <span>My Grades</span>
               </a>
             </li>
             <li>
@@ -396,9 +396,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Squad 1-1</a></li>
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Team 1-1a</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Team 1-1b</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Squad 1-1</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Team 1-1a</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Team 1-1b</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -408,9 +408,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Page 1</a></li>
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Page 2</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Page 3</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Page 1</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Page 2</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Page 3</a></li>
               </ul>
             </li>
           </ul>
@@ -427,8 +427,7 @@
             <small>Control panel</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
+            <li><a href="../../"><i class="fa fa-dashboard"></i> Home</a></li>
           </ol>
         </section>
 
@@ -439,7 +438,7 @@
             <div class="col-lg-12 col-xs-12">
                 <div class="alert alert-warning alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <i class="icon fa fa-ban"></i> Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.
+                    <i class="icon fa fa-ban"></i> Danger alert preview. This alert is dismissable.
                 </div>
             </div>
           </div>
@@ -792,6 +791,6 @@
         });
     </script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="js/pages/dashboard.js"></script>
+    <script src="../../js/pages/dashboard.js"></script>
   </body>
 </html>

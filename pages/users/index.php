@@ -1,8 +1,12 @@
 <?php
+    // initialize core database connection and import core classes
     include_once '../../core/init.php';
+    // get the current user
     $user = new User();
-    if(!$user->isLoggedIn())
-        Redirect::to("../");
+     // kick the user out if the he's not logged in or doesn't have sufficient privileges
+    if(!$user->isLoggedIn() || $user->data()->role < 3)
+        Redirect::to("../../");
+    // store the database connection into $db
     $db = DB::getInstance();
 ?>
 <!DOCTYPE html>
@@ -23,9 +27,6 @@
     <link rel="stylesheet" href="../../plugins/datatables/dataTables.bootstrap.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../css/AdminLTE.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../css/skins/_all-skins.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,7 +40,7 @@
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="../../" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini">F-2</span>
           <!-- logo for regular state and mobile devices -->
@@ -67,7 +68,7 @@
                       <li><!-- start message -->
                         <a href="#">
                           <div class="pull-left">
-                            <img src="../../images/staff-sgt-160x160.jpg" class="img-circle" alt="User Image">
+                            <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Support Team
@@ -243,15 +244,15 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="../../images/staff-sgt-160x160.jpg" class="user-image" alt="User Image">
-                  <span class="hidden-xs">Alexander Pierce</span>
+                  <img src="../../images/rank-ssg.jpg" class="user-image" alt="User Image">
+                  <span class="hidden-xs"><?php echo $user->data()->first." ".$user->data()->last; ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="../../images/staff-sgt-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
                     <p>
-                      Alexander Pierce - Web Developer
+                      <?php echo $user->data()->first." ".$user->data()->last; ?> - Web Developer
                       <small>Member since Nov. 2012</small>
                     </p>
                   </li>
@@ -273,7 +274,7 @@
                       <a href="#" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="actions/logout.php" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="../../actions/logout.php" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -293,10 +294,10 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="../../images/staff-sgt-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p><?php echo $user->data()->first." ".$user->data()->last; ?></p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
@@ -314,7 +315,7 @@
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="">
-              <a href="#">
+              <a href="../../">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
               </a>
             </li>
@@ -322,11 +323,11 @@
               <a href="#">
                 <i class="fa fa-user"></i>
                 <span>Admin</span>
-                <i class="fa fa-angle-down pull-right"></i>
+                <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li class="active"><a href="../../pages/users"><i class="fa fa-circle-o"></i> Users</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Groups</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Groups</a></li>
               </ul>
             </li>
             <li>
@@ -341,8 +342,8 @@
               </a>
             </li>
             <li>
-              <a href="#">
-                <i class="fa fa-graduation-cap"></i> <span>Grades</span>
+              <a href="../../pages/grades">
+                <i class="fa fa-graduation-cap"></i> <span>My Grades</span>
               </a>
             </li>
             <li>
@@ -362,9 +363,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Squad 1-1</a></li>
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Team 1-1a</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Team 1-1b</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Squad 1-1</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Team 1-1a</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Team 1-1b</a></li>
               </ul>
             </li>
             <li class="treeview">
@@ -374,9 +375,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu" style="display: none;">
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Page 1</a></li>
-                <li><a href="index.html"><i class="fa fa-circle-o"></i> Page 2</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Page 3</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Page 1</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Page 2</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Page 3</a></li>
               </ul>
             </li>
           </ul>
@@ -393,30 +394,33 @@
             <small>Control panel</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
+            <li><a href="../../"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Users</li>
           </ol>
         </section>
 
         <!-- Main content -->
         <section class="content">
-          <!-- Small boxes (Stat box) -->
+          <!-- Alert -->
           <div class="row">
             <div class="col-lg-12 col-xs-12">
                 <div class="alert alert-warning alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <i class="icon fa fa-ban"></i> Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.
+                    <i class="icon fa fa-ban"></i> Danger alert preview. This alert is dismissable.
                 </div>
             </div>
           </div>
+          <!-- Users table -->
           <div class="row">
             <div class="col-xs-12">
               <div class="box">
+                <!-- Header -->
                 <div class="box-header">
                   <h3 class="box-title">Users</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <?php
+                  // get an array of every user in the system
                   $users = $db->get('users', array('1', '=', '1'))->results();
                   ?>
                   <table id="userstable" class="table table-bordered table-hover">
@@ -446,7 +450,7 @@
                             <option value="3" <?php if($iuser->role == 2) echo 'selected'; ?>>Member</option>
                             <option value="4" <?php if($iuser->role == 1) echo 'selected'; ?>>Non-Member</option>
                           </select>
-                          <a href="#" style="margin-left: 10px; visibility: hidden;">Change</a>
+                          <a href="#" id="changerole" style="margin-left: 10px; visibility: hidden;">Change</a>
                           <?php } else {
                             if($iuser->role == 4) echo 'Super Admin';
                             if($iuser->role == 3) echo 'Admin';
@@ -454,20 +458,8 @@
                             if($iuser->role == 1) echo 'Non-Member';
                           } ?>
                         </td>
-                        <!--<td><a href="#">Change Password</a></td>
-                        <td><a href="#">Change Role</a></td>
-                        <td><a href="#">Delete</a></td>--->
                       </tr>
                       <?php } ?>
-                      <!--<tr>
-                        <td>1</td>
-                        <td>admin</td>
-                        <td>password</td>
-                        <td>µ»°ÊÁéGn»‰œždn_¢?rí<*&FÈ)ÖR¯ú</td>
-                        <td>Mr.</td>
-                        <td>Fox</td>
-                        <td>1</td>
-                      </tr>-->
                     </tbody>
                     <tfoot>
                       <tr>
@@ -490,7 +482,7 @@
                             <label style="width: 150px;">Password:</label>
                             <input id="pw-input" type="password" style="width: 200px;" />
                             <i id="pw-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
-                            <a id="pw-input-error" href="#" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none;"><i class="fa fa-exclamation-circle" style="color: #ab172b;"></i></a>
+                            <i id="pw-input-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
                             <br>
                             <label style="width: 150px;">Confirm Password:</label>
                             <input id="pw-check" type="password" style="width: 200px;" />
@@ -503,7 +495,7 @@
                             <div id="pw-strength-text" style="text-align: center; position: absolute; width: 100%;">Very Weak (0%)</div>
                             </div>
                             <i id="pw-strength-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
-                            <a id="pw-strength-error" href="#" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none;"><i class="fa fa-exclamation-circle" style="color: #ab172b;"></i></a>
+                            <i id="pw-strength-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -710,62 +702,78 @@
     <script src="../../js/demo.js"></script>
     <!-- page script -->
     <script>
-        var passed = false;
-        $(function () {
+        /*
+            Users Table
+        */
+
+        $(function () { // called when the page finishes loading
+            // create the Users table
             $('#userstable').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
+                "paging": false, // do you want the table to be separated into pages if there are too many rows?
+                "lengthChange": false, // not sure what this does...
+                "searching": true, // do you want to be able to search through the table using a search box?
+                "ordering": true, // do you want to be able to change whether a column is displayed in ascending or decending order?
+                "info": false, // do you want the table to display info about the columns displayed (e.g. "Showing x of y entries")?
+                "autoWidth": false // not sure what this does...
             });
         });
-        $('#pw-input').on('keyup', function () {
+
+        /*
+            Password Change Popup
+        */
+
+        $('#pw-input').on('keyup', function () { // called whenever the user releases a key when the Password input box is selected
+            // by default, assume the user passes all minimum requirements
+            // show the check icon and hide the error icon
             $('#pw-input-check').show();
             $('#pw-input-error').hide();
 
-            var str = $(this).val();
-            var len = str.length;
-            function upp(str) {
+            /* Variables that will be used a lot */
+
+            var str = $(this).val(); // the string from the Password input box
+            var len = str.length; // length of the string from the Password input box
+            var strength = 0; // strength of the password, assume 0 by default
+
+            /* Common operations that will be used a lot */
+
+            function upp(str) { // returns the number of upper case alphabetic characters in a string (A-Z)
                 return str.replace(/[^A-Z]/g, "").length;
             }
-            function low(str) {
+            function low(str) { // returns the number of lower case alphabetic characters in a string (a-z)
                 return str.replace(/[^a-z]/g, "").length;
             }
-            function num(str) {
+            function num(str) { // returns the number of numeric characters in a string (0-9)
                 return str.replace(/[^0-9]/g, "").length;
             }
-            function sym(str) {
+            function sym(str) { // returns the number of symbolic characters in a string (anything not an alphabetic or numeric character)
                 return str.length - upp(str) - low(str) - num(str);
             }
 
-            var strength = 0;
-            strength += len * 4;
-            strength += upp(str) > 0 ? (len - upp(str)) * 2 : 0;
-            strength += low(str) > 0 ? (len - low(str)) * 2 : 0;
-            strength += num(str) != len ? num(str) * 4 : 0;
-            strength += sym(str) != len ? sym(str) * 6 : 0;
-            strength += (num(str.substr(1, len - 2)) + sym(str.substr(1, len - 2))) * 2;
-            if (len >= 8) {
+            /* Bonuses to password strength */
+            // source: http://askthegeek.kennyhart.com/password-meter/
+
+            strength += len * 4; // number of characters
+            strength += upp(str) > 0 ? (len - upp(str)) * 2 : 0; // uppercase letters
+            strength += low(str) > 0 ? (len - low(str)) * 2 : 0; // lowercase letters
+            strength += num(str) != len ? num(str) * 4 : 0; // numbers
+            strength += sym(str) != len ? sym(str) * 6 : 0; // symbols
+            strength += (num(str.substr(1, len - 2)) + sym(str.substr(1, len - 2))) * 2; // middle numbers or symbols
+            // requirements - must pass both requirements to get bonuses
+            if (len >= 8) { // minimum of 8 characters in length
                 var reqnum = 0;
-                if (upp(str) >= 1)
-                    reqnum++;
-                if (low(str) >= 1)
-                    reqnum++;
-                if (num(str) >= 1)
-                    reqnum++;
-                if (sym(str) >= 1)
-                    reqnum++;
-                if (reqnum >= 3)
-                    strength += reqnum * 2 + 2;
+                if (upp(str) >= 1) reqnum++; // at least one uppercase letter
+                if (low(str) >= 1) reqnum++; // at least one  lowercase letter
+                if (num(str) >= 1) reqnum++; // at least one  number
+                if (sym(str) >= 1) reqnum++; // at least one  symbol
+                if (reqnum >= 3) strength += reqnum * 2 + 2; // if you meet at least 3 of these requirements, you get bonuses
             }
 
-            if (upp(str) + low(str) == len)
-                strength -= len;
-            if (num(str) == len)
-                strength -= len;
+            /* Deductions to password strength */
 
+            if (upp(str) + low(str) == len) strength -= len; // letters only
+            if (num(str) == len) strength -= len; // numbers only
+
+            // repeat characters (case insensitive)
             var nRepInc = 0;
             var nRepChar = 0;
             for (var i = 0; i < len; i++) {
@@ -784,6 +792,7 @@
             }
             strength -= nRepInc;
 
+            // consecutive uppercase letters
             var consecUpper = 0;
             var prevUpper = false;
             for (var i = 0; i < len; i++) {
@@ -798,6 +807,7 @@
             }
             strength -= consecUpper * 2;
 
+            // consecutive lowercase letters
             var consecLower = 0;
             var prevLower = false;
             for (var i = 0; i < len; i++) {
@@ -811,7 +821,8 @@
                 }
             }
             strength -= consecLower * 2;
-
+            
+            // consecutive numbers
             var consecNum = 0;
             var prevNum = false;
             for (var i = 0; i < len; i++) {
@@ -826,6 +837,7 @@
             }
             strength -= consecNum * 2;
 
+            // sequential letters (e.g. abc or zyx)
             var sAlphas = "abcdefghijklmnopqrstuvwxyz";
             var seqLetter = 0;
             for (var i = 0; i < sAlphas.length - 2; i++) {
@@ -836,6 +848,7 @@
             }
             strength -= seqLetter * 3;
 
+            // sequential numbers (e.g. 123 or 654)
             var sNumerics = "01234567890";
             var seqNum = 0;
             for (var i = 0; i < sNumerics.length - 2; i++) {
@@ -846,6 +859,7 @@
             }
             strength -= seqNum * 3;
 
+            // sequential symbols (e.g. %^& or #@!)
             var sSymbols = ")!@#$%^&*()";
             var seqSym = 0;
             for (var i = 0; i < sSymbols.length - 2; i++) {
@@ -856,67 +870,88 @@
             }
             strength -= seqSym * 3;
 
+            // limit strength to between 0 and 100
             strength = Math.max(0, Math.min(strength, 100));
 
+            /* Style updating */
+
+            // update Strength bar length
             $('#pw-strength-bar').width(strength + '%');
-            if (strength < 20) {
+
+            // update Strength bar color and text
+            if (strength < 20) { // red zone (very week)
                 $('#pw-strength-bar').removeClass();
                 $('#pw-strength-bar').addClass('progress-bar progress-bar-red');
                 $('#pw-strength-text').html('Very Weak (' + strength + '%)');
-            } else if (strength < 40) {
+            } else if (strength < 40) { // red zone (weak)
                 $('#pw-strength-bar').removeClass();
                 $('#pw-strength-bar').addClass('progress-bar progress-bar-red');
                 $('#pw-strength-text').html('Weak (' + strength + '%)');
-            } else if (strength < 60) {
+            } else if (strength < 60) { // yellow zone (ok)
                 $('#pw-strength-bar').removeClass();
                 $('#pw-strength-bar').addClass('progress-bar progress-bar-yellow');
                 $('#pw-strength-text').html('OK (' + strength + '%)');
-            } else if (strength < 80) {
+            } else if (strength < 80) { // green zone (strong)
                 $('#pw-strength-bar').removeClass();
                 $('#pw-strength-bar').addClass('progress-bar progress-bar-green');
                 $('#pw-strength-text').html('Strong (' + strength + '%)');
-            } else {
+            } else { // green zone (very strong)
                 $('#pw-strength-bar').removeClass();
                 $('#pw-strength-bar').addClass('progress-bar progress-bar-green');
                 $('#pw-strength-text').html('Very Strong (' + strength + '%)');
             }
 
-            if (len < 8) {
-                $('#pw-input-error').attr('title', 'Password must be at least 8 characters long.');
+            /* Error checking */
+
+            var passed = false; // represents whether the password passes all minimum requirements
+
+            if (len < 8) { // if the password length is < 8
+                // change to the error icon and set the tooltip to 'Password must be at least 8 characters long.'
+                $('#pw-input-error').attr('title', 'Password must be at least 8 characters long.').tooltip('fixTitle');
                 $('#pw-input-check').hide();
                 $('#pw-input-error').show();
-                passed = false;
+                passed = false; // fails minimum requirements
                 $('.modal-footer #save').removeClass();
                 $('.modal-footer #save').addClass('btn btn-primary disabled');
-            } else if (strength < 25) {
-                $('#pw-input-error').attr('title', 'Password strength must be at least 25.');
+            } else if (strength < 25) { // if the password strength is < 25
+                // change to the error icon and set the tooltip to 'Password strength must be at least 25.'
+                $('#pw-input-error').attr('title', 'Password strength must be at least 25.').tooltip('fixTitle');
                 $('#pw-input-check').hide();
                 $('#pw-input-error').show();
-                passed = false;
+                passed = false; // fails minimum requirements
+                // disable the Save Changes button
                 $('.modal-footer #save').removeClass();
                 $('.modal-footer #save').addClass('btn btn-primary disabled');
             } else {
-                passed = true;
-                if ($(this).val() == $('#pw-check').val()) {
+                passed = true; // passes minimum requirements
+                if ($(this).val() == $('#pw-check').val()) { // if the passwords match
+                    // enable the Save Changes button
                     $('.modal-footer #save').removeClass();
                     $('.modal-footer #save').addClass('btn btn-primary');
-                } else {
+                } else { // if the passwords don't match
+                    // disable the Save Changes button
                     $('.modal-footer #save').removeClass();
                     $('.modal-footer #save').addClass('btn btn-primary disabled');
                 }
             }
         });
-        $('#pw-check').on('keyup', function () {
+
+        $('#pw-check').on('keyup', function () { // called whenever the user releases a key when the Confirm Password input box is selected
+            // by default, assume the user passes validation
+            // show the check icon and hide the error icon
             $('#pw-check-check').show();
             $('#pw-check-error').hide();
 
-            if ($(this).val() != $('#pw-input').val()) {
-                $('#pw-check-error').attr('title', 'The passwords you entered do not match.');
+            if ($(this).val() != $('#pw-input').val()) { // if the passwords don't match
+                // change to the error icon and set the tooltip to 'The passwords you entered do not match.'
+                $('#pw-check-error').attr('title', 'The passwords you entered do not match.').tooltip('fixTitle');
                 $('#pw-check-check').hide();
                 $('#pw-check-error').show();
+                // disable the Save Changes button
                 $('.modal-footer #save').removeClass();
                 $('.modal-footer #save').addClass('btn btn-primary disabled');
-            } else if (passed) {
+            } else if (passed) { // if the passwords match and the password meets all requirements
+                // enable the Save Changes button
                 $('.modal-footer #save').removeClass();
                 $('.modal-footer #save').addClass('btn btn-primary');
             }
