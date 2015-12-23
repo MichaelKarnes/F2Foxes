@@ -3,23 +3,30 @@ error_reporting(E_ERROR | E_PARSE);
 session_start();
 
 $GLOBALS['config'] = array(
-	'mysql' => array(
+    'cpanel'    => array(
+        'ip'        => '192.232.249.164',
+		'username'  => 'km310765',
+		'password'  => 'BestInAcademicsF2!',
+        'domain'    => 'f2foxes.com',
+        'port'      => 2083
+    ),
+	'mysql'     => array(
 		/*'host' => 'localhost',
 		'username' => 'f2foxesUp5qu',
 		'password' => '5K;0WZP^?o@;',
 		'db' => 'f2foxes'*/
-        'host' => '192.232.249.164',
-		'username' => 'km310765_admin',
-		'password' => 'Aftermath2015',
-		'db' => 'km310765_f2foxes'
+        'host'      => '192.232.249.164',
+		'username'  => 'km310765_admin',
+		'password'  => 'Aftermath2015',
+		'db'        => 'km310765_f2foxes'
 	),
-	'remember' => array(
-		'cookie_name' => 'hash',
+	'remember'  => array(
+		'cookie_name'   => 'hash',
 		'cookie_expiry' => 604800
 	),
-	'session' => array(
-		'session_name' => 'user',
-		'token_name' => 'token'
+	'session'   => array(
+		'session_name'  => 'user',
+		'token_name'    => 'token'
 	)
 );
 

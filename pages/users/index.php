@@ -8,6 +8,10 @@
         Redirect::to("../../");
     // store the database connection into $db
     $db = DB::getInstance();
+    // create a token to submit with all forms
+    $token = Token::generate();
+    // store any errors returned to the page into $error
+    $error = Session::flash('error');
 ?>
 <!DOCTYPE html>
 <html>
@@ -401,6 +405,17 @@
 
         <!-- Main content -->
         <section class="content">
+          <!-- Error -->
+          <?php if(!empty($error)) { ?>
+          <div class="row">
+            <div class="col-lg-12 col-xs-12">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <i class="icon fa fa-ban"></i> <?php echo $error; ?>
+                </div>
+            </div>
+          </div>
+          <?php } ?>
           <!-- Alert -->
           <div class="row">
             <div class="col-lg-12 col-xs-12">
@@ -431,32 +446,50 @@
                         <th>Last Accessed</th>
                         <th>Password</th>
                         <th>Role</th>
+                        <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php foreach($users as $iuser) { ?>
-                      <tr style="height: 40px;">
+                      <tr id="user-<?php echo $iuser->id; ?>" style="height: 40px;">
                         <td><?php echo $iuser->first; ?></td>
                         <td><?php echo $iuser->last; ?></td>
                         <td><?php echo date('M d', strtotime($iuser->accessed)); ?></td>
                         <td>
-                          <a href="#" data-toggle="modal" data-target="#passwordmodal">Change Password</a>
+                          <?php if($iuser->role < $user->data()->role || $iuser->id == $user->data()->id) { ?>
+                          <a href="#" data-toggle="modal" data-target="#passwordmodal" onclick="$('#passwordmodal #id').val(<?php echo $iuser->id; ?>);">Change Password</a>
+                          <?php } else { ?>
+                          Change Password
+                          <?php } ?>
                         </td>
                         <td>
                           <?php if($iuser->role < $user->data()->role || $iuser->id == $user->data()->id) { ?>
-                          <select onchange="alert('test');">
-                            <option value="1" <?php if($iuser->role == 4) echo 'selected'; if($user->data()->role < 4) echo 'disabled'; ?>>Super Admin</option>
-                            <option value="2" <?php if($iuser->role == 3) echo 'selected'; if($user->data()->role < 3) echo 'disabled'; ?>>Admin</option>
-                            <option value="3" <?php if($iuser->role == 2) echo 'selected'; ?>>Member</option>
-                            <option value="4" <?php if($iuser->role == 1) echo 'selected'; ?>>Non-Member</option>
+                          <select onchange="selectrole(<?php echo $iuser->id.", ".$iuser->role; ?>, $(this).val());">
+                            <option value="4" <?php if($iuser->role == 4) echo 'selected'; if($user->data()->role < 4) echo 'disabled'; ?>>Super Admin</option>
+                            <option value="3" <?php if($iuser->role == 3) echo 'selected'; if($user->data()->role < 3) echo 'disabled'; ?>>Admin</option>
+                            <option value="2" <?php if($iuser->role == 2) echo 'selected'; ?>>Member</option>
+                            <option value="1" <?php if($iuser->role == 1) echo 'selected'; ?>>Non-Member</option>
                           </select>
-                          <a href="#" id="changerole" style="margin-left: 10px; visibility: hidden;">Change</a>
+                          <span id="changerole" style="margin-left: 10px; visibility: hidden;">
+                              <?php if($iuser->id == $user->data()->id) { ?>
+                              <a href="#" data-toggle="modal" data-target="#changeownrolemodal">Change</a><i class="fa fa-refresh fa-spin" style="margin-left: 10px; visibility: hidden;"></i>
+                              <?php } else { ?>
+                              <a href="#" onclick="changerole(<?php echo $iuser->id; ?>);">Change</a><i class="fa fa-refresh fa-spin" style="margin-left: 10px; visibility: hidden;"></i>
+                              <?php } ?>
+                          </span>
                           <?php } else {
                             if($iuser->role == 4) echo 'Super Admin';
                             if($iuser->role == 3) echo 'Admin';
                             if($iuser->role == 2) echo 'Member';
                             if($iuser->role == 1) echo 'Non-Member';
                           } ?>
+                        </td>
+                        <td>
+                          <?php if($iuser->role < $user->data()->role || $iuser->id == $user->data()->id) { ?>
+                          <a href="#" data-toggle="modal" data-target="#deletemodal" onclick="$('#deletemodal #id').val(<?php echo $iuser->id; ?>); $('#deletemodal #name').html('<?php echo $iuser->first.' '.$iuser->last; ?>');">Delete</a>
+                          <?php } else { ?>
+                          Delete
+                          <?php } ?>
                         </td>
                       </tr>
                       <?php } ?>
@@ -468,17 +501,20 @@
                         <th>Last Accessed</th>
                         <th>Password</th>
                         <th>Role</th>
+                        <th>Delete</th>
                       </tr>
                     </tfoot>
                   </table>
+                  <button class="btn btn-warning pull-right" data-toggle="modal" data-target="#addusermodal">Add User</button>
                   <div class="modal fade" id="passwordmodal" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
-                      <div class="modal-content">
+                      <form class="modal-content box">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">Change Password</h4>
                         </div>
                         <div class="modal-body">
+                            <input id="id" type="hidden" />
                             <label style="width: 150px;">Password:</label>
                             <input id="pw-input" type="password" style="width: 200px;" />
                             <i id="pw-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
@@ -487,7 +523,7 @@
                             <label style="width: 150px;">Confirm Password:</label>
                             <input id="pw-check" type="password" style="width: 200px;" />
                             <i id="pw-check-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
-                            <a id="pw-check-error" href="#" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none;"><i class="fa fa-exclamation-circle" style="color: #ab172b;"></i></a>
+                            <i id="pw-check-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
                             <br>
                             <label style="width: 150px;">Strength:</label>
                             <div id="pw-strength" class="progress" style="width: 200px; display: inline-block; margin: 0 0 -6px 0; position: relative;">
@@ -496,10 +532,115 @@
                             </div>
                             <i id="pw-strength-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
                             <i id="pw-strength-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                            <input id="token" type="hidden" value="<?php echo $token; ?>" />
+                        </div>
+                        <div class="overlay" style="display: none;">
+                          <i class="fa fa-refresh fa-spin"></i>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            <button id="save" type="button" class="btn btn-primary disabled">Save changes</button>
+                            <input id="submit" type="submit" class="btn btn-primary disabled" disabled value="Save Changes" />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal fade" id="addusermodal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <form class="modal-content box">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Add User</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label style="width: 150px;">First Name:</label>
+                            <input id="fname-input" type="text" style="width: 200px;" />
+                            <i id="fname-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                            <i id="fname-input-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                            <br>
+                            <label style="width: 150px;">Last Name:</label>
+                            <input id="lname-input" type="text" style="width: 200px;" />
+                            <i id="lname-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                            <i id="lname-input-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                            <br>
+                            <label style="width: 150px;">Role:</label>
+                            <select id="role" style="width: 200px;">
+                              <option value="4">Super Admin</option>
+                              <option value="3">Admin</option>
+                              <option value="2">Member</option>
+                              <option value="1">Non-Member</option>
+                            </select>
+                            <br>
+                            <label style="width: 150px;">Password:</label>
+                            <input id="pw-input" type="password" style="width: 200px;" />
+                            <i id="pw-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                            <i id="pw-input-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                            <br>
+                            <label style="width: 150px;">Confirm Password:</label>
+                            <input id="pw-check" type="password" style="width: 200px;" />
+                            <i id="pw-check-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                            <i id="pw-check-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                            <br>
+                            <label style="width: 150px;">Strength:</label>
+                            <div id="pw-strength" class="progress" style="width: 200px; display: inline-block; margin: 0 0 -6px 0; position: relative;">
+                            <div id="pw-strength-bar" class="progress-bar progress-bar-red" role="progressbar" style="width: 0%;"></div>
+                            <div id="pw-strength-text" style="text-align: center; position: absolute; width: 100%;">Very Weak (0%)</div>
+                            </div>
+                            <i id="pw-strength-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                            <i id="pw-strength-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                            <input id="token" type="hidden" value="<?php echo $token; ?>" />
+                        </div>
+                        <div class="overlay" style="display: none;">
+                          <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <input id="submit" type="submit" class="btn btn-primary disabled" disabled value="Add User" />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <form class="modal-content box">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Delete User</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input id="id" type="hidden" />
+                            <label style="width: 150px;">Name:</label><b id="name"></b><br>
+                            <br>
+                            Are you <i>sure</i> you want to delete this user?
+                            <input id="token" type="hidden" value="<?php echo $token; ?>" />
+                        </div>
+                        <div class="overlay" style="display: none;">
+                          <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <input id="submit" type="submit" class="btn btn-primary" value="Delete" />
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal fade" id="changeownrolemodal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content box">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Are You Sure?</h4>
+                        </div>
+                        <div class="modal-body">
+                            Are you <i>sure</i> you want to change your own role?<br>
+                            <br>
+                            This will affect your ability to make changes in the future.
+                        </div>
+                        <div class="overlay" style="display: none;">
+                          <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <input id="submit" type="submit" class="btn btn-primary" value="Change" data-dismiss="modal" onclick="changerole(<?php echo $user->data()->id; ?>);" />
                         </div>
                       </div>
                     </div>
@@ -703,12 +844,14 @@
     <!-- page script -->
     <script>
         /*
-            Users Table
+        Users Table
         */
+
+        var userstable;
 
         $(function () { // called when the page finishes loading
             // create the Users table
-            $('#userstable').DataTable({
+            userstable = $('#userstable').DataTable({
                 "paging": false, // do you want the table to be separated into pages if there are too many rows?
                 "lengthChange": false, // not sure what this does...
                 "searching": true, // do you want to be able to search through the table using a search box?
@@ -719,18 +862,12 @@
         });
 
         /*
-            Password Change Popup
+        Password Popups
         */
 
-        $('#pw-input').on('keyup', function () { // called whenever the user releases a key when the Password input box is selected
-            // by default, assume the user passes all minimum requirements
-            // show the check icon and hide the error icon
-            $('#pw-input-check').show();
-            $('#pw-input-error').hide();
-
+        function getPasswordStrength(str) { // returns the strength of the given password
             /* Variables that will be used a lot */
 
-            var str = $(this).val(); // the string from the Password input box
             var len = str.length; // length of the string from the Password input box
             var strength = 0; // strength of the password, assume 0 by default
 
@@ -821,7 +958,7 @@
                 }
             }
             strength -= consecLower * 2;
-            
+
             // consecutive numbers
             var consecNum = 0;
             var prevNum = false;
@@ -873,89 +1010,348 @@
             // limit strength to between 0 and 100
             strength = Math.max(0, Math.min(strength, 100));
 
+            return strength;
+        }
+
+        var pwmodpassword = false; // represents whether the password from the password modal passes all minimum requirements
+
+        $('#passwordmodal #pw-input').on('keyup', function () { // called whenever the user releases a key when the Password input box is selected
+            // by default, assume the user passes all minimum requirements
+            // show the check icon and hide the error icon
+            $('#passwordmodal #pw-input-check').show();
+            $('#passwordmodal #pw-input-error').hide();
+
+            var strength = getPasswordStrength($(this).val()); // get the strength of the string from the Password input box
+
             /* Style updating */
 
             // update Strength bar length
-            $('#pw-strength-bar').width(strength + '%');
+            $('#passwordmodal #pw-strength-bar').width(strength + '%');
 
             // update Strength bar color and text
             if (strength < 20) { // red zone (very week)
-                $('#pw-strength-bar').removeClass();
-                $('#pw-strength-bar').addClass('progress-bar progress-bar-red');
-                $('#pw-strength-text').html('Very Weak (' + strength + '%)');
+                $('#passwordmodal #pw-strength-bar').removeClass();
+                $('#passwordmodal #pw-strength-bar').addClass('progress-bar progress-bar-red');
+                $('#passwordmodal #pw-strength-text').html('Very Weak (' + strength + '%)');
             } else if (strength < 40) { // red zone (weak)
-                $('#pw-strength-bar').removeClass();
-                $('#pw-strength-bar').addClass('progress-bar progress-bar-red');
-                $('#pw-strength-text').html('Weak (' + strength + '%)');
+                $('#passwordmodal #pw-strength-bar').removeClass();
+                $('#passwordmodal #pw-strength-bar').addClass('progress-bar progress-bar-red');
+                $('#passwordmodal #pw-strength-text').html('Weak (' + strength + '%)');
             } else if (strength < 60) { // yellow zone (ok)
-                $('#pw-strength-bar').removeClass();
-                $('#pw-strength-bar').addClass('progress-bar progress-bar-yellow');
-                $('#pw-strength-text').html('OK (' + strength + '%)');
+                $('#passwordmodal #pw-strength-bar').removeClass();
+                $('#passwordmodal #pw-strength-bar').addClass('progress-bar progress-bar-yellow');
+                $('#passwordmodal #pw-strength-text').html('OK (' + strength + '%)');
             } else if (strength < 80) { // green zone (strong)
-                $('#pw-strength-bar').removeClass();
-                $('#pw-strength-bar').addClass('progress-bar progress-bar-green');
-                $('#pw-strength-text').html('Strong (' + strength + '%)');
+                $('#passwordmodal #pw-strength-bar').removeClass();
+                $('#passwordmodal #pw-strength-bar').addClass('progress-bar progress-bar-green');
+                $('#passwordmodal #pw-strength-text').html('Strong (' + strength + '%)');
             } else { // green zone (very strong)
-                $('#pw-strength-bar').removeClass();
-                $('#pw-strength-bar').addClass('progress-bar progress-bar-green');
-                $('#pw-strength-text').html('Very Strong (' + strength + '%)');
+                $('#passwordmodal #pw-strength-bar').removeClass();
+                $('#passwordmodal #pw-strength-bar').addClass('progress-bar progress-bar-green');
+                $('#passwordmodal #pw-strength-text').html('Very Strong (' + strength + '%)');
             }
 
             /* Error checking */
 
-            var passed = false; // represents whether the password passes all minimum requirements
-
-            if (len < 8) { // if the password length is < 8
+            if ($(this).val().length < 8) { // if the password length is < 8
                 // change to the error icon and set the tooltip to 'Password must be at least 8 characters long.'
-                $('#pw-input-error').attr('title', 'Password must be at least 8 characters long.').tooltip('fixTitle');
-                $('#pw-input-check').hide();
-                $('#pw-input-error').show();
-                passed = false; // fails minimum requirements
-                $('.modal-footer #save').removeClass();
-                $('.modal-footer #save').addClass('btn btn-primary disabled');
+                $('#passwordmodal #pw-input-error').attr('title', 'Password must be at least 8 characters long.').tooltip('fixTitle');
+                $('#passwordmodal #pw-input-check').hide();
+                $('#passwordmodal #pw-input-error').show();
+                pwmodpassword = false; // fails minimum requirements
+                $('#passwordmodal .modal-footer #submit').removeClass();
+                $('#passwordmodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#passwordmodal .modal-footer #submit').attr('disabled', 'disabled');
             } else if (strength < 25) { // if the password strength is < 25
                 // change to the error icon and set the tooltip to 'Password strength must be at least 25.'
-                $('#pw-input-error').attr('title', 'Password strength must be at least 25.').tooltip('fixTitle');
-                $('#pw-input-check').hide();
-                $('#pw-input-error').show();
-                passed = false; // fails minimum requirements
+                $('#passwordmodal #pw-input-error').attr('title', 'Password strength must be at least 25.').tooltip('fixTitle');
+                $('#passwordmodal #pw-input-check').hide();
+                $('#passwordmodal #pw-input-error').show();
+                pwmodpassword = false; // fails minimum requirements
                 // disable the Save Changes button
-                $('.modal-footer #save').removeClass();
-                $('.modal-footer #save').addClass('btn btn-primary disabled');
+                $('#passwordmodal .modal-footer #submit').removeClass();
+                $('#passwordmodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#passwordmodal .modal-footer #submit').attr('disabled', 'disabled');
             } else {
-                passed = true; // passes minimum requirements
-                if ($(this).val() == $('#pw-check').val()) { // if the passwords match
+                pwmodpassword = true; // passes minimum requirements
+                if ($(this).val() == $('#passwordmodal #pw-check').val()) { // if the passwords match
                     // enable the Save Changes button
-                    $('.modal-footer #save').removeClass();
-                    $('.modal-footer #save').addClass('btn btn-primary');
+                    $('#passwordmodal .modal-footer #submit').removeClass();
+                    $('#passwordmodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#passwordmodal .modal-footer #submit').removeAttr('disabled');
                 } else { // if the passwords don't match
                     // disable the Save Changes button
-                    $('.modal-footer #save').removeClass();
-                    $('.modal-footer #save').addClass('btn btn-primary disabled');
+                    $('#passwordmodal .modal-footer #submit').removeClass();
+                    $('#passwordmodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#passwordmodal .modal-footer #submit').attr('disabled', 'disabled');
                 }
             }
         });
 
-        $('#pw-check').on('keyup', function () { // called whenever the user releases a key when the Confirm Password input box is selected
+        $('#passwordmodal #pw-check').on('keyup', function () { // called whenever the user releases a key when the Confirm Password input box is selected
             // by default, assume the user passes validation
             // show the check icon and hide the error icon
-            $('#pw-check-check').show();
-            $('#pw-check-error').hide();
+            $('#passwordmodal #pw-check-check').show();
+            $('#passwordmodal #pw-check-error').hide();
 
-            if ($(this).val() != $('#pw-input').val()) { // if the passwords don't match
+            if ($(this).val() != $('#passwordmodal #pw-input').val()) { // if the passwords don't match
                 // change to the error icon and set the tooltip to 'The passwords you entered do not match.'
-                $('#pw-check-error').attr('title', 'The passwords you entered do not match.').tooltip('fixTitle');
-                $('#pw-check-check').hide();
-                $('#pw-check-error').show();
+                $('#passwordmodal #pw-check-error').attr('title', 'The passwords you entered do not match.').tooltip('fixTitle');
+                $('#passwordmodal #pw-check-check').hide();
+                $('#passwordmodal #pw-check-error').show();
                 // disable the Save Changes button
-                $('.modal-footer #save').removeClass();
-                $('.modal-footer #save').addClass('btn btn-primary disabled');
-            } else if (passed) { // if the passwords match and the password meets all requirements
+                $('#passwordmodal .modal-footer #submit').removeClass();
+                $('#passwordmodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#passwordmodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else if (pwmodpassword) { // if the passwords match and the password meets all requirements
                 // enable the Save Changes button
-                $('.modal-footer #save').removeClass();
-                $('.modal-footer #save').addClass('btn btn-primary');
+                $('#passwordmodal .modal-footer #submit').removeClass();
+                $('#passwordmodal .modal-footer #submit').addClass('btn btn-primary');
+                $('#passwordmodal .modal-footer #submit').removeAttr('disabled');
             }
         });
+
+        $('#passwordmodal form').on('submit', function () {
+            if ($('#passwordmodal #pw-input').val() == $('#passwordmodal #pw-check').val() && pwmodpassword) {
+                $('#passwordmodal .overlay').show();
+                $.post("../../actions/edit/user.php",
+                {
+                    id: $('#passwordmodal #id').val(),
+                    password: $('#passwordmodal #pw-input').val(),
+                    token: $('#passwordmodal #token').val()
+                },
+                function (data, status) {
+                    if (data.length != 0) location.reload();
+                    $('#passwordmodal .overlay').hide();
+                    $('#passwordmodal .close').click();
+                });
+            }
+            return false;
+        });
+
+        var aumodpassword = false; // represents whether the password from the add user modal passes all minimum requirements
+        var aumodfname = false; // represents whether the first name from the add user modal pass all requirements
+        var aumodlname = false; // represents whether the first name from the add user modal pass all requirements
+
+        $('#addusermodal #pw-input').on('keyup', function () { // called whenever the user releases a key when the Password input box is selected
+            // by default, assume the user passes all minimum requirements
+            // show the check icon and hide the error icon
+            $('#addusermodal #pw-input-check').show();
+            $('#addusermodal #pw-input-error').hide();
+
+            var strength = getPasswordStrength($(this).val()); // get the strength of the string from the Password input box
+
+            /* Style updating */
+
+            // update Strength bar length
+            $('#addusermodal #pw-strength-bar').width(strength + '%');
+
+            // update Strength bar color and text
+            if (strength < 20) { // red zone (very week)
+                $('#addusermodal #pw-strength-bar').removeClass();
+                $('#addusermodal #pw-strength-bar').addClass('progress-bar progress-bar-red');
+                $('#addusermodal #pw-strength-text').html('Very Weak (' + strength + '%)');
+            } else if (strength < 40) { // red zone (weak)
+                $('#addusermodal #pw-strength-bar').removeClass();
+                $('#addusermodal #pw-strength-bar').addClass('progress-bar progress-bar-red');
+                $('#addusermodal #pw-strength-text').html('Weak (' + strength + '%)');
+            } else if (strength < 60) { // yellow zone (ok)
+                $('#addusermodal #pw-strength-bar').removeClass();
+                $('#addusermodal #pw-strength-bar').addClass('progress-bar progress-bar-yellow');
+                $('#addusermodal #pw-strength-text').html('OK (' + strength + '%)');
+            } else if (strength < 80) { // green zone (strong)
+                $('#addusermodal #pw-strength-bar').removeClass();
+                $('#addusermodal #pw-strength-bar').addClass('progress-bar progress-bar-green');
+                $('#addusermodal #pw-strength-text').html('Strong (' + strength + '%)');
+            } else { // green zone (very strong)
+                $('#addusermodal #pw-strength-bar').removeClass();
+                $('#addusermodal #pw-strength-bar').addClass('progress-bar progress-bar-green');
+                $('#addusermodal #pw-strength-text').html('Very Strong (' + strength + '%)');
+            }
+
+            /* Error checking */
+
+            if ($(this).val().length < 8) { // if the password length is < 8
+                // change to the error icon and set the tooltip to 'Password must be at least 8 characters long.'
+                $('#addusermodal #pw-input-error').attr('title', 'Password must be at least 8 characters long.').tooltip('fixTitle');
+                $('#addusermodal #pw-input-check').hide();
+                $('#addusermodal #pw-input-error').show();
+                aumodpassword = false; // fails minimum requirements
+                $('#addusermodal .modal-footer #submit').removeClass();
+                $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else if (strength < 25) { // if the password strength is < 25
+                // change to the error icon and set the tooltip to 'Password strength must be at least 25.'
+                $('#addusermodal #pw-input-error').attr('title', 'Password strength must be at least 25.').tooltip('fixTitle');
+                $('#addusermodal #pw-input-check').hide();
+                $('#addusermodal #pw-input-error').show();
+                aumodpassword = false; // fails minimum requirements
+                // disable the Save Changes button
+                $('#addusermodal .modal-footer #submit').removeClass();
+                $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addusermodal .modal-footer #submit').removeAttr('disabled');
+            } else {
+                aumodpassword = true; // passes minimum requirements
+                if ($(this).val() == $('#addusermodal #pw-check').val() && aumodfname && aumodlname) { // if the passwords match and the names meet all requirements
+                    // enable the Save Changes button
+                    $('#addusermodal .modal-footer #submit').removeClass();
+                    $('#addusermodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#addusermodal .modal-footer #submit').removeAttr('disabled');
+                } else { // if something isn't right yet
+                    // disable the Save Changes button
+                    $('#addusermodal .modal-footer #submit').removeClass();
+                    $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+                }
+            }
+        });
+
+        $('#addusermodal #pw-check').on('keyup', function () { // called whenever the user releases a key when the Confirm Password input box is selected
+            // by default, assume the user passes validation
+            // show the check icon and hide the error icon
+            $('#addusermodal #pw-check-check').show();
+            $('#addusermodal #pw-check-error').hide();
+
+            if ($(this).val() != $('#addusermodal #pw-input').val()) { // if the passwords don't match
+                // change to the error icon and set the tooltip to 'The passwords you entered do not match.'
+                $('#addusermodal #pw-check-error').attr('title', 'The passwords you entered do not match.').tooltip('fixTitle');
+                $('#addusermodal #pw-check-check').hide();
+                $('#addusermodal #pw-check-error').show();
+                // disable the Save Changes button
+                $('#addusermodal .modal-footer #submit').removeClass();
+                $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else if (aumodpassword && aumodfname && aumodlname) { // if the passwords match and the password meets all requirements
+                // enable the Save Changes button
+                $('#addusermodal .modal-footer #submit').removeClass();
+                $('#addusermodal .modal-footer #submit').addClass('btn btn-primary');
+                $('#addusermodal .modal-footer #submit').removeAttr('disabled');
+            }
+        });
+
+        $('#addusermodal #fname-input').on('keyup', function () { // called whenever the user releases a key when the First Name input box is selected
+            // by default, assume the user passes validation
+            // show the check icon and hide the error icon
+            $('#addusermodal #fname-input-check').show();
+            $('#addusermodal #fname-input-error').hide();
+
+            /* Error checking */
+
+            if ($(this).val().length == 0) { // if the first name length is = 0
+                // change to the error icon and set the tooltip to 'First Name cannot be empty.'
+                $('#addusermodal #fname-input-error').attr('title', 'First Name cannot be emtpy.').tooltip('fixTitle');
+                $('#addusermodal #fname-input-check').hide();
+                $('#addusermodal #fname-input-error').show();
+                aumodfname = false; // fails minimum requirements
+                $('#addusermodal .modal-footer #submit').removeClass();
+                $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else {
+                aumodfname = true; // passes minimum requirements
+                if ($('#addusermodal #pw-input').val() == $('#addusermodal #pw-check').val() && aumodpassword && aumodfname && aumodlname) { // if the passwords match and the password and both names meet all requirements
+                    // enable the Save Changes button
+                    $('#addusermodal .modal-footer #submit').removeClass();
+                    $('#addusermodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#addusermodal .modal-footer #submit').removeAttr('disabled');
+                } else { // if something isn't right yet
+                    // disable the Save Changes button
+                    $('#addusermodal .modal-footer #submit').removeClass();
+                    $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+                }
+            }
+        });
+
+        $('#addusermodal #lname-input').on('keyup', function () { // called whenever the user releases a key when the Last Name input box is selected
+            // by default, assume the user passes validation
+            // show the check icon and hide the error icon
+            $('#addusermodal #lname-input-check').show();
+            $('#addusermodal #lname-input-error').hide();
+
+            /* Error checking */
+
+            if ($(this).val().length == 0) { // if the last name length is = 0
+                // change to the error icon and set the tooltip to 'Last Name cannot be empty.'
+                $('#addusermodal #lname-input-error').attr('title', 'Last Name cannot be empty.').tooltip('fixTitle');
+                $('#addusermodal #lname-input-check').hide();
+                $('#addusermodal #lname-input-error').show();
+                aumodlname = false; // fails minimum requirements
+                $('#addusermodal .modal-footer #submit').removeClass();
+                $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else {
+                aumodlname = true; // passes minimum requirements
+                if ($('#addusermodal #pw-input').val() == $('#addusermodal #pw-check').val() && aumodpassword && aumodfname && aumodlname) { // if the passwords match and the password and both names meet all requirements
+                    // enable the Save Changes button
+                    $('#addusermodal .modal-footer #submit').removeClass();
+                    $('#addusermodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#addusermodal .modal-footer #submit').removeAttr('disabled');
+                } else { // if something isn't right yet
+                    // disable the Save Changes button
+                    $('#addusermodal .modal-footer #submit').removeClass();
+                    $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+                }
+            }
+        });
+
+        $('#addusermodal form').on('submit', function () {
+            if ($('#addusermodal #pw-input').val() == $('#addusermodal #pw-check').val() && aumodpassword && aumodfname && aumodlname) {
+                $('#addusermodal .overlay').show();
+                $.post("../../actions/create/user.php",
+                {
+                    fname: $('#addusermodal #fname-input').val(),
+                    lname: $('#addusermodal #lname-input').val(),
+                    password: $('#addusermodal #pw-input').val(),
+                    role: $('#addusermodal #role').val(),
+                    token: $('#addusermodal #token').val()
+                },
+                function (data, status) {
+                    location.reload();
+                });
+            }
+            return false;
+        });
+
+        $('#deletemodal form').on('submit', function () {
+            $('#deletemodal .overlay').show();
+            $.post("../../actions/delete/user.php",
+            {
+                id: $('#deletemodal #id').val(),
+                token: $('#addusermodal #token').val()
+            },
+            function (data, status) {
+                if (data.length != 0) location.reload();
+                userstable.row('#user-' + $('#deletemodal #id').val()).remove().draw(false);
+                $('#deletemodal .overlay').hide();
+                $('#deletemodal .close').click();
+            });
+            return false;
+        });
+
+        function selectrole(id, oldrole, newrole) {
+            if (oldrole == newrole)
+                $('#user-' + id + ' #changerole').css('visibility', 'hidden');
+            else
+                $('#user-' + id + ' #changerole').css('visibility', '');
+        }
+
+        function changerole(id) {
+            $('#user-' + id + ' #changerole i').css('visibility', '');
+            $.post("../../actions/edit/user.php",
+            {
+                id: id,
+                role: $('#user-' + id + ' select').val(),
+                token: $('#passwordmodal #token').val()
+            },
+            function (data, status) {
+                if (data.length != 0) location.reload();
+                $('#user-' + id + ' #changerole i').css('visibility', 'hidden');
+                $('#user-' + id + ' #changerole').css('visibility', 'hidden');
+                $('#user-' + id + ' select').removeAttr('onchange');
+                $('#user-' + id + ' select').attr('onchange', 'selectrole(' + id + ', ' + $('#user-' + id + ' select').val() + ', $(this).val());');
+            });
+        }
     </script>
   </body>
 </html>

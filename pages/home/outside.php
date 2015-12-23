@@ -80,15 +80,7 @@
 												</li>
 												<li><a href="left-sidebar.php">Left Sidebar</a></li>
 												<li><a href="right-sidebar.php">Right Sidebar</a></li>
-												<li>
-                                                    <form action="actions/login.php" method="post">
-                                                        <input type="hidden" name="username" value="admin" />
-                                                        <input type="hidden" name="password" value="password" />
-                                                        <input type="hidden" name="remember" value="off" />
-                                                        <input type="hidden" name="token" value="<?php echo $token; ?>" />
-                                                        <a style="cursor: pointer;" onclick="$(this).parent().submit();">Login</a>
-                                                    </form>
-                                                </li>
+												<li><a href="../pages/login">Login</a></li>
 											</ul>
 										</nav>
 
