@@ -9,7 +9,8 @@
         'salt' => $salt,
         'first' => 'Mr.',
         'last' => 'Fox',
-        'group' => 1
+        'role' => 1,
+        'accessed' => date('Y-m-d')
     ));
     print_r($user);
     die();*/
