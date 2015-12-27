@@ -382,7 +382,7 @@
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
               </a>
             </li>
-            <li class="active">
+            <li>
               <a href="../../pages/grades">
                 <i class="fa fa-graduation-cap"></i> <span>My Grades</span>
               </a>
@@ -392,7 +392,7 @@
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
-            <li>
+            <li class="active">
               <a href="../../pages/pt">
                 <i class="fa fa-line-chart"></i> <span>PT Scores</span>
               </a>
@@ -431,12 +431,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            My Grades
+            My PT Scores
             <small></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="../../"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">My Grades</li>
+            <li class="active">My PT Scores</li>
           </ol>
         </section>
 
@@ -451,7 +451,7 @@
                 </div>
             </div>
           </div>
-          <!-- Grades stuff -->
+          <!-- PT Scores stuff -->
           <div class="row">
             <div class="col-md-6">
               <div class="box">
@@ -805,3 +805,4 @@
     <script src="../../js/pages/dashboard.js"></script>
   </body>
 </html>
+
