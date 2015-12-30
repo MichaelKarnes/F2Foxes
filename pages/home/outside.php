@@ -26,12 +26,12 @@
 		<!--[if lte IE 8]><script src="js/ie/respond.min.js"></script><![endif]-->
 		<script src="js/main.js"></script>
         <?php
-            $nivo = new NivoSlider('../plugins/nivoslider');
+            $nivo = new NivoSlider('plugins/nivoslider');
             $nivo->render_includes();
 
-            $nivo->add_slide('../images/a&m-vs-arkansas-banner.jpg','','A&M vs. Arkansas');
-            $nivo->add_slide('../images/march-in-banner.jpg','','March In');
-            $nivo->add_slide('../images/senior-picture-banner.jpg','','March In');
+            $nivo->add_slide('images/a&m-vs-arkansas-banner.jpg','','A&M vs. Arkansas');
+            $nivo->add_slide('images/march-in-banner.jpg','','March In');
+            $nivo->add_slide('images/senior-picture-banner.jpg','','March In');
         ?>
 	</head>
 	<body class="homepage">
