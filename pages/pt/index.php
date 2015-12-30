@@ -459,7 +459,7 @@
                   <h3 class="box-title"><i class="icon fa fa-bookmark"></i>  History</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 320px;">
+                <div class="box-body no-padding" style="min-height: 200px;">
                   <table class="table">
                   <tr>
                   <td>Date</td> <td>Type</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
@@ -472,20 +472,48 @@
               </div>
               <!-- /.nav-tabs-custom -->
             </div>
-            <div class="col-md-6">
+
+
+            <div class="col-xs-5">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Summary</h3>
-                  <select class="pull-right" onchange="linechart($(this).val());">
-                    <option>By Semester</option>
-                    <option>By Week</option>
-                  </select>
+                  <h3 class="box-title"> New PT Score</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
-                  <div id="line-chart" style="min-height: 300px;"></div>
+                <div class="box-body" style="min-height: 200px;">
+
+                <p>Please fill out the form below to add a PT Score. Your score will be
+                calculated from raw scores (ex. You did 80 push ups, enter 80).</p>
+        
+           
+                <form action="ptSubmit.php" method="POST">
+                <label>Type: &nbsp </label> 
+                <input type="radio" name="type" value="army" checked>Army &nbsp
+                <input type="radio" name="type" value="corps">Corps <br>
+
+                <label>Date of test (ex. 09-24-2015): &nbsp </label> 
+                <input type="text" id="formIn" name="date" maxlength="15"/> <br>
+            
+                <label>Raw Push Ups (ex. 80): &nbsp </label>
+                <input type="text" id="formIn" name="pushUpsRaw" maxlength="3"/> <br>
+          
+                <label>Raw Sit Ups (ex. 90): &nbsp </label>
+                <input type="text" id="formIn" name="sitUpsRaw" maxlength="3"/> <br>
+           
+                <label>Run Time (ex. 12:30): &nbsp </label>
+                <input type="text" id="formIn" name="runRaw" maxlength="10"/> <br>
+          
+                <label>Gender: &nbsp </label>
+                <input type="radio" name="gender" value="male" checked>Male &nbsp
+                <input type="radio" name="gender" value="female">Female <br>
+
+                <input type="submit"> <br></br>
+                </form>       
                 </div>
               </div>
+
+
+              
               <!-- /.nav-tabs-custom -->
             </div>
           </div>
