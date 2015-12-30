@@ -453,57 +453,20 @@
           </div>
           <!-- PT Scores stuff -->
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-ban"></i> Summary</h3>
-                  <b class="pull-right">GPA: 3.45</b>
+                  <h3 class="box-title"><i class="icon fa fa-bookmark"></i>  History</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding" style="min-height: 320px;">
                   <table class="table">
-                    <colgroup>
-                      <col style="width: 30px;"></col>
-                      <col></col>
-                      <col style="width: 30px;"></col>
-                      <col style="width: 50px;"></col>
-                      <col style="width: 50px;"></col>
-                    </colgroup>
-                    <tr>
-                      <td>(3)</td>
-                      <td>ENGR 111 - Foundations of Engineering I</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #00a65a;">A</b></td>
-                      <td><b style="color: #00a65a;">93.4</b></td>
-                    </tr>
-                    <tr>
-                      <td>(1)</td>
-                      <td>KINE 198 - Health & Fitness - Aerobic Walking</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #3c8dbc;">B-</b></td>
-                      <td><b style="color: #3c8dbc;">81.2</b></td>
-                    </tr>
-                    <tr>
-                      <td>(4)</td>
-                      <td>MATH 152 - Engineering Math II</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #3c8dbc;">A</b></td>
-                      <td><b style="color: #3c8dbc;">94.6</b></td>
-                    </tr>
-                    <tr>
-                      <td>(4)</td>
-                      <td>PHYS 218 - Mechanics</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #f39c12;">C+</b></td>
-                      <td><b style="color: #f39c12;">79.3</b></td>
-                    </tr>
-                    <tr>
-                      <td>(3)</td>
-                      <td>POLS 206 - American National Government</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #dd4b39;">D+</b></td>
-                      <td><b style="color: #dd4b39;">69.4</b></td>
-                    </tr>
+                  <tr>
+                  <td>Date</td> <td>Type</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
+                  <td>Raw Sit Ups</td> <td>Sit Up Score</td>
+                  <td>Raw Run</td> <td>Run Score</td> <td>Overall Score</td> 
+                  <td>Pass/Fail</td> <td>Delete</td>
+                  </tr>     
                   </table>
                 </div>
               </div>
