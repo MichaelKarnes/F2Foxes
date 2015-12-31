@@ -1,7 +1,26 @@
 <?php
-    #include 'boot/session.php'; 
-    $username=$_SESSION ['username'];
-    $userid=$_SESSION ['userid'];
+    #include 'classes/Session.php';
+    #include_once 'core/init.php'; 
+
+    #code from users/index.php
+    // initialize core database connection and import core classes
+    include_once '../../core/init.php';
+    // get the current user
+    $user = new User();
+     // kick the user out if the he's not logged in or doesn't have sufficient privileges
+    if(!$user->isLoggedIn())
+        Redirect::to("../../");
+    // store the database connection into $db
+    $db = DB::getInstance();
+    // create a token to submit with all forms
+    $token = Token::generate();
+    // store any errors returned to the page into $error
+    $error = Session::flash('error');
+
+
+
+    $username=$_SESSION['username'];
+    $userid=$_SESSION['user'];
 
     #collect score data from the form in pt.php
     $date = $_POST['date'];
@@ -11,16 +30,19 @@
     $runTime = $_POST['runRaw'];
     $type = $_POST['type'];
 
+    echo "hi " . $userid . '<br>';
+    var_dump($_SESSION);
+
     #form validation for the date and push up/sit up scores
     if (strlen($date) != 10 || substr($date,2,1) != '-' || substr($date,5,1) != '-') {
         echo "The date you have inputed does not have the correct form.
         For example, September 24th, 2015 would be typed in as 09-24-2015." . 
-        "<br>" . '<a href ="pt.php"> Please Try Again </a>' . "<br>" . "<br>";
+        "<br>" . '<a href ="index.php"> Please Try Again </a>' . "<br>" . "<br>";
         break;
     }
     if (is_numeric($pushUpsRaw) == 0 || is_numeric($sitUpsRaw) == 0) {
         echo "The request was invalid. Raw Push Up Scores and Raw Sit Up 
-        Scores should be numbers." . "<br>" . '<a href ="pt.php"> Please Try Again </a>' .
+        Scores should be numbers." . "<br>" . '<a href ="index.php"> Please Try Again </a>' .
         "<br>" . "<br>";
         break;
     }
@@ -33,7 +55,7 @@
     if (strlen($runRaw) != 5 || substr($runRaw,2,1) != ':') {
         echo "The run time you have inputed does not have the correct form.
         For example, 14 minutes and 5 seconds, would be typed in as 14:05" . 
-        "<br>" . '<a href ="pt.php"> Please Try Again </a>' . "<br>" . "<br>";
+        "<br>" . '<a href ="index.php"> Please Try Again </a>' . "<br>" . "<br>";
         break;
     }
 
@@ -173,15 +195,15 @@
 <!--automatically refresh index.php in the pt folder after running php code above-->
 <!DOCTYPE html>
 <html lang="en">
-    <!--<head>
+    <head>
         <meta charset="utf-8" />
-        <meta http-equiv="refresh" content="1;url=.." />
+        <meta http-equiv="refresh" content="1;url=index.php" />
         <script type ="text/javascript">
-            window.location.href = ".."
+            window.location.href = "index.php"
         </script>
         <title>Updating Scores</title>
-    </head> -->
+    </head>
     <body>
-        <a href="http://localhost:55346/pages/pt/index.php">Click here if the automatic redirect is not working</a>
+        <a href="index.php">Click here if the automatic redirect is not working</a>
     </body>
 </html>
