@@ -293,8 +293,8 @@
                   <li class="user-header">
                     <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
                     <p>
-                      <?php echo $user->data()->first." ".$user->data()->last; ?>
-                      <small>Title</small>
+                      <?php echo $user->data()->first." ".$user->data()->last; ?> - Web Developer
+                      <small>Member since Nov. 2012</small>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -382,7 +382,7 @@
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
               </a>
             </li>
-            <li class="active">
+            <li>
               <a href="../../pages/grades">
                 <i class="fa fa-graduation-cap"></i> <span>My Grades</span>
               </a>
@@ -392,7 +392,7 @@
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
-            <li>
+            <li class="active">
               <a href="../../pages/pt">
                 <i class="fa fa-line-chart"></i> <span>PT Scores</span>
               </a>
@@ -431,12 +431,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            My Grades
+            My PT Scores
             <small></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="../../"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">My Grades</li>
+            <li class="active">My PT Scores</li>
           </ol>
         </section>
 
@@ -451,146 +451,70 @@
                 </div>
             </div>
           </div>
-          <!-- Grades stuff -->
+          <!-- PT Scores stuff -->
           <div class="row">
-            <div class="col-md-12">
-              <div class="nav-tabs-custom">
-                <!-- Tabs within a box -->
-                <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#revenue-chart" data-toggle="tab">Summary</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li class="pull-left header"><i class="fa fa-graduation-cap"></i> My Grades</li>
-                </ul>
-                <div class="tab-content">
-                  <!-- Morris chart - Sales -->
-                  <div class="chart tab-pane active" id="revenue-chart" style="position: relative;">
-                    <div class="col-md-10">
-                      <p class="text-center"><b>Weekly Semester GPA Report</b></p>
-                      <div id="line-chart" style="min-height: 300px;"></div>
-                    </div>
-                    <div class="col-md-2">
-                      <p class="text-center"><b>Classes</b></p>
-                      <table class="table table-condensed">
-                        <colgroup>
-                          <col></col>
-                          <col></col>
-                        </colgroup>
-                        <tr>
-                          <td>ENGR 111</td>
-                          <td style="text-align: left;">A</td>
-                          <td style="text-align: right;">93.4</td>
-                        </tr>
-                        <tr>
-                          <td>KINE 198</td>
-                          <td style="text-align: left;">B-</td>
-                          <td style="text-align: right;">81.2</td>
-                        </tr>
-                        <tr>
-                          <td>MATH 152</td>
-                          <td style="text-align: left;">A</td>
-                          <td style="text-align: right;">94.6</td>
-                        </tr>
-                        <tr>
-                          <td>PHYS 218</td>
-                          <td style="text-align: left;">C+</td>
-                          <td style="text-align: right;">79.3</td>
-                        </tr>
-                        <tr>
-                          <td>POLS 206</td>
-                          <td style="text-align: left;">D+</td>
-                          <td style="text-align: right;">69.4</td>
-                        </tr>
-                        <tr>
-                          <td>KINE 198</td>
-                          <td style="text-align: left;">B-</td>
-                          <td style="text-align: right;">81.2</td>
-                        </tr>
-                        <tr>
-                          <td>MATH 152</td>
-                          <td style="text-align: left;">A</td>
-                          <td style="text-align: right;">94.6</td>
-                        </tr>
-                        <tr>
-                          <td>PHYS 218</td>
-                          <td style="text-align: left;">C+</td>
-                          <td style="text-align: right;">79.3</td>
-                        </tr>
-                        <tr>
-                          <td>POLS 206</td>
-                          <td style="text-align: left;">D+</td>
-                          <td style="text-align: right;">69.4</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-                </div>
-              </div>
-              <!-- /.nav-tabs-custom -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
+            <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Summary</h3>
-                  <b class="pull-right">GPA: 3.45</b>
+                  <h3 class="box-title"><i class="icon fa fa-bookmark"></i>  History</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 320px;">
+                <div class="box-body no-padding" style="min-height: 200px;">
                   <table class="table">
-                    <colgroup>
-                      <col style="width: 30px;"></col>
-                      <col></col>
-                      <col style="width: 30px;"></col>
-                      <col style="width: 50px;"></col>
-                      <col style="width: 50px;"></col>
-                    </colgroup>
-                    <tr>
-                      <td>(3)</td>
-                      <td>ENGR 111 - Foundations of Engineering I</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #00a65a;">A</b></td>
-                      <td><b style="color: #00a65a;">93.4</b></td>
-                    </tr>
-                    <tr>
-                      <td>(1)</td>
-                      <td>KINE 198 - Health & Fitness - Aerobic Walking</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #3c8dbc;">B-</b></td>
-                      <td><b style="color: #3c8dbc;">81.2</b></td>
-                    </tr>
-                    <tr>
-                      <td>(4)</td>
-                      <td>MATH 152 - Engineering Math II</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #00a65a;">A</b></td>
-                      <td><b style="color: #00a65a;">94.6</b></td>
-                    </tr>
-                    <tr>
-                      <td>(4)</td>
-                      <td>PHYS 218 - Mechanics</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #f39c12;">C+</b></td>
-                      <td><b style="color: #f39c12;">79.3</b></td>
-                    </tr>
-                    <tr>
-                      <td>(3)</td>
-                      <td>POLS 206 - American National Government</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #dd4b39;">D+</b></td>
-                      <td><b style="color: #dd4b39;">69.4</b></td>
-                    </tr>
+                  <tr>
+                  <td>Date</td> <td>Type</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
+                  <td>Raw Sit Ups</td> <td>Sit Up Score</td>
+                  <td>Raw Run</td> <td>Run Score</td> <td>Overall Score</td> 
+                  <td>Pass/Fail</td> <td>Delete</td>
+                  </tr>     
                   </table>
                 </div>
               </div>
               <!-- /.nav-tabs-custom -->
             </div>
-            <div class="col-md-6">
+
+
+            <div class="col-xs-5">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title"> New PT Score</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="min-height: 200px;">
+
+                <p>Please fill out the form below to add a PT Score. Your score will be
+                calculated from raw scores (ex. You did 80 push ups, enter 80).</p>
+        
+           
+                <form action="ptSubmit.php" method="POST">
+                <label>Type: &nbsp </label> 
+                <input type="radio" name="type" value="army" checked>Army &nbsp
+                <input type="radio" name="type" value="corps">Corps <br>
+
+                <label>Date of test (ex. 09-24-2015): &nbsp </label> 
+                <input type="text" id="formIn" name="date" maxlength="15"/> <br>
+            
+                <label>Raw Push Ups (ex. 80): &nbsp </label>
+                <input type="text" id="formIn" name="pushUpsRaw" maxlength="3"/> <br>
+          
+                <label>Raw Sit Ups (ex. 90): &nbsp </label>
+                <input type="text" id="formIn" name="sitUpsRaw" maxlength="3"/> <br>
+           
+                <label>Run Time (ex. 12:30): &nbsp </label>
+                <input type="text" id="formIn" name="runRaw" maxlength="10"/> <br>
+          
+                <label>Gender: &nbsp </label>
+                <input type="radio" name="gender" value="male" checked>Male &nbsp
+                <input type="radio" name="gender" value="female">Female <br>
+
+                <input type="submit"> <br></br>
+                </form>       
+                </div>
+              </div>
+
+
+              
+              <!-- /.nav-tabs-custom -->
             </div>
           </div>
         </section><!-- /.content -->
@@ -802,7 +726,7 @@
                     chart = weekly;
                     break;
                 default:
-                    chart = weekly;
+                    chart = semester;
                     break;
             }
             /*
@@ -822,7 +746,7 @@
                         show: true
                     },
                     points: {
-                        show: true
+                        show: false
                     }
                 },
                 lines: {
@@ -872,3 +796,4 @@
     <script src="../../js/pages/dashboard.js"></script>
   </body>
 </html>
+
