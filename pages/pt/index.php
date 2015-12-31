@@ -464,7 +464,7 @@
                   <tr>
                   <td>Date</td> <td>Type</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
                   <td>Raw Sit Ups</td> <td>Sit Up Score</td>
-                  <td>Raw Run</td> <td>Run Score</td> <td>Overall Score</td> 
+                  <td>Raw Run</td> <td>Run Score</td> <td>Total Score</td> 
                   <td>Pass/Fail</td> <td>Delete</td>
                   </tr>     
                   </table>
@@ -477,7 +477,7 @@
             <div class="col-xs-5">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"> New PT Score</h3>
+                  <h3 class="box-title"> <i class="icon fa fa-plus"></i> New PT Score</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" style="min-height: 200px;">
@@ -511,11 +511,25 @@
                 </form>       
                 </div>
               </div>
-
-
-              
-              <!-- /.nav-tabs-custom -->
             </div>
+
+              <div class="col-xs-7">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title"> <i class="icon fa fa-trophy"></i> Top Scores </h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="min-height: 280px;">
+                <table class="table">
+                <tr>
+                <td>Last</td> <td>First</td> <td>Type</td> <td>Date</td> <td>Total Score</td>
+                </tr>
+                </table>           
+                </div>
+              </div>
+            </div>
+
+            
           </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
