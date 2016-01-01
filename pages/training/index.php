@@ -14,7 +14,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>F-2 Foxes | My PT Scores</title>
+    <title>F-2 Foxes | Training Schedule</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -377,8 +377,8 @@
                 <small class="label pull-right bg-yellow">12</small>
               </a>
             </li>
-            <li>
-              <a href="#">
+            <li class="active">
+              <a href="pages/training">
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
               </a>
             </li>
@@ -392,7 +392,7 @@
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
-            <li class="active">
+            <li>
               <a href="../../pages/pt">
                 <i class="fa fa-line-chart"></i> <span>PT Scores</span>
               </a>
@@ -431,12 +431,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            My PT Scores
+            Training Schedule
             <small></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="../../"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">My PT Scores</li>
+            <li class="active">Training Schedule</li>
           </ol>
         </section>
 
@@ -456,80 +456,16 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-bookmark"></i>  History</h3>
+                  <h3 class="box-title"><i class="icon fa fa-arrow-right"></i>  Google Doc</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 200px;">
-                  <table class="table">
-                  <tr>
-                  <td>Date</td> <td>Type</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
-                  <td>Raw Sit Ups</td> <td>Sit Up Score</td>
-                  <td>Raw Run</td> <td>Run Score</td> <td>Total Score</td> 
-                  <td>Pass/Fail</td> <td>Delete</td>
-                  </tr>     
-                  </table>
+                <div class="box-body no-padding" style="min-height: 600px;">
+                <iframe src="https://docs.google.com/spreadsheets/d/1wJodUEryd_OzVQJ-5_HO8yhVE1PAIy1AqidGQqzdtZ0/pubhtml?widget=true&amp;headers=false" style="min-height: 600px; min-width: 100%"></iframe>
                 </div>
               </div>
               <!-- /.nav-tabs-custom -->
             </div>
 
-
-            <div class="col-xs-5">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title"> <i class="icon fa fa-plus"></i> New PT Score</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body" style="min-height: 200px;">
-
-                <p>Please fill out the form below to add a PT Score. Your score will be
-                calculated from raw scores (ex. You did 80 push ups, enter 80).</p>
-        
-           
-                <form action="ptSubmit.php" method="POST">
-                <label>Type: &nbsp </label> 
-                <input type="radio" name="type" value="army" checked>Army &nbsp
-                <input type="radio" name="type" value="corps">Corps <br>
-
-                <label>Date of test (ex. 09-24-2015): &nbsp </label> 
-                <input type="text" id="formIn" name="date" maxlength="15"/> <br>
-            
-                <label>Raw Push Ups (ex. 80): &nbsp </label>
-                <input type="text" id="formIn" name="pushUpsRaw" maxlength="3"/> <br>
-          
-                <label>Raw Sit Ups (ex. 90): &nbsp </label>
-                <input type="text" id="formIn" name="sitUpsRaw" maxlength="3"/> <br>
-           
-                <label>Run Time (ex. 12:30): &nbsp </label>
-                <input type="text" id="formIn" name="runRaw" maxlength="10"/> <br>
-          
-                <label>Gender: &nbsp </label>
-                <input type="radio" name="gender" value="male" checked>Male &nbsp
-                <input type="radio" name="gender" value="female">Female <br>
-
-                <input type="submit"> <br></br>
-                </form>       
-                </div>
-              </div>
-            </div>
-
-              <div class="col-xs-7">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title"> <i class="icon fa fa-trophy"></i> Top Scores </h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body" style="min-height: 280px;">
-                <table class="table">
-                <tr>
-                <td>Last</td> <td>First</td> <td>Type</td> <td>Date</td> <td>Total Score</td>
-                </tr>
-                </table>           
-                </div>
-              </div>
-            </div>
-
-            
           </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->

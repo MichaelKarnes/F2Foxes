@@ -370,7 +370,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../pages/training">
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
               </a>
             </li>
