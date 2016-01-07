@@ -1,4 +1,6 @@
 <?php
+// reference https://www.youtube.com/watch?v=PaBWDOBFxDc&list=PLfdtiltiRHWF5Rhuk7k4UAU1_yLAZzhWc&index=8
+// for more info about this class
 class DB {
 	private static $_instance = null;
 	private $_pdo,
@@ -22,8 +24,10 @@ class DB {
 		return self::$_instance;
 	}
 	
+    // this query function improves security, binds parameters to prevent SQL injection
 	public function query($sql, $params = array()) {
-		$this->_error = false;
+		$this->_error = false;   //prevents errors from previous queries
+
 		if($this->_query = $this->_pdo->prepare($sql)) {
 			$x = 1;
 			if(count($params)) {
@@ -63,6 +67,11 @@ class DB {
 		return false;
 	}
 	
+
+    // the get function provides an alternative to using direct SQL
+    // for example use something like $db->get('users', array('first', '=', 'joe')
+    // instead of $db->query("SELECT * FROM users WHERE first = 'joe'"). This function
+    // helps prevent sql injection statements
 	public function get($table, $where) {
 		return $this->action('SELECT *', $table, $where);
 	}
@@ -93,6 +102,8 @@ class DB {
 		return false;
 	}
 	
+
+
 	public function update($table, $id, $fields) {
 		$set = "";
 		$x = 1;

@@ -47,17 +47,6 @@
             if (!empty($error)) {
                 Session::put("error", $error);
             }
-    
-
-    #collect score data from the form in pt.php
-    /*$date = $_POST['date'];
-    $pushUpsRaw = $_POST['pushUpsRaw'];
-    $sitUpsRaw = $_POST['sitUpsRaw'];
-    $runRaw = $_POST['runRaw'];
-    $runTime = $_POST['runRaw'];
-    $type = $_POST['type']; */
-
-    #form validation for the date and push up/sit up scores
 
 
     #for the run Score, convert to seconds and the integer data type
@@ -81,7 +70,7 @@
             }
 
             #regression for mens running scores
-            if ($type == "army") {
+            if ($type == "Army") {
                 if ($runRaw >= 780) {
                     #make sure that runRaw is divisible by 6. Otherwise regression will error
                     if($runRaw % 6 != 0) {
@@ -111,7 +100,7 @@
                     $pushUpsScore = 100 + ($pushUpsRaw - 42);
                 }
 
-                if ($_POST['type'] == "army") {
+                if ($_POST['type'] == "Army") {
                     if ($runRaw >= 936) {
                         if($runRaw % 6 != 0) {
                             #go to the next highest time divisible by 6 to calculate score
@@ -171,14 +160,7 @@
 
            
            #input data into database table called pt, see cPanel for more info
-           #the null field is for the auto increment unique row key
            #runTime was set near the very top of this file
-           $query = $db->query("INSERT INTO pt VALUES('', 
-           '$userid', '$lastName', '$firstName', '$type', '$date', '$pushUpsRaw',
-           '$pushUpsScore', '$sitUpsRaw',
-           '$sitUpsScore', '$runRaw', '$runTime', '$runScore',
-           '$overallScore', '$passOrF')");
-
            $db->insert("pt", array(
                 "user_id"=>$user->data()->id,
                 "last"=>$user->data()->last,
@@ -194,8 +176,8 @@
                 "total_score"=>$overallScore,
                 "pass"=>$passOrF));
 
-            #Session::put("success", "Thank you. Your response has been recorded. 
-            #Redirecting you to your PT Scores.");
+            Session::put("success", "Thank you. Your response has been recorded. 
+            Redirecting you to your PT Scores.");
 
           }
     }  

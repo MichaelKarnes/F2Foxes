@@ -383,7 +383,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../../pages/training">
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
               </a>
             </li>
@@ -393,7 +393,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../../pages/signout">
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
@@ -471,7 +471,48 @@
                   <td>Raw Sit Ups</td> <td>Sit Up Score</td>
                   <td>Raw Run</td> <td>Run Score</td> <td>Total Score</td> 
                   <td>Pass/Fail</td> <td>Delete</td>
-                  </tr>     
+                  </tr>
+                      
+
+                  <?php
+                      $scores = $db->get('pt', array('user_id', '=', $user->data()->id));
+                      if (!$scores->count()) {
+                          echo "<tr>" . "<td>" . "No Scores To Date" . "</td>" . "</tr>"; 
+                      } else {
+                        foreach ($scores->results() as $scores) {
+                            echo "<tr>" . 
+                            "<td>" . $scores->date . "</td>" .
+				            "<td>" . $scores->type . "</td>" . 
+                            "<td>" . $scores->push_ups_raw . "</td>" .
+                            "<td>" . $scores->push_ups_score . "</td>" .
+                            "<td>" . $scores->sit_ups_raw . "</td>" .
+                            "<td>" . $scores->sit_ups_score . "</td>" .
+                            "<td>" . $scores->run_time . "</td>" .
+                            "<td>" . $scores->run_score . "</td>" .
+                            "<td>" . $scores->total_score . "</td>" .
+                            "<td>" . $scores->pass . "</td>" .
+
+                            /*
+                            "<td>" .   
+                            '<form action = "../../actions/delete/pt_score.php" method = "post">' .
+                            '<input type = "submit" value = "X" class = "tableSub" 
+                            name = "delete[' . $scores->id . ']" />' . '</form>' .
+                            "</td>" .
+                            */  
+
+                            "<td>" .   
+                            '<form action = "../../actions/delete/pt_score.php" method = "POST">' .
+                            '<input type = "submit" value = "X" class = "tableSub" 
+                            name = "delete[' . $scores->id . ']" />' . 
+                            
+                            // the token is required in order to run /delete/pt_score/php second if stmt
+                            '<input type="hidden" name="token" value= "' . $token . '" >' .
+                            '</form>' .
+                            "</td>" .
+                            "</tr>"; 
+                        }
+                      }
+                  ?>     
                   </table>
                 </div>
               </div>
@@ -493,8 +534,8 @@
            
                 <form action="../../actions/create/pt_score.php" method="POST">
                 <label>Type: &nbsp </label> 
-                <input type="radio" name="type" value="army" checked>Army &nbsp
-                <input type="radio" name="type" value="corps">Corps <br>
+                <input type="radio" name="type" value="Army" checked>Army &nbsp
+                <input type="radio" name="type" value="Corps">Corps <br>
 
                 <label>Date of test (ex. 09-24-2015): &nbsp </label> 
                 <input type="text" id="formIn" name="date" maxlength="15"/> <br>
@@ -713,106 +754,7 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-    <script>
-        function gd(year, month, day) {
-            return new Date(year, month - 1, day).getTime();
-        }
-        function gl(time) {
-            var d = new Date();
-            d.setTime(time);
-            var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-            return d.getDate() + '' + monthNames[d.getMonth()] + '' + d.getFullYear();
-        }
-        //LINE randomly generated data
-        var smstr = [[1, 2.81], [2, 2.87], [3, 3.82], [4, 3.01], [5, 2.93], [6, 2.96], [7, 3.88]];
-        var week = [[gd(2015, 8, 16), 2.98], [gd(2015, 8, 23), 3.10], [gd(2015, 8, 30), 3.74], [gd(2015, 9, 6), 3.17], [gd(2015, 9, 13), 3.98], [gd(2015, 9, 20), 2.13], [gd(2015, 9, 27), 3.07], [gd(2015, 10, 4), 3.24], [gd(2015, 10, 11), 3.30], [gd(2015, 10, 18), 3.83], [gd(2015, 10, 25), 2.89], [gd(2015, 11, 1), 2.58], [gd(2015, 11, 8), 2.91], [gd(2015, 11, 15), 2.41], [gd(2015, 11, 22), 2.33], [gd(2015, 11, 29), 2.46], [gd(2015, 12, 6), 2.58], [gd(2015, 12, 13), 3.82]];
-        var semester = {
-            data: smstr,
-            color: "#ab172b",
-            label: 'By Semester'
-        };
-        var weekly = {
-            data: week,
-            color: "#ab172b",
-            label: 'By Week'
-        };
-
-        function linechart(name) {
-            var chart;
-            switch (name) {
-                case 'By Semester':
-                    chart = semester;
-                    break;
-                case 'By Week':
-                    chart = weekly;
-                    break;
-                default:
-                    chart = semester;
-                    break;
-            }
-            /*
-            * LINE CHART
-            * ----------
-            */
-            $.plot("#line-chart", [chart], {
-                grid: {
-                    hoverable: true,
-                    borderColor: "#f3f3f3",
-                    borderWidth: 1,
-                    tickColor: "#f3f3f3"
-                },
-                series: {
-                    shadowSize: 0,
-                    lines: {
-                        show: true
-                    },
-                    points: {
-                        show: false
-                    }
-                },
-                lines: {
-                    fill: false,
-                    color: ["#3c8dbc", "#f56954"]
-                },
-                legend: {
-                    show: false
-                },
-                yaxis: {
-                    label: "GPA",
-                    min: 0,
-                    max: 4
-                },
-                xaxis: {
-                    //ticks: [[1, "16AUG2015"], [2, "23AUG2015"], [3, "30AUG2015"], [4, "06SEP2015"], [5, "13SEP2015"], [6, "20SEP2015"], [7, "27SEP2015"], [8, "04OCT2015"], [9, "11OCT2015"], [10, "18OCT2015"], [11, "25OCT2015"], [12, "01NOV2015"], [13, "08NOV2015"], [14, "15NOV2015"], [15, "22NOV2015"], [16, "29NOV2015"], [17, "06DEC2015"], [18, "13DEC2015"]]
-                    mode: "time",
-                    timeformat: "%m/%d"
-                }
-            });
-            //Initialize tooltip on hover
-            $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
-                position: "absolute",
-                display: "none",
-                opacity: 0.8
-            }).appendTo("body");
-            $("#line-chart").bind("plothover", function (event, pos, item) {
-                if (item) {
-                    var x = item.datapoint[0].toFixed(2),
-                        y = item.datapoint[1].toFixed(2);
-                    //item.series.label
-                    $("#line-chart-tooltip").html(y + "<br>" + gl(x))
-                        .css({ top: item.pageY + 5, left: item.pageX + 5 })
-                        .fadeIn(200);
-                } else {
-                    $("#line-chart-tooltip").hide();
-                }
-            });
-            /* END LINE CHART */
-        };
-
-        $(function () {
-            linechart();
-        });
-    </script>
+    
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../js/pages/dashboard.js"></script>
   </body>
