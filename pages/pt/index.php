@@ -8,6 +8,11 @@
         Redirect::to("../../");
     // store the database connection into $db
     $db = DB::getInstance();
+
+    //generate token to submit with all forms. form php files in ../actions/create/blahblah.php
+    $token = Token::generate();
+
+    $error = Session::flash("error");
 ?>
 <!DOCTYPE html>
 <html>
@@ -486,7 +491,7 @@
                 calculated from raw scores (ex. You did 80 push ups, enter 80).</p>
         
            
-                <form action="ptSubmit.php" method="POST">
+                <form action="../../actions/create/pt_score.php" method="POST">
                 <label>Type: &nbsp </label> 
                 <input type="radio" name="type" value="army" checked>Army &nbsp
                 <input type="radio" name="type" value="corps">Corps <br>
@@ -506,6 +511,8 @@
                 <label>Gender: &nbsp </label>
                 <input type="radio" name="gender" value="male" checked>Male &nbsp
                 <input type="radio" name="gender" value="female">Female <br>
+
+                <input type="hidden" name="token" value= "<?php echo $token; ?>" >
 
                 <input type="submit"> <br></br>
                 </form>       

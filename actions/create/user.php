@@ -1,5 +1,6 @@
 <?php
 chdir(dirname(__FILE__));
+//core init required for all pages
 require_once '../../core/init.php';
 
 if(Input::exists()) { // if at least one input has been submitted
