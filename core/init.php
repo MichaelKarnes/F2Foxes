@@ -6,7 +6,7 @@ $GLOBALS['config'] = array(
     'cpanel'    => array(
         'ip'        => '192.232.249.164',
 		'username'  => 'km310765',
-		'password'  => 'BestInAcademicsF2!',
+		'password'  => 'BU^Qo!lKF_oV',
         'domain'    => 'f2foxes.com',
         'port'      => 2083
     ),
