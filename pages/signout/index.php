@@ -8,18 +8,13 @@
         Redirect::to("../../");
     // store the database connection into $db
     $db = DB::getInstance();
-
-    //generate token to submit with all forms. form php files in ../actions/create/blahblah.php
-    $token = Token::generate();
-
-    $error = Session::flash("error");
 ?>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>F-2 Foxes | My PT Scores</title>
+    <title>F-2 Foxes | Training Schedule</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -382,8 +377,8 @@
                 <small class="label pull-right bg-yellow">12</small>
               </a>
             </li>
-            <li>
-              <a href="../../pages/training">
+            <li class="active">
+              <a href="pages/training">
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
               </a>
             </li>
@@ -393,11 +388,11 @@
               </a>
             </li>
             <li>
-              <a href="../../pages/signout">
+              <a href="#">
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
-            <li class="active">
+            <li>
               <a href="../../pages/pt">
                 <i class="fa fa-line-chart"></i> <span>PT Scores</span>
               </a>
@@ -436,12 +431,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            My PT Scores
+            Training Schedule
             <small></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="../../"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">My PT Scores</li>
+            <li class="active">Training Schedule</li>
           </ol>
         </section>
 
@@ -456,169 +451,21 @@
                 </div>
             </div>
           </div>
-          <!-- PT Scores stuff -->
+          <!-- Singout Sheet -->
           <div class="row">
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-bookmark"></i>  History</h3>
+                  <h3 class="box-title"><i class="icon fa fa-arrow-right"></i>  Google Doc</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 200px;">
-                  <table class="table">
-                  <tr>
-                  <td><b>Date</b></td> <td><b>Type</b></td> <td><b>Push Ups</b></td> <td><b>Push Up Score</b></td>
-                  <td><b>Sit Ups</b></td> <td><b>Sit Up Score</b></td>
-                  <td><b>Run Time</b></td> <td><b>Run Score</b></td> <td><b>Total Score</b></td> 
-                  <td><b>Pass/Fail</b></td> <td><b>Delete</b></td>
-                  </tr>
-                      
-
-                  <?php                  
-                      $scores = $db->get('pt', array('user_id', '=', $user->data()->id));
-                      if (!$scores->count()) {
-                          echo "<tr>" . "<td>" . "No Scores To Date" . "</td>" . "</tr>"; 
-                      } else {
-                        foreach ($scores->results() as $scores) {
-                            echo "<tr>" . 
-                            "<td>" . $scores->date . "</td>" .
-				            "<td>" . $scores->type . "</td>" . 
-                            "<td>" . $scores->push_ups_raw . "</td>" .
-                            "<td>" . $scores->push_ups_score . "</td>" .
-                            "<td>" . $scores->sit_ups_raw . "</td>" .
-                            "<td>" . $scores->sit_ups_score . "</td>" .
-                            "<td>" . $scores->run_time . "</td>" .
-                            "<td>" . $scores->run_score . "</td>" .
-                            "<td>" . $scores->total_score . "</td>" .
-                            "<td>" . $scores->pass . "</td>" .
-
-                            "<td>" .   
-                            '<form action = "../../actions/delete/pt_score.php" method = "POST">' .
-                            '<input type = "submit" value = "X" class = "tableSub" 
-                            name = "delete[' . $scores->id . ']" />' . 
-                            
-                            // the token is required in order to run /delete/pt_score/php second if stmt
-                            '<input type="hidden" name="token" value= "' . $token . '" >' .
-                            '</form>' .
-                            "</td>" .
-                            "</tr>";
-                            
-                        }
-                      }
-                  ?>     
-                  </table>
+                <div class="box-body no-padding" style="min-height: 600px;">
+                <iframe src="https://docs.google.com/spreadsheets/d/1wJodUEryd_OzVQJ-5_HO8yhVE1PAIy1AqidGQqzdtZ0/pubhtml?widget=true&amp;headers=false" style="min-height: 600px; min-width: 100%"></iframe>
                 </div>
               </div>
               <!-- /.nav-tabs-custom -->
             </div>
 
-            
-            <!-- The code block below is for the form to add a new pt score -->
-            <div class="col-xs-5">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title"> <i class="icon fa fa-plus"></i> New PT Score</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body" style="min-height: 200px;">
-
-                <p>Please fill out the form below to add a PT Score. Your score will be
-                calculated from raw scores (ex. You did 80 push ups, enter 80).</p>
-        
-           
-                <form action="../../actions/create/pt_score.php" method="POST">
-                <label>Type: &nbsp </label> 
-                <input type="radio" name="type" value="Army" checked>Army &nbsp
-                <input type="radio" name="type" value="Corps">Corps <br>
-
-                <label>Date of test (ex. 09-24-2015): &nbsp </label> 
-                <input type="text" id="formIn" name="date" maxlength="15"/> <br>
-            
-                <label>Raw Push Ups (ex. 80): &nbsp </label>
-                <input type="text" id="formIn" name="pushUpsRaw" maxlength="3"/> <br>
-          
-                <label>Raw Sit Ups (ex. 90): &nbsp </label>
-                <input type="text" id="formIn" name="sitUpsRaw" maxlength="3"/> <br>
-           
-                <label>Run Time (ex. 12:30): &nbsp </label>
-                <input type="text" id="formIn" name="runRaw" maxlength="10"/> <br>
-          
-                <label>Gender: &nbsp </label>
-                <input type="radio" name="gender" value="male" checked>Male &nbsp
-                <input type="radio" name="gender" value="female">Female <br>
-
-                <input type="hidden" name="token" value= "<?php echo $token; ?>" >
-
-                <input type="submit"> <br></br>
-                </form>       
-                </div>
-              </div>
-            </div>
-
-
-            <!-- This code block shows the top pt scores -->
-              <div class="col-xs-7">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title"> <i class="icon fa fa-trophy"></i> Top Scores </h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body" style="min-height: 280px;">
-                  
-                <table class="table">
-                <tr>
-                <td><b>Last</b></td> <td><b>First</b></td> <td><b>Date</b></td>
-                <td><b>Type</b></td> <td><b>Total Score</b></td>
-                </tr>
-                
-                <?php
-                   $top = $db->get('pt', array('1', '=', '1'))->results();
-                   $ids = array('','','','','','','');
-                   $max = array('','','','','','','');
-                   $lastTop = array('','','','','','','');
-                   $firstTop = array('','','','','','','');
-                   $dateTop = array('','','','','','','');
-                   $typeTop = array('','','','','','','');
-                   $numScores = 0;
-                   
-                   // find the top 6 scores
-                   while ($numScores < 6) {
-                      foreach($top as $i) {
-                        // ensure the score hasn't been included multiple times by checking the id
-                        if ($i->total_score >= $max[$numScores] && in_array($i->id, $ids) == 0) {
-                          $max[$numScores] = $i->total_score;
-                          $ids[$numScores] = $i->id;
-                          $lastTop[$numScores] = $i->last;
-                          $firstTop[$numScores] = $i->first;
-                          $dateTop[$numScores] = $i->date;
-                          $typeTop[$numScores] = $i->type;
-                        }
-                      }
-                      $numScores++;
-                   } 
-
-                   
-                   // input top scores into the html table
-                   $numScores = 0;
-                   while ($numScores < 6) {
-                      echo "<tr>" . 
-                            "<td>" . $lastTop[$numScores] . "</td>" .
-				            "<td>" . $firstTop[$numScores] . "</td>" . 
-                            "<td>" . $dateTop[$numScores] . "</td>" .
-                            "<td>" . $typeTop[$numScores] . "</td>" .
-                            "<td>" . $max[$numScores] . "</td>" .
-                            "<tr>";
-                            
-                      $numScores++;
-                   }
-                ?>
-                
-                </table>
-                </div>
-              </div>
-            </div>
-
-            
           </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
@@ -795,9 +642,8 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-    
+
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../js/pages/dashboard.js"></script>
   </body>
 </html>
-

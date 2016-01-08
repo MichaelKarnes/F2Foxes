@@ -351,12 +351,12 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../../pages/signout">
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../../pages/pt">
                 <i class="fa fa-line-chart"></i> <span>PT Scores</span>
               </a>
             </li>
