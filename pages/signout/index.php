@@ -451,7 +451,7 @@
                 </div>
             </div>
           </div>
-          <!-- Training Schedule Google Doc! -->
+          <!-- Singout Sheet -->
           <div class="row">
             <div class="col-xs-12">
               <div class="box">
@@ -647,4 +647,3 @@
     <script src="../../js/pages/dashboard.js"></script>
   </body>
 </html>
-
