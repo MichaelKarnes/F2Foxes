@@ -1,4 +1,6 @@
 <?php
+	// this script is intended to calculate both Army and Corps PT scores, and add them to the database
+	
     chdir(dirname(__FILE__));
     //core init required for all pages
     require_once '../../core/init.php';
@@ -11,7 +13,7 @@
             $pushUpsRaw = Input::get('pushUpsRaw');
             $sitUpsRaw = Input::get('sitUpsRaw');
             $runRaw = Input::get('runRaw');
-            $runTime = Input::get('runRaw');
+            $runTime = Input::get('runRaw');   // NOT AN ERROR!  --  two copies of 'runRaw' are used
             $type = Input::get('type');
 
             $db = DB::getInstance();
@@ -22,13 +24,13 @@
             if (strlen($date) != 10 || substr($date,2,1) != '-' || substr($date,5,1) != '-') {
                 $error = "The date you have inputed does not have the correct form.
                 For example, September 24th, 2015 would be typed in as 09-24-2015." . 
-                "<br>" . '<a href ="index.php"> Please Try Again </a>' . "<br>" . "<br>";
+                "<br>" . '<a href ="index.php"> Please Try Again </a>' . "<br>";
                 break;
             }
             if (is_numeric($pushUpsRaw) == 0 || is_numeric($sitUpsRaw) == 0) {
                 $error = "The request was invalid. Raw Push Up Scores and Raw Sit Up 
                 Scores should be numbers." . "<br>" . '<a href ="index.php"> Please Try Again </a>' .
-                "<br>" . "<br>";
+                "<br>";
                 break;
             }
 
@@ -37,10 +39,10 @@
             $sitUpsRaw = intval($sitUpsRaw);
 
             #form validation for running score input
-            if (strlen($runRaw) != 5 || substr($runRaw,2,1) != ':') {
+            if (substr($runTime,-3,1) != ':') {
                 $error = "The run time you have inputed does not have the correct form.
                 For example, 14 minutes and 5 seconds, would be typed in as 14:05" . 
-                "<br>" . '<a href ="index.php"> Please Try Again </a>' . "<br>" . "<br>";
+                "<br>" . '<a href ="index.php"> Please Try Again </a>' . "<br>";
                 break;
             }
 
@@ -50,10 +52,13 @@
 
 
     #for the run Score, convert to seconds and the integer data type
-    #substr picks off the minutes and the seconds from the form run input xx:xx
-    #runRaw = first two characters (minutes->secs) + last two characters (already secs) 
-    $runRaw = (intval(substr($runRaw,0,2))*60) + intval(substr($runRaw,-2));
-    
+    #substr picks off the minutes and the seconds from the form run input xx:xx OR x:xx
+    #runRaw = first two characters (minutes->secs) + last two characters (already secs)
+    if (strlen($runRaw) == 5) {
+		$runRaw = (intval(substr($runRaw,0,2))*60) + intval(substr($runRaw,-2));
+	} elseif (strlen($runRaw) == 4) {     // user is sub 10 minute time
+		$runRaw = (intval(substr($runRaw,0,1))*60) + intval(substr($runRaw,-2));
+	}
     
     #if the form has been set, do some calculations and communicate with
     #the PT table in the database. Notice if statements for male or female.
@@ -85,11 +90,16 @@
                     $runScore = 100 + (($runRaw - 780) / -5); 
                 }
             } else {
-                //enter regression code here
+				// then it is corps pt test
+				$corps = $db->get('run_male', array('1', '=', '1'))->results();
+                foreach($corps as $i) {
+                $diff = $runRaw - ($i->seconds);
+                if ($diff <= 0 && isset($runScore) == 0)
+                    $runScore = $i->score;
+                }
             }
                         
             #sit Ups Scores calculated same way for both genders, done at end
-
             } elseif ($user->data()->gender == 0) {
                 #female so new regression
                 if($pushUpsRaw <= 42) { 
@@ -100,7 +110,7 @@
                     $pushUpsScore = 100 + ($pushUpsRaw - 42);
                 }
 
-                if ($_POST['type'] == "Army") {
+                if ($type == "Army") {
                     if ($runRaw >= 936) {
                         if($runRaw % 6 != 0) {
                             #go to the next highest time divisible by 6 to calculate score
@@ -114,7 +124,13 @@
                         $runScore = 100 + (($runRaw - 936) / -5);
                     }
                 } else {
-                    //enter regression code here
+                    // then it is corps pt test
+					$corps = $db->get('run_female', array('1', '=', '1'))->results();
+					foreach($corps as $i) {
+					$diff = $runRaw - ($i->seconds);
+					if ($diff <= 0 && isset($runScore) == 0)
+						$runScore = $i->score;
+					}
                 }
            }
 
@@ -133,23 +149,21 @@
 	            $sitUpsScore = 100 + ($sitUpsRaw - 78);
 	       }
 
-           #overall score is useful to have!
-           $overallScore = $pushUpsScore + $sitUpsScore + $runScore;
 
            //if user does not max all events, user cannot acheive over 300!!!
-           if ($overallScore > 300 && ($pushUpsScore < 100 || $sitUpsScore < 100 || $runScore < 100)) {
-               if ($pushUpsScore > 100) {
-                   $pushUpsScore = 100;
-               }
-               if ($sitUpsScore > 100) {
-                   $sitUpsScore = 100;
-               }
-               if ($runScore > 100) {
-                   $runScore = 100;
-               }
-               $overallScore = $pushUpsScore + $sitUpsScore + $runScore;
-           }
-                    
+           if ($pushUpsScore > 100 && ($sitUpsScore < 100 || $runScore < 100)) {
+				$pushUpsScore = 100;
+		   }
+		   if ($sitUpsScore > 100 && ($pushUpsScore < 100 || $runScore < 100)) {
+				$sitUpsScore = 100;
+		   }
+		   if ($runScore > 100 && ($pushUpsScore < 100 || $sitUpsScore < 100)) {
+				$runScore = 100;
+		   }
+		   
+		   
+			#overall score is useful to have!
+           $overallScore = $pushUpsScore + $sitUpsScore + $runScore;  
           
            #check if any event has been failed, ie < 60.
            if ($pushUpsScore >= 60 && $sitUpsScore >= 60 && $runScore >= 60) {
@@ -183,6 +197,7 @@
     }  
           
     Redirect::to($_SERVER['HTTP_REFERER']);  
+	
 ?>
 
 

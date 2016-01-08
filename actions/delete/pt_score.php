@@ -16,4 +16,5 @@
         }
      }
      Redirect::to($_SERVER['HTTP_REFERER']); 
+     $db = DB::get
 ?>

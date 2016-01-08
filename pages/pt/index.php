@@ -467,14 +467,14 @@
                 <div class="box-body no-padding" style="min-height: 200px;">
                   <table class="table">
                   <tr>
-                  <td>Date</td> <td>Type</td> <td>Raw Push Ups</td> <td>Push Up Score</td>
-                  <td>Raw Sit Ups</td> <td>Sit Up Score</td>
-                  <td>Raw Run</td> <td>Run Score</td> <td>Total Score</td> 
-                  <td>Pass/Fail</td> <td>Delete</td>
+                  <td><b>Date</b></td> <td><b>Type</b></td> <td><b>Push Ups</b></td> <td><b>Push Up Score</b></td>
+                  <td><b>Sit Ups</b></td> <td><b>Sit Up Score</b></td>
+                  <td><b>Run Time</b></td> <td><b>Run Score</b></td> <td><b>Total Score</b></td> 
+                  <td><b>Pass/Fail</b></td> <td><b>Delete</b></td>
                   </tr>
                       
 
-                  <?php
+                  <?php                  
                       $scores = $db->get('pt', array('user_id', '=', $user->data()->id));
                       if (!$scores->count()) {
                           echo "<tr>" . "<td>" . "No Scores To Date" . "</td>" . "</tr>"; 
@@ -492,14 +492,6 @@
                             "<td>" . $scores->total_score . "</td>" .
                             "<td>" . $scores->pass . "</td>" .
 
-                            /*
-                            "<td>" .   
-                            '<form action = "../../actions/delete/pt_score.php" method = "post">' .
-                            '<input type = "submit" value = "X" class = "tableSub" 
-                            name = "delete[' . $scores->id . ']" />' . '</form>' .
-                            "</td>" .
-                            */  
-
                             "<td>" .   
                             '<form action = "../../actions/delete/pt_score.php" method = "POST">' .
                             '<input type = "submit" value = "X" class = "tableSub" 
@@ -509,7 +501,8 @@
                             '<input type="hidden" name="token" value= "' . $token . '" >' .
                             '</form>' .
                             "</td>" .
-                            "</tr>"; 
+                            "</tr>";
+                            
                         }
                       }
                   ?>     
@@ -519,7 +512,8 @@
               <!-- /.nav-tabs-custom -->
             </div>
 
-
+            
+            <!-- The code block below is for the form to add a new pt score -->
             <div class="col-xs-5">
               <div class="box">
                 <div class="box-header">
@@ -561,6 +555,8 @@
               </div>
             </div>
 
+
+            <!-- This code block shows the top pt scores -->
               <div class="col-xs-7">
               <div class="box">
                 <div class="box-header">
@@ -568,11 +564,56 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" style="min-height: 280px;">
+                  
                 <table class="table">
                 <tr>
-                <td>Last</td> <td>First</td> <td>Type</td> <td>Date</td> <td>Total Score</td>
+                <td><b>Last</b></td> <td><b>First</b></td> <td><b>Date</b></td>
+                <td><b>Type</b></td> <td><b>Total Score</b></td>
                 </tr>
-                </table>           
+                
+                <?php
+                   $top = $db->get('pt', array('1', '=', '1'))->results();
+                   $ids = array('','','','','','','');
+                   $max = array('','','','','','','');
+                   $lastTop = array('','','','','','','');
+                   $firstTop = array('','','','','','','');
+                   $dateTop = array('','','','','','','');
+                   $typeTop = array('','','','','','','');
+                   $numScores = 0;
+                   
+                   // find the top 6 scores
+                   while ($numScores < 6) {
+                      foreach($top as $i) {
+                        // ensure the score hasn't been included multiple times by checking the id
+                        if ($i->total_score >= $max[$numScores] && in_array($i->id, $ids) == 0) {
+                          $max[$numScores] = $i->total_score;
+                          $ids[$numScores] = $i->id;
+                          $lastTop[$numScores] = $i->last;
+                          $firstTop[$numScores] = $i->first;
+                          $dateTop[$numScores] = $i->date;
+                          $typeTop[$numScores] = $i->type;
+                        }
+                      }
+                      $numScores++;
+                   } 
+
+                   
+                   // input top scores into the html table
+                   $numScores = 0;
+                   while ($numScores < 6) {
+                      echo "<tr>" . 
+                            "<td>" . $lastTop[$numScores] . "</td>" .
+				            "<td>" . $firstTop[$numScores] . "</td>" . 
+                            "<td>" . $dateTop[$numScores] . "</td>" .
+                            "<td>" . $typeTop[$numScores] . "</td>" .
+                            "<td>" . $max[$numScores] . "</td>" .
+                            "<tr>";
+                            
+                      $numScores++;
+                   }
+                ?>
+                
+                </table>
                 </div>
               </div>
             </div>
