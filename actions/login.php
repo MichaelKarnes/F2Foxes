@@ -14,7 +14,11 @@ if(Input::exists()) {
 			$user = new User();
 			
 			$remember = (Input::get("remember") == "on") ? true : false;
-			$user->login(Input::get('username'), Input::get('password'), $remember);
+            $success = $user->login(Input::get('username'), Input::get('password'), $remember);
+			if(!$success)
+                Session::put('error', 'Incorrect username or password.');
+		} else {
+		    Session::put('error', 'You must provide a username and password.');
 		}
 	}
 }

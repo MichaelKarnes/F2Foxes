@@ -50,6 +50,9 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
+    <?php if(isset($error)) { ?>
+    <p style="color: red;"><?php echo $error; ?></p>
+    <?php } ?>
 
     <form action="../../actions/login.php" method="post">
       <input type="hidden" name="token" value="<?php echo $token; ?>" />
