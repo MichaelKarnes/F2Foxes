@@ -8,7 +8,7 @@
         Redirect::to("../../");
     // store the database connection into $db
     $db = DB::getInstance();
-    
+
     // generate token to submit with all forms. form php files in ../actions/create/blahblah.php
     $token = Token::generate();
 
@@ -377,7 +377,7 @@
               </ul>
             </li>
             <li>
-              <a href="../../pages/mailbox/mailbox.html">
+              <a href="../../pages/mailbox/mailbox">
                 <i class="fa fa-envelope"></i> <span>Mailbox</span>
                 <small class="label pull-right bg-yellow">12</small>
               </a>
@@ -457,6 +457,8 @@
         <!-- Main content -->
         <section class="content">
           <!-- Alert -->
+          <!--
+          This feature is to be implemented at a later time
           <div class="row">
             <div class="col-xs-12">
                 <div class="alert alert-warning alert-dismissible">
@@ -464,26 +466,31 @@
                     <i class="icon fa fa-ban"></i> Danger alert preview. This alert is dismissable.
                 </div>
             </div>
-          </div>
-          
-          
-          
+          </div> -->
+
+
+
           <!-- Singout Sheet
           The first block of code is to input new signouts into the database -->
           <div class="row">
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-arrow-right"></i> New Sign Out</h3>
+                  <h3 class="box-title"><i class="icon fa fa-arrow-right"></i>
+                     New Sign Out for the Week Of: &nbsp
+                     <?php
+                        $d1 = strtotime("this week");
+                        echo date("d M  Y", $d1);
+                     ?>
+                  </h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding" style="min-height: 100px;">
                 <!-- main code goes here -->
-                
+
                 <form action = "../../actions/create/signout.php" method = "post">
                 <table class = "table">
-                  
-                  
+
                   <!-- Table Header -->
                   <tr>
                     <!-- the database contains the current weekly training times in the train_times table -->
@@ -491,14 +498,14 @@
                       // draw in training times for the current semester, the admin can change
                       // these training times to add special events or account for corps changes
                       $train = $db->get('train_times', array('1','=','1'))->results();
-                      
+
                       foreach($train as $i) {
                         $myString = $i->times;
                         // in the database, the training times are stored as comma seperated values
                         // the explode function converts csv to a normal php array
                         $timeArray = explode(',',$myString);
                       }
-                      
+
                       foreach($timeArray as $i) {
                         echo "<td><b>" . $i . "</b></td>";
                       }
@@ -517,11 +524,30 @@
                   ?>
                   </tr>
                 </table>
+                <b> &nbsp Select Reason for Sign Out </b> <br>
+                &nbsp <select name="reason">
+                  <option value="Work"> Work </option>
+                  <option value="Class"> Class </option>
+                  <option value="Lab"> Lab </option>
+                  <option value="Tutoring"> Tutoring </option>
+                  <option value="Student Org"> Student Org </option>
+                  <option value="Army"> Army </option>
+                  <option value="Rudders"> Rudders </option>
+                  <option value="Ranger Challenge"> Ranger Challenge </option>
+                  <option value="Fish Drill Team"> Fish Drill Team </option>
+                  <option value="Ross Volunteers"> Ross Volunteers </option>
+                  <option value="Recon CO"> Recon CO </option>
+                  <option value="Seal PLT"> Seal PLT </option>
+                  <option value="Corps Athletics"> Corps Athletics </option>
+                  <option value="Intramurals"> Intramurals </option>
+                  <option value="Other"> Other </option>
+                  <option values="none"> None </option>
+                </select>
                 <input type="hidden" name="token" value="<?php echo $token; ?>" >
                 <input type="hidden" name="numboxes" value="<?php echo count($timeArray); ?>" >
                 <input type="submit"> <br> <br>
                 </form>
-                
+
                 <p> &nbsp <b>Current Sign Out</b></p>
                 <table class="table">
                   <tr>
@@ -532,19 +558,19 @@
                         // the explode function converts csv to a normal php array
                         $timeArray = explode(',',$myString);
                       }
-                      
+
                       foreach($timeArray as $i) {
                         echo "<td><b>" . $i . "</b></td>";
                       }
-                      
+
                       ?>
                   </tr>
-                      
+
                       <tr>
                         <?php
                         // retreive signout CSV for the current week
                         $signOuts = $db->get('signout', array('user_id','=', $user->data()->id))->results();
-                        
+
                         // we explode the string into a php array to display in the next table row
                         foreach($signOuts as $i) {
                           $myString = $i->current_week;
@@ -552,7 +578,7 @@
                           // the explode function converts csv to a normal php array
                           $try = explode(',',$myString);
                         }
-                        
+
                         $j = 0;
                         while ($j < count($timeArray)) {
                           // the numBoxes string adds a string of html checkboxes
@@ -562,21 +588,21 @@
                         ?>
                       </tr>
                 </table>
-                
-                
-                
-                
-                
+
+
+
+
+
                 </div>
               </div>
               <!-- /.nav-tabs-custom -->
             </div>
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
             <!-- this block of code shows the current outfit signouts -->
             <div class="col-xs-12">
               <div class="box">
@@ -586,11 +612,11 @@
                 <!-- /.box-header -->
                 <div class="box-body no-padding" style="min-height: 600px;">
                 <!-- main code goes here -->
-                
+
                 <form action = "../../actions/create/signout.php" method = "post">
                 <table class = "table">
-                  
-                  
+
+
                   <!-- Table Header -->
                   <tr>
                     <td><b>Name</b></td>
@@ -599,25 +625,25 @@
                       // draw in training times for the current semester, the admin can change
                       // these training times to add special events or account for corps changes
                       $train = $db->get('train_times', array('1','=','1'))->results();
-                      
+
                       foreach($train as $i) {
                         $myString = $i->times;
                         // in the database, the training times are stored as comma seperated values
                         // the explode function converts csv to a normal php array
                         $timeArray = explode(',',$myString);
                       }
-                      
+
                       foreach($timeArray as $i) {
                         echo "<td><b>" . $i . "</b></td>";
                       }
                     ?>
                   </tr>
-                  
-                  
+
+
                   <!-- we now need to create a table of checkboxes based on the number of users -->
                   <?php
                     $tableCreate = $db->get('users', array('1','=','1'))->results();
-                    
+
                     // determine the amount of boxes we will need per row based off the number of weekly training times
                     $j = 0;
                     while ($j < count($timeArray)) {
@@ -626,23 +652,23 @@
                       $numBoxes = $numBoxes . $add;
                       $j++;
                     }
-                    
+
                     // this code fills the html table with names and the corresponding checkboxes
                     foreach($tableCreate as $i) {
                       $name = $i->last . ", " . $i->first;
                       echo "<tr><td>" . $name . "</td>" . $numBoxes . "</tr>";
                     }
                   ?>
-                  
+
                 </table>
-                
+
                 <input type="hidden" name="token" value="<?php echo $token; ?>" >
                 <input type="submit">
                 </form>
-                
-                
-                
-                
+
+
+
+
                 </div>
               </div>
               <!-- /.nav-tabs-custom -->

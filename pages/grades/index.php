@@ -378,7 +378,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../../pages/training">
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
               </a>
             </li>
@@ -388,7 +388,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../../pages/signout">
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
