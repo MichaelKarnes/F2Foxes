@@ -16,7 +16,7 @@
             $runTime = Input::get('runRaw');   // NOT AN ERROR!  --  two copies of 'runRaw' are used
             $type = Input::get('type');
 
-            $db = DB::getInstance();
+            $db = DB::getInstance(); 
 
             $error = "";
 
