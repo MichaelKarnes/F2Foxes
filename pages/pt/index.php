@@ -377,7 +377,7 @@
               </ul>
             </li>
             <li>
-              <a href="../../pages/mailbox/mailbox.html">
+              <a href="../../pages/mailbox/mailbox">
                 <i class="fa fa-envelope"></i> <span>Mailbox</span>
                 <small class="label pull-right bg-yellow">12</small>
               </a>
@@ -447,7 +447,7 @@
 
         <!-- Main content -->
         <section class="content">
-          <!-- Alert -->
+          <!-- Alert feature to be implemented later
           <div class="row">
             <div class="col-xs-12">
                 <div class="alert alert-warning alert-dismissible">
@@ -455,7 +455,7 @@
                     <i class="icon fa fa-ban"></i> Danger alert preview. This alert is dismissable.
                 </div>
             </div>
-          </div>
+          </div> -->
           <!-- PT Scores stuff -->
           <div class="row">
             <div class="col-xs-12">
@@ -469,20 +469,20 @@
                   <tr>
                   <td><b>Date</b></td> <td><b>Type</b></td> <td><b>Push Ups</b></td> <td><b>Push Up Score</b></td>
                   <td><b>Sit Ups</b></td> <td><b>Sit Up Score</b></td>
-                  <td><b>Run Time</b></td> <td><b>Run Score</b></td> <td><b>Total Score</b></td> 
+                  <td><b>Run Time</b></td> <td><b>Run Score</b></td> <td><b>Total Score</b></td>
                   <td><b>Pass/Fail</b></td> <td><b>Delete</b></td>
                   </tr>
-                      
 
-                  <?php                  
+
+                  <?php
                       $scores = $db->get('pt', array('user_id', '=', $user->data()->id));
                       if (!$scores->count()) {
-                          echo "<tr>" . "<td>" . "No Scores To Date" . "</td>" . "</tr>"; 
+                          echo "<tr>" . "<td>" . "No Scores To Date" . "</td>" . "</tr>";
                       } else {
                         foreach ($scores->results() as $scores) {
-                            echo "<tr>" . 
+                            echo "<tr>" .
                             "<td>" . $scores->date . "</td>" .
-				            "<td>" . $scores->type . "</td>" . 
+				            "<td>" . $scores->type . "</td>" .
                             "<td>" . $scores->push_ups_raw . "</td>" .
                             "<td>" . $scores->push_ups_score . "</td>" .
                             "<td>" . $scores->sit_ups_raw . "</td>" .
@@ -492,27 +492,27 @@
                             "<td>" . $scores->total_score . "</td>" .
                             "<td>" . $scores->pass . "</td>" .
 
-                            "<td>" .   
+                            "<td>" .
                             '<form action = "../../actions/delete/pt_score.php" method = "POST">' .
-                            '<input type = "submit" value = "X" class = "tableSub" 
-                            name = "delete[' . $scores->id . ']" />' . 
-                            
+                            '<input type = "submit" value = "X" class = "tableSub"
+                            name = "delete[' . $scores->id . ']" />' .
+
                             // the token is required in order to run /delete/pt_score/php second if stmt
                             '<input type="hidden" name="token" value= "' . $token . '" >' .
                             '</form>' .
                             "</td>" .
                             "</tr>";
-                            
+
                         }
                       }
-                  ?>     
+                  ?>
                   </table>
                 </div>
               </div>
               <!-- /.nav-tabs-custom -->
             </div>
 
-            
+
             <!-- The code block below is for the form to add a new pt score -->
             <div class="col-xs-5">
               <div class="box">
@@ -524,25 +524,25 @@
 
                 <p>Please fill out the form below to add a PT Score. Your score will be
                 calculated from raw scores (ex. You did 80 push ups, enter 80).</p>
-        
-           
+
+
                 <form action="../../actions/create/pt_score.php" method="POST">
-                <label>Type: &nbsp </label> 
+                <label>Type: &nbsp </label>
                 <input type="radio" name="type" value="Army" checked>Army &nbsp
                 <input type="radio" name="type" value="Corps">Corps <br>
 
-                <label>Date of test (ex. 09-24-2015): &nbsp </label> 
+                <label>Date of test (ex. 09-24-2015): &nbsp </label>
                 <input type="text" id="formIn" name="date" maxlength="15"/> <br>
-            
+
                 <label>Raw Push Ups (ex. 80): &nbsp </label>
                 <input type="text" id="formIn" name="pushUpsRaw" maxlength="3"/> <br>
-          
+
                 <label>Raw Sit Ups (ex. 90): &nbsp </label>
                 <input type="text" id="formIn" name="sitUpsRaw" maxlength="3"/> <br>
-           
+
                 <label>Run Time (ex. 12:30): &nbsp </label>
                 <input type="text" id="formIn" name="runRaw" maxlength="10"/> <br>
-          
+
                 <label>Gender: &nbsp </label>
                 <input type="radio" name="gender" value="male" checked>Male &nbsp
                 <input type="radio" name="gender" value="female">Female <br>
@@ -550,7 +550,7 @@
                 <input type="hidden" name="token" value= "<?php echo $token; ?>" >
 
                 <input type="submit"> <br></br>
-                </form>       
+                </form>
                 </div>
               </div>
             </div>
@@ -564,13 +564,13 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" style="min-height: 280px;">
-                  
+
                 <table class="table">
                 <tr>
                 <td><b>Last</b></td> <td><b>First</b></td> <td><b>Date</b></td>
                 <td><b>Type</b></td> <td><b>Total Score</b></td>
                 </tr>
-                
+
                 <?php
                    $top = $db->get('pt', array('1', '=', '1'))->results();
                    $ids = array('','','','','','','');
@@ -580,7 +580,7 @@
                    $dateTop = array('','','','','','','');
                    $typeTop = array('','','','','','','');
                    $numScores = 0;
-                   
+
                    // find the top 6 scores
                    while ($numScores < 6) {
                       foreach($top as $i) {
@@ -595,30 +595,30 @@
                         }
                       }
                       $numScores++;
-                   } 
+                   }
 
-                   
+
                    // input top scores into the html table
                    $numScores = 0;
                    while ($numScores < 6) {
-                      echo "<tr>" . 
+                      echo "<tr>" .
                             "<td>" . $lastTop[$numScores] . "</td>" .
-				            "<td>" . $firstTop[$numScores] . "</td>" . 
+				            "<td>" . $firstTop[$numScores] . "</td>" .
                             "<td>" . $dateTop[$numScores] . "</td>" .
                             "<td>" . $typeTop[$numScores] . "</td>" .
                             "<td>" . $max[$numScores] . "</td>" .
                             "<tr>";
-                            
+
                       $numScores++;
                    }
                 ?>
-                
+
                 </table>
                 </div>
               </div>
             </div>
 
-            
+
           </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
@@ -795,9 +795,8 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-    
+
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../js/pages/dashboard.js"></script>
   </body>
 </html>
-

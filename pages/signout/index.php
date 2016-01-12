@@ -377,13 +377,13 @@
               </ul>
             </li>
             <li>
-              <a href="../../pages/mailbox/mailbox">
+              <a href="../../pages/mailbox">
                 <i class="fa fa-envelope"></i> <span>Mailbox</span>
                 <small class="label pull-right bg-yellow">12</small>
               </a>
             </li>
             <li>
-              <a href="../..pages/training">
+              <a href="../../pages/training">
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
               </a>
             </li>
@@ -470,14 +470,14 @@
 
 
 
-          <!-- Singout Sheet
-          The first block of code is to input new signouts into the database -->
+          <!-- Singout Sheet Main Body -->
           <div class="row">
+          <!-- This block of code shows the current signouts -->
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-arrow-right"></i>
-                     New Sign Out for the Week Of: &nbsp
+                  <h3 class="box-title"><i class="icon fa fa-thumb-tack"></i>
+                     Current Sign Out for the Week Of: &nbsp
                      <?php
                         $d1 = strtotime("this week");
                         echo date("d M  Y", $d1);
@@ -487,13 +487,8 @@
                 <!-- /.box-header -->
                 <div class="box-body no-padding" style="min-height: 100px;">
                 <!-- main code goes here -->
-
-                <form action = "../../actions/create/signout.php" method = "post">
-                <table class = "table">
-
-                  <!-- Table Header -->
+                <table class="table">
                   <tr>
-                    <!-- the database contains the current weekly training times in the train_times table -->
                     <?php
                       // draw in training times for the current semester, the admin can change
                       // these training times to add special events or account for corps changes
@@ -509,10 +504,69 @@
                       foreach($timeArray as $i) {
                         echo "<td><b>" . $i . "</b></td>";
                       }
+                      ?>
+                  </tr>
+
+                  <tr>
+                    <?php
+                      // retreive signout CSV for the current week
+                      $signOuts = $db->get('signout', array('user_id','=', $user->data()->id))->results();
+
+                      // we explode the string into a php array to display in the next table row
+                      foreach($signOuts as $i) {
+                        $myString = $i->current_week;
+                        // in the database, the training times are stored as comma seperated values
+                        // the explode function converts csv to a normal php array
+                        $try = explode(',',$myString);
+                      }
+
+                      $j = 0;
+                      while ($j < count($timeArray)) {
+                        // the numBoxes string adds a string of html checkboxes
+                        echo "<td>" . $try[$j] . "</td>";
+                        $j++;
+                      }
                     ?>
                   </tr>
+                </table>
+                </div>
+              </div>
+              <!-- /.nav-tabs-custom -->
+            </div>
+
+
+
+            <!-- This block of code is to submit new Signouts -->
+            <div class="col-xs-12">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title"><i class="icon fa fa-arrow-right"></i>
+                     Edit Sign Out for the Week Of: &nbsp
+                     <?php
+                        echo date("d M  Y", $d1);
+                     ?>
+                  </h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding" style="min-height: 100px;">
+                <!-- main code goes here -->
+
+                <form action = "../../actions/create/signout.php" method = "post">
+                <table class = "table">
+
+                  <!-- Table Header -->
                   <tr>
-                  <!-- we now need to create a table of checkboxes based on the number of users -->
+                    <!-- the database contains the current weekly training times in the train_times table -->
+                    <?php
+                      // recreate the first row as in the current signout top block
+                      foreach($timeArray as $i) {
+                        echo "<td><b>" . $i . "</b></td>";
+                      }
+                    ?>
+                  </tr>
+
+                  <tr>
+                  <!-- we now need to create a row of checkboxes based on the number of users -->
                   <?php
                     // determine the amount of boxes we will need per row based off the number of weekly training times
                     $j = 0;
@@ -541,65 +595,16 @@
                   <option value="Corps Athletics"> Corps Athletics </option>
                   <option value="Intramurals"> Intramurals </option>
                   <option value="Other"> Other </option>
-                  <option values="none"> None </option>
+                  <option values="none"> none </option>
                 </select>
                 <input type="hidden" name="token" value="<?php echo $token; ?>" >
                 <input type="hidden" name="numboxes" value="<?php echo count($timeArray); ?>" >
                 <input type="submit"> <br> <br>
                 </form>
-
-                <p> &nbsp <b>Current Sign Out</b></p>
-                <table class="table">
-                  <tr>
-                    <?php
-                      foreach($train as $i) {
-                        $myString = $i->times;
-                        // in the database, the training times are stored as comma seperated values
-                        // the explode function converts csv to a normal php array
-                        $timeArray = explode(',',$myString);
-                      }
-
-                      foreach($timeArray as $i) {
-                        echo "<td><b>" . $i . "</b></td>";
-                      }
-
-                      ?>
-                  </tr>
-
-                      <tr>
-                        <?php
-                        // retreive signout CSV for the current week
-                        $signOuts = $db->get('signout', array('user_id','=', $user->data()->id))->results();
-
-                        // we explode the string into a php array to display in the next table row
-                        foreach($signOuts as $i) {
-                          $myString = $i->current_week;
-                          // in the database, the training times are stored as comma seperated values
-                          // the explode function converts csv to a normal php array
-                          $try = explode(',',$myString);
-                        }
-
-                        $j = 0;
-                        while ($j < count($timeArray)) {
-                          // the numBoxes string adds a string of html checkboxes
-                          echo "<td>" . $try[$j] . "</td>";
-                          $j++;
-                        }
-                        ?>
-                      </tr>
-                </table>
-
-
-
-
-
                 </div>
               </div>
               <!-- /.nav-tabs-custom -->
             </div>
-
-
-
 
 
 
@@ -615,8 +620,6 @@
 
                 <form action = "../../actions/create/signout.php" method = "post">
                 <table class = "table">
-
-
                   <!-- Table Header -->
                   <tr>
                     <td><b>Name</b></td>
