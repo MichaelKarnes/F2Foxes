@@ -548,7 +548,7 @@
                 <div class="box-body no-padding" style="min-height: 100px;">
                 <!-- main code goes here -->
 
-                <form action = "../../actions/create/signout.php" method = "post">
+                <form action = "../../actions/edit/signout.php" method = "post">
                 <table class = "table">
 
                   <!-- Table Header -->
@@ -616,7 +616,7 @@
                   </h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 600px;">
+                <div class="box-body no-padding" style="min-height: 400px;">
                 <!-- main code goes here -->
 
                 <table class = "table">
@@ -656,7 +656,7 @@
                     // loop through the joined array of users with their signout CSVs
                     foreach($usersWithSignOut as $i) {
                       // fill out the name column first
-                      $name = $i->last . " , " . $i->first;
+                      $name = $i->last . ", " . $i->first;
                       echo "<tr>" . "<td>" . $name . "</td>";
 
                       $myString = $i->current_week;
