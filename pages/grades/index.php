@@ -286,14 +286,14 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="../../images/rank-ssg.jpg" class="user-image" alt="User Image">
-                  <span class="hidden-xs"><?php echo $user->data()->first." ".$user->data()->last; ?></span>
+                  <span class="hidden-xs"><?php echo escape($user->data()->first." ".$user->data()->last); ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
                     <p>
-                      <?php echo $user->data()->first." ".$user->data()->last; ?>
+                      <?php echo escape($user->data()->first." ".$user->data()->last); ?>
                       <small>Title</small>
                     </p>
                   </li>
@@ -338,7 +338,7 @@
               <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p><?php echo $user->data()->first." ".$user->data()->last; ?></p>
+              <p><?php echo escape($user->data()->first." ".$user->data()->last); ?></p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
@@ -393,7 +393,7 @@
               </a>
             </li>
             <li>
-              <a href="../../pages/pt">
+              <a href="#">
                 <i class="fa fa-line-chart"></i> <span>PT Scores</span>
               </a>
             </li>
@@ -453,144 +453,175 @@
           </div>
           <!-- Grades stuff -->
           <div class="row">
-            <div class="col-md-12">
-              <div class="nav-tabs-custom">
-                <!-- Tabs within a box -->
-                <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#revenue-chart" data-toggle="tab">Summary</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">ENGR 111</a></li>
-                  <li class="pull-left header"><i class="fa fa-graduation-cap"></i> My Grades</li>
-                </ul>
-                <div class="tab-content">
-                  <!-- Morris chart - Sales -->
-                  <div class="chart tab-pane active" id="revenue-chart" style="position: relative;">
-                    <div class="col-md-10">
-                      <p class="text-center"><b>Weekly Semester GPA Report</b></p>
-                      <div id="line-chart" style="min-height: 300px;"></div>
-                    </div>
-                    <div class="col-md-2">
-                      <p class="text-center"><b>Classes</b></p>
-                      <table class="table table-condensed">
-                        <colgroup>
-                          <col></col>
-                          <col></col>
-                        </colgroup>
-                        <tr>
-                          <td>ENGR 111</td>
-                          <td style="text-align: left;">A</td>
-                          <td style="text-align: right;">93.4</td>
-                        </tr>
-                        <tr>
-                          <td>KINE 198</td>
-                          <td style="text-align: left;">B-</td>
-                          <td style="text-align: right;">81.2</td>
-                        </tr>
-                        <tr>
-                          <td>MATH 152</td>
-                          <td style="text-align: left;">A</td>
-                          <td style="text-align: right;">94.6</td>
-                        </tr>
-                        <tr>
-                          <td>PHYS 218</td>
-                          <td style="text-align: left;">C+</td>
-                          <td style="text-align: right;">79.3</td>
-                        </tr>
-                        <tr>
-                          <td>POLS 206</td>
-                          <td style="text-align: left;">D+</td>
-                          <td style="text-align: right;">69.4</td>
-                        </tr>
-                        <tr>
-                          <td>KINE 198</td>
-                          <td style="text-align: left;">B-</td>
-                          <td style="text-align: right;">81.2</td>
-                        </tr>
-                        <tr>
-                          <td>MATH 152</td>
-                          <td style="text-align: left;">A</td>
-                          <td style="text-align: right;">94.6</td>
-                        </tr>
-                        <tr>
-                          <td>PHYS 218</td>
-                          <td style="text-align: left;">C+</td>
-                          <td style="text-align: right;">79.3</td>
-                        </tr>
-                        <tr>
-                          <td>POLS 206</td>
-                          <td style="text-align: left;">D+</td>
-                          <td style="text-align: right;">69.4</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-                </div>
-              </div>
-              <!-- /.nav-tabs-custom -->
-            </div>
-          </div>
-          <div class="row">
             <div class="col-md-6">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Summary</h3>
-                  <b class="pull-right">GPA: 3.45</b>
+                  <h3 class="box-title"><i class="fa fa-graduation-cap"></i> Courses</h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 320px;">
+                <div class="box-body no-padding">
                   <table class="table">
                     <colgroup>
-                      <col style="width: 30px;"></col>
+                      <col style="width: 100px;"></col>
                       <col></col>
-                      <col style="width: 30px;"></col>
                       <col style="width: 50px;"></col>
                       <col style="width: 50px;"></col>
                     </colgroup>
                     <tr>
-                      <td>(3)</td>
-                      <td>ENGR 111 - Foundations of Engineering I</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #00a65a;">A</b></td>
-                      <td><b style="color: #00a65a;">93.4</b></td>
+                      <th>Course</th>
+                      <th>Title</th>
+                      <th colspan="2" style="text-align: center;">Grade</th>
+                    </tr>
+                    <tr id="engr111-select" style="cursor: pointer;" onclick="change_course('engr111');">
+                      <td>ENGR 111</td>
+                      <td>Foundations of Engineering I</td>
+                      <td style="text-align: center;">A</td>
+                      <td style="text-align: center;">93.4</td>
+                    </tr>
+                    <tr id="kine198-select" style="cursor: pointer;" onclick="change_course('kine198');">
+                      <td>KINE 198</td>
+                      <td>Health & Fitness - Aerobic Walking</td>
+                      <td style="text-align: center;">B-</td>
+                      <td style="text-align: center;">81.2</td>
+                    </tr>
+                    <tr id="math152-select" style="cursor: pointer;" onclick="change_course('math152');">
+                      <td>MATH 152</td>
+                      <td>Engineering Math II</td>
+                      <td style="text-align: center;">A</td>
+                      <td style="text-align: center;">94.6</td>
+                    </tr>
+                    <tr id="phys218-select" style="cursor: pointer;" onclick="change_course('phys218');">
+                      <td>PHYS 218</td>
+                      <td>Mechanics</td>
+                      <td style="text-align: center;">C-</td>
+                      <td style="text-align: center;">71.3</td>
+                    </tr>
+                    <tr id="pols206-select" style="cursor: pointer;" onclick="change_course('pols206');">
+                      <td>POLS 206</td>
+                      <td>American National Government</td>
+                      <td style="text-align: center;">D+</td>
+                      <td style="text-align: center;">69.4</td>
                     </tr>
                     <tr>
-                      <td>(1)</td>
-                      <td>KINE 198 - Health & Fitness - Aerobic Walking</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #3c8dbc;">B-</b></td>
-                      <td><b style="color: #3c8dbc;">81.2</b></td>
-                    </tr>
-                    <tr>
-                      <td>(4)</td>
-                      <td>MATH 152 - Engineering Math II</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #00a65a;">A</b></td>
-                      <td><b style="color: #00a65a;">94.6</b></td>
-                    </tr>
-                    <tr>
-                      <td>(4)</td>
-                      <td>PHYS 218 - Mechanics</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #f39c12;">C+</b></td>
-                      <td><b style="color: #f39c12;">79.3</b></td>
-                    </tr>
-                    <tr>
-                      <td>(3)</td>
-                      <td>POLS 206 - American National Government</td>
-                      <td>&nbsp;</td>
-                      <td><b style="color: #dd4b39;">D+</b></td>
-                      <td><b style="color: #dd4b39;">69.4</b></td>
+                      <td colspan="2">&nbsp;</td>
+                      <td style="text-align: center;"><b>GPA</b></td>
+                      <td style="text-align: center;"><b>3.86</b></td>
                     </tr>
                   </table>
                 </div>
               </div>
-              <!-- /.nav-tabs-custom -->
+              <!-- /.box -->
             </div>
             <div class="col-md-6">
+              <div class="box" style="display: none;">
+                <div class="box-header">
+                  <h3 class="box-title">Summary</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <div id="line-chart" style="min-height: 300px;"></div>
+                </div>
+              </div>
+              <!-- /ENGR 111 -->
+              <div id="engr111" class="box">
+                <div class="box-header">
+                  <h3 class="box-title">ENGR 111</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <div class="box-group" id="accordion1">
+                    <div class="panel box box-warning">
+                      <div class="box-header with-border">
+                        <h4 class="box-title" style="width: 100%;">
+                          <a data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                            <span style="display: inline-block; width: 30%;">Tests</span><span>96.3</span>
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="box-body">
+                          <ul>
+                            <li>Test 1</li>
+                            <li>Test 2</li>
+                            <li>Test 3</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="box-group" id="accordion2">
+                    <div class="panel box box-warning">
+                      <div class="box-header with-border">
+                        <h4 class="box-title" style="width: 100%;">
+                          <a data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                            Quizzes<span class="pull-right">80.6</span>
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseTwo" class="panel-collapse collapse in">
+                        <div class="box-body">
+                          <ul>
+                            <li>Quiz 1</li>
+                            <li>Quiz 2</li>
+                            <li>Quiz 3</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /ENGR 111 -->
+              <!-- /KINE 198 -->
+              <div id="kine198" class="box">
+                <div class="box-header">
+                  <h3 class="box-title">KINE 198</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <div class="box-group" id="accordion1">
+                    <div class="panel box box-warning">
+                      <div class="box-header with-border">
+                        <h4 class="box-title" style="width: 100%;">
+                          <a data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                            Tests<span class="pull-right">96.3</span>
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="box-body">
+                          <ul>
+                            <li>Test 1</li>
+                            <li>Test 2</li>
+                            <li>Test 3</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="box-group" id="accordion2">
+                    <div class="panel box box-warning">
+                      <div class="box-header with-border">
+                        <h4 class="box-title" style="width: 100%;">
+                          <a data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                            Quizzes<span class="pull-right">80.6</span>
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseTwo" class="panel-collapse collapse in">
+                        <div class="box-body">
+                          <ul>
+                            <li>Quiz 1</li>
+                            <li>Quiz 2</li>
+                            <li>Quiz 3</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /ENGR 111 -->
             </div>
           </div>
         </section><!-- /.content -->
@@ -769,6 +800,27 @@
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
     <script>
+        function change_course(course) {
+            $('#engr111').hide();
+            $('#engr111-select').css('font-weight', '');
+            $('#engr111-select').css('background-color', '');
+            $('#kine198').hide();
+            $('#kine198-select').css('font-weight', '');
+            $('#kine198-select').css('background-color', '');
+            $('#math152').hide();
+            $('#math152-select').css('font-weight', '');
+            $('#math152-select').css('background-color', '');
+            $('#phys218').hide();
+            $('#phys218-select').css('font-weight', '');
+            $('#phys218-select').css('background-color', '');
+            $('#pols206').hide();
+            $('#pols206-select').css('font-weight', '');
+            $('#pols206-select').css('background-color', '');
+            $('#' + course).show();
+            $('#' + course +'-select').css('font-weight', 'bold');
+            $('#' + course +'-select').css('background-color', '#f39c12');
+        }
+
         function gd(year, month, day) {
             return new Date(year, month - 1, day).getTime();
         }
@@ -865,6 +917,7 @@
         };
 
         $(function () {
+            change_course('engr111');
             linechart();
         });
     </script>

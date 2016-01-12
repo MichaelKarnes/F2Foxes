@@ -249,14 +249,14 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="../../images/rank-ssg.jpg" class="user-image" alt="User Image">
-                  <span class="hidden-xs"><?php echo $user->data()->first." ".$user->data()->last; ?></span>
+                  <span class="hidden-xs"><?php echo escape($user->data()->first." ".$user->data()->last); ?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
                     <p>
-                      <?php echo $user->data()->first." ".$user->data()->last; ?> - Web Developer
+                      <?php echo escape($user->data()->first." ".$user->data()->last); ?> - Web Developer
                       <small>Member since Nov. 2012</small>
                     </p>
                   </li>
@@ -301,7 +301,7 @@
               <img src="../../images/rank-ssg.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p><?php echo $user->data()->first." ".$user->data()->last; ?></p>
+              <p><?php echo escape($user->data()->first." ".$user->data()->last); ?></p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
@@ -443,6 +443,7 @@
                       <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>Username</th>
                         <th>Last Accessed</th>
                         <th>Password</th>
                         <th>Role</th>
@@ -452,8 +453,9 @@
                     <tbody>
                       <?php foreach($users as $iuser) { ?>
                       <tr id="user-<?php echo $iuser->id; ?>" style="height: 40px;">
-                        <td><?php echo $iuser->first; ?></td>
-                        <td><?php echo $iuser->last; ?></td>
+                        <td><?php echo escape($iuser->first); ?></td>
+                        <td><?php echo escape($iuser->last); ?></td>
+                        <td><?php echo escape($iuser->username); ?></td>
                         <td><?php echo date('M d', strtotime($iuser->accessed)); ?></td>
                         <td>
                           <?php if($iuser->role < $user->data()->role || $iuser->id == $user->data()->id) { ?>
@@ -486,7 +488,7 @@
                         </td>
                         <td>
                           <?php if($iuser->role < $user->data()->role || $iuser->id == $user->data()->id) { ?>
-                          <a href="#" data-toggle="modal" data-target="#deletemodal" onclick="$('#deletemodal #id').val(<?php echo $iuser->id; ?>); $('#deletemodal #name').html('<?php echo $iuser->first.' '.$iuser->last; ?>');">Delete</a>
+                          <a href="#" data-toggle="modal" data-target="#deletemodal" onclick="$('#deletemodal #id').val(<?php echo $iuser->id; ?>); $('#deletemodal #name').html('<?php echo escape($iuser->first.' '.$iuser->last); ?>');">Delete</a>
                           <?php } else { ?>
                           Delete
                           <?php } ?>
@@ -498,6 +500,7 @@
                       <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>Username</th>
                         <th>Last Accessed</th>
                         <th>Password</th>
                         <th>Role</th>
@@ -561,6 +564,15 @@
                             <input id="lname-input" type="text" style="width: 200px;" />
                             <i id="lname-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
                             <i id="lname-input-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                            <br>
+                            <label style="width: 150px;">Username:</label>
+                            <input id="username-input" type="text" style="width: 200px;" />
+                            <i id="username-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                            <i id="username-input-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                            <br>
+                            <label style="width: 150px;">Gender:</label>
+                            <input name="gender-input" type="radio" value="1" checked />Male
+                            <input name="gender-input" type="radio" value="0" />Female
                             <br>
                             <label style="width: 150px;">Role:</label>
                             <select id="role" style="width: 200px;">
@@ -1130,8 +1142,9 @@
         });
 
         var aumodpassword = false; // represents whether the password from the add user modal passes all minimum requirements
-        var aumodfname = false; // represents whether the first name from the add user modal pass all requirements
-        var aumodlname = false; // represents whether the first name from the add user modal pass all requirements
+        var aumodfname = false; // represents whether the first name from the add user modal passes all requirements
+        var aumodlname = false; // represents whether the last name from the add user modal passes all requirements
+        var aumodusername = false; // represents whether the username from the add user modal passes all requirements
 
         $('#addusermodal #pw-input').on('keyup', function () { // called whenever the user releases a key when the Password input box is selected
             // by default, assume the user passes all minimum requirements
@@ -1192,7 +1205,7 @@
                 $('#addusermodal .modal-footer #submit').removeAttr('disabled');
             } else {
                 aumodpassword = true; // passes minimum requirements
-                if ($(this).val() == $('#addusermodal #pw-check').val() && aumodfname && aumodlname) { // if the passwords match and the names meet all requirements
+                if ($(this).val() == $('#addusermodal #pw-check').val() && aumodfname && aumodlname && aumodusername) { // if the passwords match and the password, first name, last name, and username meet all requirements
                     // enable the Save Changes button
                     $('#addusermodal .modal-footer #submit').removeClass();
                     $('#addusermodal .modal-footer #submit').addClass('btn btn-primary');
@@ -1221,7 +1234,7 @@
                 $('#addusermodal .modal-footer #submit').removeClass();
                 $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
                 $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
-            } else if (aumodpassword && aumodfname && aumodlname) { // if the passwords match and the password meets all requirements
+            } else if (aumodpassword && aumodfname && aumodlname && aumodusername) { // if the passwords match and the password, first name, last name, and username meet all requirements
                 // enable the Save Changes button
                 $('#addusermodal .modal-footer #submit').removeClass();
                 $('#addusermodal .modal-footer #submit').addClass('btn btn-primary');
@@ -1248,7 +1261,7 @@
                 $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
             } else {
                 aumodfname = true; // passes minimum requirements
-                if ($('#addusermodal #pw-input').val() == $('#addusermodal #pw-check').val() && aumodpassword && aumodfname && aumodlname) { // if the passwords match and the password and both names meet all requirements
+                if ($('#addusermodal #pw-input').val() == $('#addusermodal #pw-check').val() && aumodpassword && aumodfname && aumodlname && aumodusername) { // if the passwords match and the password, first name, last name, and username meet all requirements
                     // enable the Save Changes button
                     $('#addusermodal .modal-footer #submit').removeClass();
                     $('#addusermodal .modal-footer #submit').addClass('btn btn-primary');
@@ -1281,6 +1294,48 @@
                 $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
             } else {
                 aumodlname = true; // passes minimum requirements
+                if ($('#addusermodal #pw-input').val() == $('#addusermodal #pw-check').val() && aumodpassword && aumodfname && aumodlname && aumodusername) { // if the passwords match and the password, first name, last name, and username meet all requirements
+                    // enable the Save Changes button
+                    $('#addusermodal .modal-footer #submit').removeClass();
+                    $('#addusermodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#addusermodal .modal-footer #submit').removeAttr('disabled');
+                } else { // if something isn't right yet
+                    // disable the Save Changes button
+                    $('#addusermodal .modal-footer #submit').removeClass();
+                    $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+                }
+            }
+        });
+
+        $('#addusermodal #username-input').on('keyup', function () { // called whenever the user releases a key when the Last Name input box is selected
+            // by default, assume the user passes validation
+            // show the check icon and hide the error icon
+            $('#addusermodal #username-input-check').show();
+            $('#addusermodal #username-input-error').hide();
+
+            /* Error checking */
+
+            if ($(this).val().length == 0) { // if the username length is = 0
+                // change to the error icon and set the tooltip to 'Username cannot be empty.'
+                $('#addusermodal #username-input-error').attr('title', 'Username cannot be empty.').tooltip('fixTitle');
+                $('#addusermodal #username-input-check').hide();
+                $('#addusermodal #username-input-error').show();
+                aumodusername = false; // fails minimum requirements
+                $('#addusermodal .modal-footer #submit').removeClass();
+                $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else if(!/^[a-zA-Z0-9]+$/.test($(this).val())) { // if the username is not alphanumeric
+                // change to the error icon and set the tooltip to 'Username must be alphanumeric.'
+                $('#addusermodal #username-input-error').attr('title', 'Username must be alphanumeric.').tooltip('fixTitle');
+                $('#addusermodal #username-input-check').hide();
+                $('#addusermodal #username-input-error').show();
+                aumodusername = false; // fails minimum requirements
+                $('#addusermodal .modal-footer #submit').removeClass();
+                $('#addusermodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addusermodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else {
+                aumodusername = true; // passes minimum requirements
                 if ($('#addusermodal #pw-input').val() == $('#addusermodal #pw-check').val() && aumodpassword && aumodfname && aumodlname) { // if the passwords match and the password and both names meet all requirements
                     // enable the Save Changes button
                     $('#addusermodal .modal-footer #submit').removeClass();
@@ -1302,6 +1357,8 @@
                 {
                     fname: $('#addusermodal #fname-input').val(),
                     lname: $('#addusermodal #lname-input').val(),
+                    username: $('#addusermodal #username-input').val(),
+                    gender: $('#addusermodal input[name="gender-input"]:checked').val(),
                     password: $('#addusermodal #pw-input').val(),
                     role: $('#addusermodal #role').val(),
                     token: $('#addusermodal #token').val()

@@ -13,15 +13,15 @@ if(Input::exists()) { // if at least one input has been submitted
 
         $fname = Input::get('fname'); // First Name
         $lname = Input::get('lname'); // Last Name
+        $username = Input::get('username'); // Username
+        $gender = Input::get('gender'); // Gender
         $password = Input::get('password'); // Password
         $role = Input::get('role'); // Role
 
         $salt = utf8_encode(Hash::salt(32)); // create a salt of length 32, essentially a string of 32 random characters
 
         $user = new User(); // create a blank user object
-        $hashedpw = Hash::make(Input::get('password'), $salt); // hash the password with the salt to create an uncrackable password 
-
-        $username = strtolower($fname[0].str_replace(' ', '', $lname)); // username should be the first letter of a fname concatenated with lname (without spaces), then converted into lowercase
+        $hashedpw = Hash::make(Input::get('password'), $salt); // hash the password with the salt to create an uncrackable password
 
         /*
             Add a new user to the f2foxes database
@@ -34,6 +34,7 @@ if(Input::exists()) { // if at least one input has been submitted
             'salt'      => $salt,
             'first'     => Input::get('fname'),
             'last'      => Input::get('lname'),
+            'gender'    => $gender,
             'role'      => Input::get('role'),
             'accessed'  => date('Y-m-d')
         ));
