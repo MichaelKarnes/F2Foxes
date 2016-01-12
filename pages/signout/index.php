@@ -477,7 +477,7 @@
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title"><i class="icon fa fa-thumb-tack"></i>
-                     Current Sign Out for the Week Of: &nbsp
+                     Current Sign Out for the Week of: &nbsp
                      <?php
                         $d1 = strtotime("this week");
                         echo date("d M  Y", $d1);
@@ -541,10 +541,7 @@
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title"><i class="icon fa fa-arrow-right"></i>
-                     Edit Sign Out for the Week Of: &nbsp
-                     <?php
-                        echo date("d M  Y", $d1);
-                     ?>
+                     Edit Current Sign Out
                   </h3>
                 </div>
                 <!-- /.box-header -->
@@ -612,15 +609,18 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-arrow-right"></i>  Sign Out</h3>
+                  <h3 class="box-title"><i class="icon fa fa-archive"></i> Outfit Sign Outs for the Week of: &nbsp
+                    <?php
+                       echo date("d M  Y", $d1);
+                    ?>
+                  </h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding" style="min-height: 600px;">
                 <!-- main code goes here -->
 
-                <form action = "../../actions/create/signout.php" method = "post">
                 <table class = "table">
-                  <!-- Table Header -->
+                  <!-- first table row -->
                   <tr>
                     <td><b>Name</b></td>
                     <!-- the database contains the current weekly training times in the train_times table -->
@@ -642,12 +642,47 @@
                     ?>
                   </tr>
 
-
-                  <!-- we now need to create a table of checkboxes based on the number of users -->
+                  <!-- display all users and their signouts -->
                   <?php
-                    $tableCreate = $db->get('users', array('1','=','1'))->results();
+                    #$tableNames = $db->get('users', array('1','=','1'))->results();
+                    #$signOuts = $db->get('signout', array('1','=','1'))->results();
+                    #var_dump($signOuts);
+                    #echo "<br>";
+                    $sql = "SELECT users.last, users.first, signout.current_week
+                            FROM users INNER JOIN signout ON
+                            users.id = signout.user_id";
+                    $usersWithSignOut = $db->query($sql)->results();
 
-                    // determine the amount of boxes we will need per row based off the number of weekly training times
+                    // loop through the joined array of users with their signout CSVs
+                    foreach($usersWithSignOut as $i) {
+                      // fill out the name column first
+                      $name = $i->last . " , " . $i->first;
+                      echo "<tr>" . "<td>" . $name . "</td>";
+
+                      $myString = $i->current_week;
+                      // append an extra comma to myString for so the final reason
+                      // can be determined. reference the while loop below
+                      $myString = $myString . ",";
+                      $j = 0;
+                      // we need to fill the remaining columns
+                      while ($j < count($timeArray)) {
+                        // strstr returns all characters to the left of ,
+                        // which gives us the reason
+                        $tempString = strstr($myString,',',true);
+                        echo "<td>" . $tempString . "</td>";
+
+                        // get rid of the the used reason
+                        $myString = strstr($myString,',');
+                        // get rid of the first character which is always ,
+                        $myString = substr($myString,1);
+                        $j++;
+                      }
+                      echo "</tr>";
+                    }
+
+
+
+                    /*
                     $j = 0;
                     while ($j < count($timeArray)) {
                       // the numBoxes string adds a string of html checkboxes
@@ -656,22 +691,20 @@
                       $j++;
                     }
 
-                    // this code fills the html table with names and the corresponding checkboxes
-                    foreach($tableCreate as $i) {
-                      $name = $i->last . ", " . $i->first;
-                      echo "<tr><td>" . $name . "</td>" . $numBoxes . "</tr>";
-                    }
+                    // loop through each user
+                    foreach($tableNames as $i) {
+                      // obtain the name to dislay
+                      //$name = $i->last . ", " . $i->first;
+                      //echo "<tr><td>" . $name . "</td>" . $numBoxes . "</tr>";
+                      //echo "<tr>" . "<td>" . $name . "</td>";
+                      //echo $name . "<br>";
+                      //$signOuts = $db->get('signout', array('user_id','=', $i->id))->results();
+                      //var_dump($signOuts);
+
+                    } */
                   ?>
 
                 </table>
-
-                <input type="hidden" name="token" value="<?php echo $token; ?>" >
-                <input type="submit">
-                </form>
-
-
-
-
                 </div>
               </div>
               <!-- /.nav-tabs-custom -->
