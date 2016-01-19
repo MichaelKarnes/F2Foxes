@@ -8,6 +8,29 @@
         Redirect::to("../../");
     // store the database connection into $db
     $db = DB::getInstance();
+    // create a token to submit with all forms
+    $token = Token::generate();
+    // store any errors returned to the page into $error
+    $error = Session::flash('error');
+    // get the current user's courses
+    $courses = $db->get('courses', array('user_id', '=', $user->data()->id))->results();
+    // sort the courses by credits, or by abbrev if the credits are equal
+    usort($courses, function ($a, $b) {
+        if($a->credits == $b->credits)
+            return ($a->abbrev < $b->abbrev) ? -1 : 1;
+        return ($a->credits > $b->credits) ? -1 : 1;
+    });
+    // get the current user's gpa and number of hours
+    $gpa = 0;
+    $hours = 0;
+    foreach($courses as $course) {
+        if(empty($course->grade))
+            continue;
+        $gpa += (floor(max(min(decrypt($course->grade, $user->data()->salt), 90), 50) / 10) - 5) * $course->credits; // turns percentage grade into credits earned
+        $hours += $course->credits;
+    }
+    if($hours > 0)
+        $gpa /= $hours;
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,6 +58,8 @@
     <link rel="stylesheet" href="../../plugins/datepicker/datepicker3.css">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker-bs3.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../../plugins/iCheck/all.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
      <!-- jQuery 2.1.4 -->
@@ -456,172 +481,230 @@
             <div class="col-md-6">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-graduation-cap"></i> Courses</h3>
+                  <h3 id="gpa" class="box-title">GPA: <?php if($hours > 0) echo number_format($gpa, 2, '.', ''); else echo '--'; ?></h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#addcoursemodal"><i class="fa fa-plus"></i></button>
+                  </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
                   <table class="table">
-                    <colgroup>
-                      <col style="width: 100px;"></col>
-                      <col></col>
-                      <col style="width: 50px;"></col>
-                      <col style="width: 50px;"></col>
-                    </colgroup>
-                    <tr>
-                      <th>Course</th>
-                      <th>Title</th>
-                      <th colspan="2" style="text-align: center;">Grade</th>
+                    <?php foreach($courses as $course) { ?>
+                    <tr id="<?php echo $course->id; ?>-select" style="cursor: pointer;" onclick="change_course('<?php echo $course->id; ?>');">
+                      <td>
+                        <div>
+                          <span style="font-size: 24pt;"><span class="cGrade"><?php if(empty($course->grade)) echo '--'; else echo number_format(decrypt($course->grade, $user->data()->salt), 1, '.', ''); ?></span><?php if(!empty($course->note)) { ?><span data-toggle="tooltip" data-placement="right" title="<?php echo $course->note; ?>">*</span><?php } ?></span>
+                          <span class="pull-right"><?php echo date('M j', strtotime($course->updated)); ?></span>
+                        </div>
+                        <i>(<?php echo $course->credits; ?>) <?php echo strtoupper($course->abbrev); ?> <?php echo $course->num; ?>: <?php echo $course->name; ?></i>
+                      </td>
                     </tr>
-                    <tr id="engr111-select" style="cursor: pointer;" onclick="change_course('engr111');">
-                      <td>ENGR 111</td>
-                      <td>Foundations of Engineering I</td>
-                      <td style="text-align: center;">A</td>
-                      <td style="text-align: center;">93.4</td>
-                    </tr>
-                    <tr id="kine198-select" style="cursor: pointer;" onclick="change_course('kine198');">
-                      <td>KINE 198</td>
-                      <td>Health & Fitness - Aerobic Walking</td>
-                      <td style="text-align: center;">B-</td>
-                      <td style="text-align: center;">81.2</td>
-                    </tr>
-                    <tr id="math152-select" style="cursor: pointer;" onclick="change_course('math152');">
-                      <td>MATH 152</td>
-                      <td>Engineering Math II</td>
-                      <td style="text-align: center;">A</td>
-                      <td style="text-align: center;">94.6</td>
-                    </tr>
-                    <tr id="phys218-select" style="cursor: pointer;" onclick="change_course('phys218');">
-                      <td>PHYS 218</td>
-                      <td>Mechanics</td>
-                      <td style="text-align: center;">C-</td>
-                      <td style="text-align: center;">71.3</td>
-                    </tr>
-                    <tr id="pols206-select" style="cursor: pointer;" onclick="change_course('pols206');">
-                      <td>POLS 206</td>
-                      <td>American National Government</td>
-                      <td style="text-align: center;">D+</td>
-                      <td style="text-align: center;">69.4</td>
-                    </tr>
-                    <tr>
-                      <td colspan="2">&nbsp;</td>
-                      <td style="text-align: center;"><b>GPA</b></td>
-                      <td style="text-align: center;"><b>3.86</b></td>
-                    </tr>
+                    <?php } ?>
                   </table>
                 </div>
               </div>
               <!-- /.box -->
             </div>
             <div class="col-md-6">
-              <div class="box" style="display: none;">
+              <?php foreach($courses as $course) { ?>
+              <div id="<?php echo $course->id; ?>" class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Summary</h3>
+                  <h3 class="box-title"><?php echo strtoupper($course->abbrev); ?> <?php echo $course->num; ?>: <?php echo $course->name; ?></h3>
+                  <div class="box-tools pull-right">
+                    <!--<button type="button" class="btn btn-box-tool"><i class="fa fa-pencil" onclick="edit_course('<?php echo $course->id; ?>');"></i></button>-->
+                    <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#deletecoursemodal-<?php echo $course->id; ?>"><i class="fa fa-trash"></i></button>
+                  </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                  <div id="line-chart" style="min-height: 300px;"></div>
+                  <?php
+                      $categories = $db->get('grade_categories', array('course_id', '=', $course->id))->results();
+                      // sort the categories by name
+                      usort($categories, function ($a, $b) {
+                          return ($a->name < $b->name) ? -1 : 1;
+                      });
+                  ?>
+                  <?php foreach($categories as $category) { ?>
+                  <div class="box-group" id="accordion<?php echo $category->id; ?>">
+                    <div class="panel box" style="border-top: none;">
+                      <div class="box-header with-border">
+                        <h4 class="box-title" style="width: 100%;">
+                          <a data-toggle="collapse" data-parent="#accordion<?php echo $category->id; ?>" href="#collapse<?php echo $category->id; ?>" style="color: #444;">
+                            <span style="display: block; width: 100%;">
+                              <span><?php echo $category->name; ?> <small>(<?php if($course->pointsystem) echo floor(decrypt($category->total, $user->data()->salt)).' pts'; else echo decrypt($category->total, $user->data()->salt).'%'; ?>)</small></span>
+                              <?php if(!empty($category->earned) && !empty($category->available)) { ?>
+                              <span class="pull-right"><b><?php echo number_format(decrypt($category->earned, $user->data()->salt), 1); ?></b><small>/<?php echo number_format(decrypt($category->available, $user->data()->salt), 1); ?></small></span>
+                              <?php } else { ?>
+                              <span class="pull-right"><b>--</b><small>/--</small></span>
+                              <?php } ?>
+                            </span>
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapse<?php echo $category->id; ?>" class="panel-collapse collapse">
+                        <div class="box-body">
+                          <table class="table no-border">
+                            <colgroup>
+                              <col style="width: 20px; text-align: center;"></col>
+                              <col style="width: 20px; text-align: center;"></col>
+                              <col></col>
+                              <col></col>
+                              <col></col>
+                            </colgroup>
+                            <?php
+                                $grades = $db->get('grades', array('category_id', '=', $category->id))->results();
+                                // sort the grades by name
+                                usort($grades, function ($a, $b) {
+                                    return ($a->name < $b->name) ? -1 : 1;
+                                });
+                            ?>
+                            <?php foreach($grades as $grade) { ?>
+                            <tr>
+                              <td><a href="#" style="color: #333;" onclick="edit_grade('<?php echo $course->id; ?>', '<?php echo $category->id; ?>', '<?php echo $grade->id; ?>', $(this).parent().parent()); return false;"><i class="fa fa-pencil"></i></a></td>
+                              <td><a href="#" style="color: #333;" onclick="delete_grade('<?php echo $course->id; ?>', '<?php echo $category->id; ?>', '<?php echo $grade->id; ?>', $(this).parent().parent()); return false;"><i class="fa fa-trash"></i></a></td>
+                              <td class="gName"><?php echo $grade->name; ?></td>
+                              <td class="gGrade" style="text-align: right;"><b><?php echo number_format(decrypt($grade->earned, $user->data()->salt), 1, '.', ''); ?></b><small>/<?php echo number_format(decrypt($grade->total, $user->data()->salt), 1, '.', ''); ?></small></td>
+                            </tr>
+                            <?php } ?>
+                            <tr>
+                              <td colspan="2"><button class="btn btn-primary btn-xs" onclick="create_grade('<?php echo $course->id; ?>', '<?php echo $category->id; ?>', $(this).parent().parent());"><i class="fa fa-plus"></i></button></td>
+                              <td><input id="gName" type="text" style="width: 100%;" placeholder="Name" /></td>
+                              <td style="text-align: right;"><input id="gEarned" type="number" placeholder="Score" style="width: 55px;" />/<input id="gTotal" type="number" value="100" placeholder="Total" style="width: 55px;" /></td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <?php } ?>
                 </div>
               </div>
-              <!-- /ENGR 111 -->
-              <div id="engr111" class="box">
-                <div class="box-header">
-                  <h3 class="box-title">ENGR 111</h3>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="modal fade" id="addcoursemodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <form class="modal-content box">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Add Course</h4>
                 </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                  <div class="box-group" id="accordion1">
-                    <div class="panel box box-warning">
-                      <div class="box-header with-border">
-                        <h4 class="box-title" style="width: 100%;">
-                          <a data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
-                            <span style="display: inline-block; width: 30%;">Tests</span><span>96.3</span>
-                          </a>
-                        </h4>
-                      </div>
-                      <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="box-body">
-                          <ul>
-                            <li>Test 1</li>
-                            <li>Test 2</li>
-                            <li>Test 3</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="box-group" id="accordion2">
-                    <div class="panel box box-warning">
-                      <div class="box-header with-border">
-                        <h4 class="box-title" style="width: 100%;">
-                          <a data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                            Quizzes<span class="pull-right">80.6</span>
-                          </a>
-                        </h4>
-                      </div>
-                      <div id="collapseTwo" class="panel-collapse collapse in">
-                        <div class="box-body">
-                          <ul>
-                            <li>Quiz 1</li>
-                            <li>Quiz 2</li>
-                            <li>Quiz 3</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div class="modal-body">
+                  <label style="width: 150px;">Course Abbreviation:</label>
+                  <input id="abbrev-input" type="text" style="width: 100px;" placeholder="ex: PHYS" />
+                  <i id="abbrev-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                  <i id="abbrev-input-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                  <br>
+                  <label style="width: 150px;">Course Number:</label>
+                  <input id="num-input" type="number" style="width: 100px;" placeholder="ex: 218" />
+                  <i id="num-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                  <i id="num-input-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                  <br>
+                  <label style="width: 150px;">Credits:</label>
+                  <input id="credits-input" type="number" style="width: 100px;" placeholder="ex: 4" />
+                  <i id="credits-input-check" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                  <i id="credits-input-error" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                  <br>
+                  <label style="width: 150px;">Course Name:</label>
+                  <input id="name-input" type="text" style="width: 200px;" placeholder="ex: Mechanics (Optional)" />
+                  <br>
+                  <label style="width: 150px;">Note:</label>
+                  <input id="note-input" type="text" style="width: 200px;" placeholder="ex: 2 quizzes dropped (Optional)" />
+                  <br>
+                  <label style="width: 150px;">Grade System:</label>
+                  <label><input name="pointsystem-input" type="radio" value="0" checked /> Percent</label>
+                  <label style="margin-left: 10px;"><input name="pointsystem-input" type="radio" value="1" /> Points</label>
+                  <br>
+                  <label style="width: 150px;">Grade Category:</label>
+                  <input class="category-input" type="text" style="width: 110px;" placeholder="ex: Tests" onkeyup="category_input($(this), 0);" />
+                  <label class="category-points-label" style="width: 35px; margin-right: 5px; text-align: right;">%:</label>
+                  <input class="category-points-input" type="number" style="width: 50px;" onkeyup="category_points_input($(this), 0);" />
+                  <i id="category-input-check-0" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>
+                  <i id="category-input-error-0" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>
+                  <br>
+                  <button id="remove-category" type="button" class="btn btn-default btn-xs"><i class="fa fa-minus"></i></button>
+                  <button id="add-category" type="button" class="btn btn-default btn-xs"><i class="fa fa-plus"></i></button>
+                  <br>
+                  <input id="token" type="hidden" value="<?php echo $token; ?>" />
+                </div>
+                <div class="overlay" style="display: none;">
+                  <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <input id="submit" type="submit" class="btn btn-primary disabled" disabled value="Add Course" />
+                </div>
+              </form>
+            </div>
+          </div>
+          <?php foreach($courses as $course) { ?>
+          <div class="modal fade" id="deletecoursemodal-<?php echo $course->id; ?>" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <form class="modal-content box" onsubmit="delete_course('<?php echo $course->id; ?>'); return false;">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Delete Course</h4>
+                </div>
+                <div class="modal-body">
+                  Are you <i>sure</i> you want to delete this course?
+                  <br>
+                  <br>
+                  <label style="width: 150px;">Course Abbreviation:</label>
+                  <span><?php echo $course->abbrev; ?></span>
+                  <br>
+                  <label style="width: 150px;">Course Number:</label>
+                  <span><?php echo $course->num; ?></span>
+                  <br>
+                  <label style="width: 150px;">Credits:</label>
+                  <span><?php echo $course->credits; ?></span>
+                  <br>
+                  <label style="width: 150px;">Course Name:</label>
+                  <span><?php echo $course->name; ?></span>
+                  <br>
+                  <label style="width: 150px;">Note:</label>
+                  <span><?php echo $course->note; ?></span>
+                  <br>
+                  <label style="width: 150px;">Grade System:</label>
+                  <span><?php echo $course->pointsystem == 0 ? 'Percent' : 'Points'; ?></span>
+                  <br>
+                  <?php
+                      $categories = $db->get('grade_categories', array('course_id', '=', $course->id))->results();
+                      // sort the categories by name
+                      usort($categories, function ($a, $b) {
+                          return ($a->name < $b->name) ? -1 : 1;
+                      });
+                  ?>
+                  <?php foreach($categories as $category) { ?>
+                  <label style="width: 150px;">Grade Category:</label>
+                  <span><?php echo $category->name.' ('.decrypt($category->total, $user->data()->salt).($category->pointsystem == 0 ? '%' : 'pts').')'; ?></span>
+                  <br>
+                  <?php } ?>
+                  <input id="token" type="hidden" value="<?php echo $token; ?>" />
+                </div>
+                <div class="overlay" style="display: none;">
+                  <i class="fa fa-refresh fa-spin"></i>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <input id="submit" type="submit" class="btn btn-primary" value="Delete Course" />
+                </div>
+              </form>
+            </div>
+          </div>
+          <?php } ?>
+          <div class="modal fade" id="errormodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content box">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Error</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                  <input type="button" class="btn btn-primary" data-dismiss="modal" value="OK" />
                 </div>
               </div>
-              <!-- /ENGR 111 -->
-              <!-- /KINE 198 -->
-              <div id="kine198" class="box">
-                <div class="box-header">
-                  <h3 class="box-title">KINE 198</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                  <div class="box-group" id="accordion1">
-                    <div class="panel box box-warning">
-                      <div class="box-header with-border">
-                        <h4 class="box-title" style="width: 100%;">
-                          <a data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
-                            Tests<span class="pull-right">96.3</span>
-                          </a>
-                        </h4>
-                      </div>
-                      <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="box-body">
-                          <ul>
-                            <li>Test 1</li>
-                            <li>Test 2</li>
-                            <li>Test 3</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="box-group" id="accordion2">
-                    <div class="panel box box-warning">
-                      <div class="box-header with-border">
-                        <h4 class="box-title" style="width: 100%;">
-                          <a data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                            Quizzes<span class="pull-right">80.6</span>
-                          </a>
-                        </h4>
-                      </div>
-                      <div id="collapseTwo" class="panel-collapse collapse in">
-                        <div class="box-body">
-                          <ul>
-                            <li>Quiz 1</li>
-                            <li>Quiz 2</li>
-                            <li>Quiz 3</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- /ENGR 111 -->
             </div>
           </div>
         </section><!-- /.content -->
@@ -800,128 +883,548 @@
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
     <script>
+        function delete_course(course_id) {
+            $.post("../../actions/delete/course.php",
+            {
+                id: course_id,
+                token: '<?php echo $token; ?>'
+            },
+            function (data, status) {
+                location.reload();
+            });
+            return false;
+        }
+    </script>
+    <script>
+        var acmodabbrev = false; // represents whether the course abbreviation from the add course modal passes all minimum requirements
+        var acmodnum = false; // represents whether the course number from the add course modal passes all requirements
+        var acmodcredits = false; // represents whether the credits from the add course modal passes all requirements
+        var acmodcategory = [false]; // represents whether each grade category from the add course modal passes all requirements
+        var acmodcategorypoints = [false]; // represents whether each grade category points from the add course modal passes all requirements
+        var acmodsystem = 0; // represents which grade system is selected (0 = percent, 1 = points)
+
+        $('#addcoursemodal #abbrev-input').on('keyup', function () { // called whenever the user releases a key when the Course Abbreviation input box is selected
+            // by default, assume the abbreviation passes all minimum requirements
+            // show the check icon and hide the error icon
+            $('#addcoursemodal #abbrev-input-check').show();
+            $('#addcoursemodal #abbrev-input-error').hide();
+
+            /* Error checking */
+
+            if ($(this).val().length > 5) { // if the abbreviation length is > 5
+                // change to the error icon and set the tooltip to 'Course Abbreviation cannot be more than 5 characters long.'
+                $('#addcoursemodal #abbrev-input-error').attr('title', 'Course Abbreviation cannot be more than 5 characters long.').tooltip('fixTitle');
+                $('#addcoursemodal #abbrev-input-check').hide();
+                $('#addcoursemodal #abbrev-input-error').show();
+                acmodabbrev = false; // fails minimum requirements
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else if ($(this).val().length < 4) { // if the abbreviation length is < 4
+                // change to the error icon and set the tooltip to 'Course Abbreviation must be at least 4 characters long.'
+                $('#addcoursemodal #abbrev-input-error').attr('title', 'Course Abbreviation must be at least 4 characters long.').tooltip('fixTitle');
+                $('#addcoursemodal #abbrev-input-check').hide();
+                $('#addcoursemodal #abbrev-input-error').show();
+                acmodabbrev = false; // fails minimum requirements
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else {
+                acmodabbrev = true; // passes minimum requirements
+                if (acmodnum && acmodcredits && acmodcategory.every(Boolean) && acmodcategorypoints.every(Boolean)) { // if the abbreviation, course number, and all grade categories meet all requirements
+                    // enable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#addcoursemodal .modal-footer #submit').removeAttr('disabled');
+                } else { // if something isn't right yet
+                    // disable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+                }
+            }
+        });
+
+        $('#addcoursemodal #num-input').on('keyup', function () { // called whenever the user releases a key when the Course Number input box is selected
+            // by default, assume the course number passes all minimum requirements
+            // show the check icon and hide the error icon
+            $('#addcoursemodal #num-input-check').show();
+            $('#addcoursemodal #num-input-error').hide();
+
+            /* Error checking */
+
+            if ($(this).val().length > 4) { // if the course number length is > 4
+                // change to the error icon and set the tooltip to 'Course Number cannot be more than 4 characters long.'
+                $('#addcoursemodal #num-input-error').attr('title', 'Course Number cannot be more than 4 characters long.').tooltip('fixTitle');
+                $('#addcoursemodal #num-input-check').hide();
+                $('#addcoursemodal #num-input-error').show();
+                acmodnum = false; // fails minimum requirements
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else if ($(this).val().length < 3) { // if the course number length is < 3
+                // change to the error icon and set the tooltip to 'Course Number must be at least 3 characters long.'
+                $('#addcoursemodal #num-input-error').attr('title', 'Course Number must be at least 3 characters long.').tooltip('fixTitle');
+                $('#addcoursemodal #num-input-check').hide();
+                $('#addcoursemodal #num-input-error').show();
+                acmodnum = false; // fails minimum requirements
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else {
+                acmodnum = true; // passes minimum requirements
+                if (acmodabbrev && acmodcategory.every(Boolean) && acmodcategorypoints.every(Boolean)) { // if the abbreviation, course number, and all grade categories meet all requirements
+                    // enable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#addcoursemodal .modal-footer #submit').removeAttr('disabled');
+                } else { // if something isn't right yet
+                    // disable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+                }
+            }
+        });
+
+        $('#addcoursemodal #credits-input').on('keyup', function () { // called whenever the user releases a key when the Credits input box is selected
+            // by default, assume the credits passes all minimum requirements
+            // show the check icon and hide the error icon
+            $('#addcoursemodal #credits-input-check').show();
+            $('#addcoursemodal #credits-input-error').hide();
+
+            /* Error checking */
+
+            if ($(this).val().length != 1) { // if the credits length != 1
+                // change to the error icon and set the tooltip to 'Credits must be exactly one character long.'
+                $('#addcoursemodal #credits-input-error').attr('title', 'Credits must be exactly one character long.').tooltip('fixTitle');
+                $('#addcoursemodal #credits-input-check').hide();
+                $('#addcoursemodal #credits-input-error').show();
+                acmodcredits = false; // fails minimum requirements
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else {
+                acmodcredits = true; // passes minimum requirements
+                if (acmodabbrev && acmodnum && acmodcategory.every(Boolean) && acmodcategorypoints.every(Boolean)) { // if the abbreviation, course number, and all grade categories meet all requirements
+                    // enable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#addcoursemodal .modal-footer #submit').removeAttr('disabled');
+                } else { // if something isn't right yet
+                    // disable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+                }
+            }
+        });
+
+        $('#addcoursemodal input[name="pointsystem-input"]').change(function () { // called whenever the user changes the Point System radios
+            acmodsystem = $(this).val();
+            $('.category-points-label').each(function () {
+                $(this).html((acmodsystem == 0 ? '%' : 'pts') + ':');
+            });
+        });
+
+        function category_input(input, index) { // called whenever the user releases a key when any Grade Category input box is selected
+            // by default, assume the grade category passes all minimum requirements
+            // show the check icon and hide the error icon
+            $('#addcoursemodal #category-input-check-' + index).show();
+            $('#addcoursemodal #category-input-error-' + index).hide();
+
+            /* Error checking */
+
+            if ($(input).val().length == 0) { // if the grade category input is blank
+                // change to the error icon and set the tooltip to 'Grade Category is required.'
+                $('#addcoursemodal #category-input-error-' + index).attr('title', 'Grade Category is required.').tooltip('fixTitle');
+                $('#addcoursemodal #category-input-check-' + index).hide();
+                $('#addcoursemodal #category-input-error-' + index).show();
+                acmodcategory[index] = false; // fails minimum requirements
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else if (!acmodcategorypoints[index]) { // if the grade category points input is blank
+                acmodcategory[index] = true; // passes minimum requirements
+                // change to the error icon and set the tooltip to 'Grade Category %/pts is required.'
+                $('#addcoursemodal #category-input-error-' + index).attr('title', 'Grade Category ' + (acmodsystem == 0 ? '%' : 'pts') + ' is required.').tooltip('fixTitle');
+                $('#addcoursemodal #category-input-check-' + index).hide();
+                $('#addcoursemodal #category-input-error-' + index).show();
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else {
+                acmodcategory[index] = true; // passes minimum requirements
+                if (acmodabbrev && acmodnum && acmodcredits && acmodcategory.every(Boolean) && acmodcategorypoints.every(Boolean)) { // if the abbreviation, course number, and all grade categories meet all requirements
+                    // enable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#addcoursemodal .modal-footer #submit').removeAttr('disabled');
+                } else { // if something isn't right yet
+                    // disable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+                }
+            }
+        }
+
+        function category_points_input(input, index) { // called whenever the user releases a key when any Grade Category %/pts input box is selected
+            // by default, assume the grade category points passes all minimum requirements
+            // show the check icon and hide the error icon
+            $('#addcoursemodal #category-input-check-' + index).show();
+            $('#addcoursemodal #category-input-error-' + index).hide();
+
+            /* Error checking */
+
+            if ($(input).val().length == 0) { // if the grade category points input is blank
+                // change to the error icon and set the tooltip to 'Grade Category %/pts is required.'
+                $('#addcoursemodal #category-input-error-' + index).attr('title', 'Grade Category ' + (acmodsystem == 0 ? '%' : 'pts') + ' is required.').tooltip('fixTitle');
+                $('#addcoursemodal #category-input-check-' + index).hide();
+                $('#addcoursemodal #category-input-error-' + index).show();
+                acmodcategorypoints[index] = false; // fails minimum requirements
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else if (!acmodcategory[index]) { // if the grade category input is blank
+                acmodcategorypoints[index] = true; // passes minimum requirements
+                // change to the error icon and set the tooltip to 'Grade Category is required.'
+                $('#addcoursemodal #category-input-error-' + index).attr('title', 'Grade Category is required.').tooltip('fixTitle');
+                $('#addcoursemodal #category-input-check-' + index).hide();
+                $('#addcoursemodal #category-input-error-' + index).show();
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            } else {
+                acmodcategorypoints[index] = true; // passes minimum requirements
+                if (acmodabbrev && acmodnum && acmodcredits && acmodcategory.every(Boolean) && acmodcategorypoints.every(Boolean)) { // if the abbreviation, course number, and all grade categories meet all requirements
+                    // enable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary');
+                    $('#addcoursemodal .modal-footer #submit').removeAttr('disabled');
+                } else { // if something isn't right yet
+                    // disable the Save Changes button
+                    $('#addcoursemodal .modal-footer #submit').removeClass();
+                    $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                    $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+                }
+            }
+        }
+
+        $('#addcoursemodal #add-category').click(function () { // called whenever the user presses the + button
+            $(this).prev().before('\
+            <label style="width: 150px;">Grade Category:</label>\
+            <input class="category-input" type="text" style="width: 110px;" placeholder="ex: Tests" onkeyup="category_input($(this), ' + acmodcategory.length + ');" />\
+            <label class="category-points-label" style="width: 35px; margin-right: 5px; text-align: right;">' + (acmodsystem == 0 ? '%' : 'pts') + ':</label>\
+            <input class="category-points-input" type="number" style="width: 50px;" onkeyup="category_points_input($(this), ' + acmodcategory.length + ');" />\
+            <i id="category-input-check-' + acmodcategory.length + '" class="fa fa-check-circle" style="margin-left: 5px; display: none;"></i>\
+            <i id="category-input-error-' + acmodcategory.length + '" class="fa fa-exclamation-circle" data-toggle="tooltip" data-placement="right" style="margin-left: 5px; display: none; color: #ab172b;"></i>\
+            <br>\
+            ');
+            acmodcategory.push(false);
+            acmodcategorypoints.push(false);
+            $('#addcoursemodal .modal-footer #submit').removeClass();
+            $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+            $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+        });
+
+        $('#addcoursemodal #remove-category').click(function () { // called whenever the user presses the + button
+            $(this).prev().remove();
+            $(this).prev().remove();
+            $(this).prev().remove();
+            $(this).prev().remove();
+            $(this).prev().remove();
+            $(this).prev().remove();
+            $(this).prev().remove();
+            acmodcategory.pop();
+            acmodcategorypoints.pop();
+            if (acmodabbrev && acmodnum && acmodcredits && acmodcategory.every(Boolean) && acmodcategorypoints.every(Boolean)) { // if the abbreviation, course number, and all grade categories meet all requirements
+                // enable the Save Changes button
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary');
+                $('#addcoursemodal .modal-footer #submit').removeAttr('disabled');
+            } else { // if something isn't right yet
+                // disable the Save Changes button
+                $('#addcoursemodal .modal-footer #submit').removeClass();
+                $('#addcoursemodal .modal-footer #submit').addClass('btn btn-primary disabled');
+                $('#addcoursemodal .modal-footer #submit').attr('disabled', 'disabled');
+            }
+        });
+
+        $('#addcoursemodal form').on('submit', function () {
+            if (acmodabbrev && acmodnum && acmodcredits && acmodcategory.every(Boolean) && acmodcategorypoints.every(Boolean)) {
+                $('#addcoursemodal .overlay').show();
+                var gradecategories = [];
+                var gradecategorypoints = [];
+                $('#addcoursemodal .category-input').each(function () {
+                    gradecategories.push($(this).val());
+                });
+                $('#addcoursemodal .category-points-input').each(function () {
+                    gradecategorypoints.push($(this).val());
+                });
+                $.post("../../actions/create/course.php",
+                {
+                    user_id: <?php echo $user->data()->id; ?>,
+                    abbrev: $('#addcoursemodal #abbrev-input').val(),
+                    num: $('#addcoursemodal #num-input').val(),
+                    credits: $('#addcoursemodal #credits-input').val(),
+                    name: $('#addcoursemodal #name-input').val(),
+                    note: $('#addcoursemodal #note-input').val(),
+                    pointsystem: $('#addcoursemodal input[name="pointsystem-input"]:checked').val(),
+                    gradecategories: JSON.stringify(gradecategories),
+                    gradecategorypoints: JSON.stringify(gradecategorypoints),
+                    token: $('#addcoursemodal #token').val()
+                },
+                function (data, status) {
+                    location.reload();
+                });
+            }
+            return false;
+        });
+    </script>
+    <script>
+        function delete_grade(course_id, category_id, grade_id, tr) {
+            var name = $(tr).find('.gName').text();
+            var grade = $(tr).find('.gGrade').text().split('/');
+            var earned = parseFloat(grade[0]);
+            var total = parseFloat(grade[1]);
+            var user_id = <?php echo $user->data()->id; ?>;
+            var token = '<?php echo $token; ?>';
+            $(tr).html('\
+                <td colspan="2"><i class="fa fa-refresh fa-spin"></i></a></td>\
+                <td class="gName">'+name+'</td>\
+                <td class="gGrade" style="text-align: right;"><b>'+earned.toFixed(1)+'</b><small>/'+total.toFixed(1)+'</small></td>\
+            ');
+            $.post("../../actions/delete/grade.php",
+            {
+                id: grade_id,
+                token: token
+            },
+            function (data, status) {
+                if (data.length != 0) {
+                    $(tr).html('\
+                        <td><a href="#" style="color: #333;" onclick="edit_grade(\''+course_id+'\', \''+category_id+'\', \''+grade_id+'\', $(this).parent().parent()); return false;"><i class="fa fa-pencil"></i></a></td>\
+                        <td><a href="#" style="color: #333;" onclick="delete_grade(\''+course_id+'\', \''+category_id+'\', \''+grade_id+'\', $(this).parent().parent()); return false;"><i class="fa fa-trash"></i></a></td>\
+                        <td class="gName">'+name+'</td>\
+                        <td class="gGrade" style="text-align: right;"><b>'+earned.toFixed(1)+'</b><small>/'+total.toFixed(1)+'</small></td>\
+                    ');
+                    $('#errormodal .modal-body').html(data);
+                    $('#errormodal').modal('show');
+                }
+                else {
+                    var gpa;
+                    var course_grade;
+                    var category_grade;
+                    $.post("../../actions/get/category_grade.php",
+                    {
+                        user_id: user_id,
+                        category_id: category_id,
+                        token: token
+                    },
+                    function (data, status) {
+                        category_grade = data.split('/');
+                        $.post("../../actions/get/course_grade.php",
+                        {
+                            user_id: user_id,
+                            course_id: course_id,
+                            token: token
+                        },
+                        function (data, status) {
+                            course_grade = data;
+                            $.post("../../actions/get/gpa.php",
+                            {
+                                user_id: user_id,
+                                token: token
+                            },
+                            function (data, status) {
+                                gpa = data;
+
+                                $(tr).remove();
+                                
+                                $('a[href=\'#collapse'+category_id+'\'] .pull-right').html('<b>'+category_grade[0]+'</b><small>/'+category_grade[1]+'</small>');
+                                $('#'+course_id+'-select .cGrade').html(course_grade);
+                                $('#gpa').html('GPA: '+gpa);
+                            });
+                        });
+                    });
+                }
+            });
+        }
+
+        function finalize_grade(course_id, category_id, grade_id, tr) {
+            $(tr).find('td[colspan="2"]').html('<i class="fa fa-refresh fa-spin"></i>');
+            var name = $(tr).find('#gName').val();
+            var earned = parseFloat($(tr).find('#gEarned').val());
+            var total = parseFloat($(tr).find('#gTotal').val());
+            var user_id = <?php echo $user->data()->id; ?>;
+            var token = '<?php echo $token; ?>';
+            $.post("../../actions/edit/grade.php",
+            {
+                id: grade_id,
+                name: name,
+                earned: earned,
+                total: total,
+                token: token
+            },
+            function (data, status) {
+                if (data.length != 0) {
+                    $(tr).find('td[colspan="2"]').html('<button class="btn btn-primary btn-xs" onclick="finalize_grade(\''+course_id+'\', \''+category_id+'\', \''+grade_id+'\', $(this).parent().parent());"><i class="fa fa-pencil"></i></button>');
+                    $('#errormodal .modal-body').html(data);
+                    $('#errormodal').modal('show');
+                }
+                else {
+                    var gpa;
+                    var course_grade;
+                    var category_grade;
+                    $.post("../../actions/get/category_grade.php",
+                    {
+                        user_id: user_id,
+                        category_id: category_id,
+                        token: token
+                    },
+                    function (data, status) {
+                        category_grade = data.split('/');
+                        $.post("../../actions/get/course_grade.php",
+                        {
+                            user_id: user_id,
+                            course_id: course_id,
+                            token: token
+                        },
+                        function (data, status) {
+                            course_grade = data;
+                            $.post("../../actions/get/gpa.php",
+                            {
+                                user_id: user_id,
+                                token: token
+                            },
+                            function (data, status) {
+                                gpa = data;
+                                
+                                $(tr).html('\
+                                    <td><a href="#" style="color: #333;" onclick="edit_grade(\''+course_id+'\', \''+category_id+'\', \''+grade_id+'\', $(this).parent().parent()); return false;"><i class="fa fa-pencil"></i></a></td>\
+                                    <td><a href="#" style="color: #333;" onclick="delete_grade(\''+course_id+'\', \''+category_id+'\', \''+grade_id+'\', $(this).parent().parent()); return false;"><i class="fa fa-trash"></i></a></td>\
+                                    <td class="gName">'+name+'</td>\
+                                    <td class="gGrade" style="text-align: right;"><b>'+earned.toFixed(1)+'</b><small>/'+total.toFixed(1)+'</small></td>\
+                                ');
+                                
+                                $('a[href=\'#collapse'+category_id+'\'] .pull-right').html('<b>'+category_grade[0]+'</b><small>/'+category_grade[1]+'</small>');
+                                $('#'+course_id+'-select .cGrade').html(course_grade);
+                                $('#gpa').html('GPA: '+gpa);
+                            });
+                        });
+                    });
+                }
+            });
+        }
+
+        function edit_grade(course_id, category_id, grade_id, tr) {
+            var name = $(tr).find('.gName').text();
+            var grade = $(tr).find('.gGrade').text().split('/');
+            var earned = parseFloat(grade[0]);
+            var total = parseFloat(grade[1]);
+            $(tr).html('\
+                <td colspan="2"><button class="btn btn-primary btn-xs" onclick="finalize_grade(\''+course_id+'\', \''+category_id+'\', \''+grade_id+'\', $(this).parent().parent());"><i class="fa fa-pencil"></i></button></td>\
+                <td><input id="gName" type="text" style="width: 100%;" placeholder="Name" value="'+name+'" /></td>\
+                <td style="text-align: right;"><input id="gEarned" type="number" placeholder="Score" style="width: 55px;" value="'+earned+'" />/<input id="gTotal" type="number" value="'+total+'" placeholder="Total" style="width: 55px;" /></td>\
+            ');
+        }
+
+        function create_grade(course_id, category_id, tr) {
+            $(tr).find('td[colspan="2"]').html('<i class="fa fa-refresh fa-spin"></i>');
+            var name = $(tr).find('#gName').val();
+            var earned = parseFloat($(tr).find('#gEarned').val());
+            var total = parseFloat($(tr).find('#gTotal').val());
+            var user_id = <?php echo $user->data()->id; ?>;
+            var token = '<?php echo $token; ?>';
+            $.post("../../actions/create/grade.php",
+            {
+                user_id: user_id,
+                category_id: category_id,
+                name: name,
+                earned: earned,
+                total: total,
+                token: token
+            },
+            function (data, status) {
+                if (data.length == 0) {
+                    $(tr).find('td[colspan="2"]').html('<button class="btn btn-primary btn-xs" onclick="create_grade(\''+course_id+'\', \''+category_id+'\', $(this).parent().parent());"><i class="fa fa-plus"></i></button>');
+                    $('#errormodal .modal-body').html('Could not create entry.');
+                    $('#errormodal').modal('show');
+                }
+                else {
+                    var gpa;
+                    var course_grade;
+                    var category_grade;
+                    var grade_id = data;
+                    $.post("../../actions/get/category_grade.php",
+                    {
+                        user_id: user_id,
+                        category_id: category_id,
+                        token: token
+                    },
+                    function (data, status) {
+                        category_grade = data.split('/');
+                        $.post("../../actions/get/course_grade.php",
+                        {
+                            user_id: user_id,
+                            course_id: course_id,
+                            token: token
+                        },
+                        function (data, status) {
+                            course_grade = data;
+                            $.post("../../actions/get/gpa.php",
+                            {
+                                user_id: user_id,
+                                token: token
+                            },
+                            function (data, status) {
+                                gpa = data;
+
+                                $(tr).find('td[colspan="2"]').html('<button class="btn btn-primary btn-xs" onclick="create_grade(\''+course_id+'\', \''+category_id+'\', $(this).parent().parent());"><i class="fa fa-plus"></i></button>');
+                                $(tr).before('<tr>\
+                                    <td><a href="#" style="color: #333;" onclick="edit_grade(\''+course_id+'\', \''+category_id+'\', \''+grade_id+'\', $(this).parent().parent()); return false;"><i class="fa fa-pencil"></i></a></td>\
+                                    <td><a href="#" style="color: #333;" onclick="delete_grade(\''+course_id+'\', \''+category_id+'\', \''+grade_id+'\', $(this).parent().parent()); return false;"><i class="fa fa-trash"></i></a></td>\
+                                    <td class="gName">'+name+'</td>\
+                                    <td class="gGrade" style="text-align: right;"><b>'+earned.toFixed(1)+'</b><small>/'+total.toFixed(1)+'</small></td>\
+                                </tr>');
+                                $(tr).find('#gName').val('');
+                                $(tr).find('#gEarned').val('');
+                                $(tr).find('#gTotal').val('100');
+                                
+                                $('a[href=\'#collapse'+category_id+'\'] .pull-right').html('<b>'+category_grade[0]+'</b><small>/'+category_grade[1]+'</small>');
+                                $('#'+course_id+'-select .cGrade').html(course_grade);
+                                $('#gpa').html('GPA: '+gpa);
+                            });
+                        });
+                    });
+                }
+            });
+        }
+
         function change_course(course) {
-            $('#engr111').hide();
-            $('#engr111-select').css('font-weight', '');
-            $('#engr111-select').css('background-color', '');
-            $('#kine198').hide();
-            $('#kine198-select').css('font-weight', '');
-            $('#kine198-select').css('background-color', '');
-            $('#math152').hide();
-            $('#math152-select').css('font-weight', '');
-            $('#math152-select').css('background-color', '');
-            $('#phys218').hide();
-            $('#phys218-select').css('font-weight', '');
-            $('#phys218-select').css('background-color', '');
-            $('#pols206').hide();
-            $('#pols206-select').css('font-weight', '');
-            $('#pols206-select').css('background-color', '');
+            <?php foreach($courses as $course) { ?>
+            $('#<?php echo $course->id; ?>').hide();
+            $('#<?php echo $course->id; ?>-select').css('font-weight', '');
+            $('#<?php echo $course->id; ?>-select').css('background-color', '');
+            <?php } ?>
             $('#' + course).show();
             $('#' + course +'-select').css('font-weight', 'bold');
             $('#' + course +'-select').css('background-color', '#f39c12');
         }
 
-        function gd(year, month, day) {
-            return new Date(year, month - 1, day).getTime();
-        }
-        function gl(time) {
-            var d = new Date();
-            d.setTime(time);
-            var monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-            return d.getDate() + '' + monthNames[d.getMonth()] + '' + d.getFullYear();
-        }
-        //LINE randomly generated data
-        var smstr = [[1, 2.81], [2, 2.87], [3, 3.82], [4, 3.01], [5, 2.93], [6, 2.96], [7, 3.88]];
-        var week = [[gd(2015, 8, 16), 2.98], [gd(2015, 8, 23), 3.10], [gd(2015, 8, 30), 3.74], [gd(2015, 9, 6), 3.17], [gd(2015, 9, 13), 3.98], [gd(2015, 9, 20), 2.13], [gd(2015, 9, 27), 3.07], [gd(2015, 10, 4), 3.24], [gd(2015, 10, 11), 3.30], [gd(2015, 10, 18), 3.83], [gd(2015, 10, 25), 2.89], [gd(2015, 11, 1), 2.58], [gd(2015, 11, 8), 2.91], [gd(2015, 11, 15), 2.41], [gd(2015, 11, 22), 2.33], [gd(2015, 11, 29), 2.46], [gd(2015, 12, 6), 2.58], [gd(2015, 12, 13), 3.82]];
-        var semester = {
-            data: smstr,
-            color: "#ab172b",
-            label: 'By Semester'
-        };
-        var weekly = {
-            data: week,
-            color: "#ab172b",
-            label: 'By Week'
-        };
-
-        function linechart(name) {
-            var chart;
-            switch (name) {
-                case 'By Semester':
-                    chart = semester;
-                    break;
-                case 'By Week':
-                    chart = weekly;
-                    break;
-                default:
-                    chart = weekly;
-                    break;
-            }
-            /*
-            * LINE CHART
-            * ----------
-            */
-            $.plot("#line-chart", [chart], {
-                grid: {
-                    hoverable: true,
-                    borderColor: "#f3f3f3",
-                    borderWidth: 1,
-                    tickColor: "#f3f3f3"
-                },
-                series: {
-                    shadowSize: 0,
-                    lines: {
-                        show: true
-                    },
-                    points: {
-                        show: true
-                    }
-                },
-                lines: {
-                    fill: false,
-                    color: ["#3c8dbc", "#f56954"]
-                },
-                legend: {
-                    show: false
-                },
-                yaxis: {
-                    label: "GPA",
-                    min: 0,
-                    max: 4
-                },
-                xaxis: {
-                    //ticks: [[1, "16AUG2015"], [2, "23AUG2015"], [3, "30AUG2015"], [4, "06SEP2015"], [5, "13SEP2015"], [6, "20SEP2015"], [7, "27SEP2015"], [8, "04OCT2015"], [9, "11OCT2015"], [10, "18OCT2015"], [11, "25OCT2015"], [12, "01NOV2015"], [13, "08NOV2015"], [14, "15NOV2015"], [15, "22NOV2015"], [16, "29NOV2015"], [17, "06DEC2015"], [18, "13DEC2015"]]
-                    mode: "time",
-                    timeformat: "%m/%d"
-                }
-            });
-            //Initialize tooltip on hover
-            $('<div class="tooltip-inner" id="line-chart-tooltip"></div>').css({
-                position: "absolute",
-                display: "none",
-                opacity: 0.8
-            }).appendTo("body");
-            $("#line-chart").bind("plothover", function (event, pos, item) {
-                if (item) {
-                    var x = item.datapoint[0].toFixed(2),
-                        y = item.datapoint[1].toFixed(2);
-                    //item.series.label
-                    $("#line-chart-tooltip").html(y + "<br>" + gl(x))
-                        .css({ top: item.pageY + 5, left: item.pageX + 5 })
-                        .fadeIn(200);
-                } else {
-                    $("#line-chart-tooltip").hide();
-                }
-            });
-            /* END LINE CHART */
-        };
-
         $(function () {
-            change_course('engr111');
-            linechart();
+            change_course('<?php echo $courses[0]->id; ?>');
+            var tooltips = $( "[title]" ).tooltip();
+            //iCheck for checkbox and radio inputs
+            $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+              checkboxClass: 'icheckbox_minimal-blue',
+              radioClass: 'iradio_minimal-blue'
+            });
         });
     </script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../js/pages/dashboard.js"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="../../plugins/iCheck/icheck.min.js"></script>
   </body>
 </html>
