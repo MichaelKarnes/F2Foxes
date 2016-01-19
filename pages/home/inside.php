@@ -380,7 +380,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../pages/signout">
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>

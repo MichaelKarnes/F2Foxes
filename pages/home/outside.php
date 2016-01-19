@@ -18,7 +18,7 @@
 		<link rel="stylesheet" href="css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie9.css" /><![endif]-->
-        <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
 		<script src="js/jquery.dropotron.min.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-viewport.min.js"></script>
@@ -61,7 +61,7 @@
 										<nav id="nav">
 											<ul>
 												<li class="current_page_item"><a href="/">Home</a></li>
-												<li>
+												<!-- <li>
 													<a href="#">Dropdown</a>
 													<ul>
 														<li><a href="#">Lorem ipsum dolor</a></li>
@@ -77,9 +77,11 @@
 														</li>
 														<li><a href="#">Veroeros feugiat</a></li>
 													</ul>
-												</li>
-												<li><a href="left-sidebar.php">Left Sidebar</a></li>
-												<li><a href="right-sidebar.php">Right Sidebar</a></li>
+												</li> -->
+
+												<li><a href="leadership.php">Leadership</a></li>
+												<li><a href="hall-of-fame.php">Hall of Fame</a></li>
+                        <li><a href="http://foxcompany.core-image.net/"> Shop </a> </li>
 												<li><a href="../pages/login">Login</a></li>
 											</ul>
 										</nav>
@@ -92,8 +94,8 @@
 								<h2><strong>Fox Company</strong>
 								<br />
 								Where cadets become leaders</h2>
-								<p>Want to stay updated on our upcoming events?</p>
-								<a href="#" class="button big icon fa-check-circle">Subscribe</a>
+								<!-- <p>Want to stay updated on our upcoming events?</p>
+								<a href="#" class="button big icon fa-check-circle">Subscribe</a> -->
 							</div>
 							<!--<div id="banner">
 								<h2><strong>ZeroFour:</strong> A free responsive site template
@@ -177,7 +179,7 @@
                                                 you. Every year, we host public tailgates, banquets, and cookouts. The money that
                                                 we get from you helps contribute to these events and make them as awesome as possible!</p>
 												<footer>
-													<a href="#" class="button medium icon fa-arrow-circle-right">To the shop!</a>
+													<a href="http://foxcompany.core-image.net/" class="button medium icon fa-arrow-circle-right">To the shop!</a>
 												</footer>
 											</section>
 										</div>
@@ -188,10 +190,10 @@
 													<p>Apply to be included in the Fox Hall of Fame</p>
 												</header>
 												<p>When you submit your information to our database of Ol' Foxes, you'll be included in our
-                                                <a href="#">Fox Hall of Fame</a> with all of the other great Foxes. We'll also keep
+                                                <a href="hall-of-fame.php">Fox Hall of Fame</a> with all of the other great Foxes. We'll also keep
                                                 you informed of our latest achievements, as well as ways to help out current foxes.</p>
 												<footer>
-													<a href="#" class="button medium icon fa-arrow-circle-right">Apply for the Hall of Fame</a>
+													<a href="hall-of-fame.php" class="button medium icon fa-arrow-circle-right">Apply for the Hall of Fame</a>
 												</footer>
 											</section>
 										</div>
@@ -247,8 +249,8 @@
 																<h3>Freshman Orientation Week Culmination</h3>
 															</header>
 															<p>Freshmen Orientation Week has been both exhausting and exhilarating for
-                                                            upperclassmen and fish alike. However, all of our work has finally paid off, and
-                                                            we can confidently welcome the Class of 2019 into the family as Fightin' Foxes!</p>
+                                  upperclassmen and fish alike. However, all of our work has finally paid off, and
+                                  we can confidently welcome the Class of 2019 into the family as Fightin' Foxes!</p>
 														</div>
 													</article>
 

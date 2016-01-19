@@ -397,13 +397,13 @@
               </ul>
             </li>
             <li>
-              <a href="../../pages/mailbox/mailbox.html">
+              <a href="../../pages/mailbox">
                 <i class="fa fa-envelope"></i> <span>Mailbox</span>
                 <small class="label pull-right bg-yellow">12</small>
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../../pages/training">
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
               </a>
             </li>
@@ -413,7 +413,7 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="../../pages/signout">
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
@@ -467,7 +467,7 @@
 
         <!-- Main content -->
         <section class="content">
-          <!-- Alert -->
+          <!-- Alert feature to be implemented later
           <div class="row">
             <div class="col-xs-12">
                 <div class="alert alert-warning alert-dismissible">
@@ -475,7 +475,7 @@
                     <i class="icon fa fa-ban"></i> Danger alert preview. This alert is dismissable.
                 </div>
             </div>
-          </div>
+          </div> -->
           <!-- Grades stuff -->
           <div class="row">
             <div class="col-md-6">
