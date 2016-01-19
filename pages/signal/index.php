@@ -19,7 +19,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>F-2 Foxes | Sign Out</title>
+    <title>F-2 Foxes | Signal</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -159,12 +159,12 @@
                 <i class="fa fa-graduation-cap"></i> <span>Grades</span>
               </a>
             </li>
-            <li class="active">
+            <li>
               <a href="../../pages/signout">
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
-            <li>
+            <li class="active">
               <a href="../../pages/signal">
                 <i class="fa fa-bolt"></i> <span>Signal</span>
               </a>
@@ -182,24 +182,17 @@
 
 
 
-
-
-
-
-
-
-
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Sign Out Sheet
+            Signal
             <small></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="../../"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Sign Out Sheet</li>
+            <li class="active">Signal</li>
           </ol>
         </section>
 
@@ -219,133 +212,53 @@
 
 
 
-          <!-- Singout Sheet Main Body -->
+          <!-- Signal Accountability Sheet Main Body -->
           <div class="row">
-          <!-- This block of code shows the current signouts -->
+
+            <!-- This block of code is to submit the pin that only signal chain knows -->
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-thumb-tack"></i>
-                     Current Sign Out for the Week of: &nbsp
-                     <?php
-                        $d1 = strtotime("this week");
-                        echo date("d M  Y", $d1);
-                     ?>
+                  <h3 class="box-title"><i class="icon fa fa-lock"></i>
+                     Conduct Accountability for Signal Chain
                   </h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 100px;">
-                <!-- main code goes here -->
-                <table class="table">
-                  <tr>
-                    <?php
-                      // draw in training times for the current semester, the admin can change
-                      // these training times to add special events or account for corps changes
-                      $train = $db->get('train_times', array('1','=','1'))->results();
-
-                      foreach($train as $i) {
-                        $myString = $i->times;
-                        // in the database, the training times are stored as comma seperated values
-                        // the explode function converts csv to a normal php array
-                        $timeArray = explode(',',$myString);
-                      }
-
-                      foreach($timeArray as $i) {
-                        echo "<td><b>" . $i . "</b></td>";
-                      }
-                      ?>
-                  </tr>
-
-                  <tr>
-                    <?php
-                      // retreive signout CSV for the current week
-                      $signOuts = $db->get('signout', array('user_id','=', $user->data()->id))->results();
-
-                      // we explode the string into a php array to display in the next table row
-                      foreach($signOuts as $i) {
-                        $myString = $i->current_week;
-                        // in the database, the training times are stored as comma seperated values
-                        // the explode function converts csv to a normal php array
-                        $try = explode(',',$myString);
-                      }
-
-                      $j = 0;
-                      while ($j < count($timeArray)) {
-                        // the numBoxes string adds a string of html checkboxes
-                        echo "<td>" . $try[$j] . "</td>";
-                        $j++;
-                      }
-                    ?>
-                  </tr>
-                </table>
-                </div>
-              </div>
-              <!-- /.nav-tabs-custom -->
-            </div>
-
-
-
-            <!-- This block of code is to submit new Signouts -->
-            <div class="col-xs-12">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-arrow-right"></i>
-                     Edit Current Sign Out
-                  </h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 100px;">
+                <div class="box-body" style="min-height: 100px;">
                 <!-- main code goes here -->
 
-                <form action = "../../actions/edit/signout.php" method = "post">
-                <table class = "table">
-
-                  <!-- Table Header -->
-                  <tr>
-                    <!-- the database contains the current weekly training times in the train_times table -->
-                    <?php
-                      // recreate the first row as in the current signout top block
-                      foreach($timeArray as $i) {
-                        echo "<td><b>" . $i . "</b></td>";
-                      }
-                    ?>
-                  </tr>
-
-                  <tr>
-                  <!-- we now need to create a row of checkboxes based on the number of users -->
+                <form action = "../../pages/accountability/" method = "post">
+                <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                <label>Enter the PIN: &nbsp </label>
+                <input type="password" name="pin"> <br>
+                <label>Select Date: &nbsp </label>
+                <input type="date" name="date"> <br>
+                <label>Training Time: &nbsp </label>
+                <select name="event">
                   <?php
-                    // determine the amount of boxes we will need per row based off the number of weekly training times
+                    //create a select list from the train_times table in the DB
+                    $train = $db->get('train_times', array('1','=','1'))->results();
+
+                    foreach($train as $i) {
+                      $myString = $i->times;
+                      // in the database, the training times are stored as comma seperated values
+                      // the explode function converts csv to a normal php array
+                      $timeArray = explode(',',$myString);
+                    }
+
                     $j = 0;
-                    while ($j < count($timeArray)) {
-                      // the numBoxes string adds a string of html checkboxes
-                      echo "<td>" . '<input type="checkbox" name="' . $j . '">' . "</td>";
+                    foreach($timeArray as $i) {
+                      echo '<option value="' . $i . '"' . '>' . $i . '</option>';
                       $j++;
                     }
                   ?>
-                  </tr>
-                </table>
-                <b> &nbsp Select Reason for Sign Out </b> <br>
-                &nbsp <select name="reason">
-                  <option value="Work"> Work </option>
-                  <option value="Class"> Class </option>
-                  <option value="Exam"> Exam </option>
-                  <option value="Lab"> Lab </option>
-                  <option value="Tutoring"> Tutoring </option>
-                  <option value="Student Org"> Student Org </option>
-                  <option value="Army"> Army </option>
-                  <option value="Rudders"> Rudders </option>
-                  <option value="Ranger Challenge"> Ranger Challenge </option>
-                  <option value="Fish Drill Team"> Fish Drill Team </option>
-                  <option value="Ross Volunteers"> Ross Volunteers </option>
-                  <option value="Recon CO"> Recon CO </option>
-                  <option value="Seal PLT"> Seal PLT </option>
-                  <option value="Corps Athletics"> Corps Athletics </option>
-                  <option value="Intramurals"> Intramurals </option>
-                  <option value="Other"> Other </option>
-                  <option values="none"> none </option>
                 </select>
-                <input type="hidden" name="token" value="<?php echo $token; ?>" >
-                <input type="hidden" name="numboxes" value="<?php echo count($timeArray); ?>" >
+                <br>
+                <!-- also pass in the training times -->
+                <?php
+                  $myString = implode(",",$timeArray);
+                ?>
+                <input type="hidden" name="train_times" value="<?php echo $myString; ?>" >
                 <input type="submit"> <br> <br>
                 </form>
                 </div>
@@ -354,85 +267,46 @@
             </div>
 
 
-
-            <!-- this block of code shows the current outfit signouts -->
+            <!-- Display Absent Foxes -->
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-archive"></i> Outfit Sign Outs for the Week of: &nbsp
-                    <?php
-                       echo date("d M  Y", $d1);
-                    ?>
+                  <h3 class="box-title"><i class="icon fa fa-frown-o"></i>
+                     Absent Foxes
                   </h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 400px;">
+                <div class="box-body" style="min-height: 100px;">
                 <!-- main code goes here -->
 
-                <table class = "table">
-                  <!-- first table row -->
-                  <tr>
-                    <td><b>Name</b></td>
-                    <!-- the database contains the current weekly training times in the train_times table -->
-                    <?php
-                      // draw in training times for the current semester, the admin can change
-                      // these training times to add special events or account for corps changes
-                      $train = $db->get('train_times', array('1','=','1'))->results();
 
-                      foreach($train as $i) {
-                        $myString = $i->times;
-                        // in the database, the training times are stored as comma seperated values
-                        // the explode function converts csv to a normal php array
-                        $timeArray = explode(',',$myString);
-                      }
-
-                      foreach($timeArray as $i) {
-                        echo "<td><b>" . $i . "</b></td>";
-                      }
-                    ?>
-                  </tr>
-
-                  <!-- display all users and their signouts -->
+                <p> <b> View absences for a Fox or for a certain date </b> </p>
+                <form>
+                <select name="selectUsers" onchange="showUser(this.value)">
+                <option value="">Select a Fox</option>
                   <?php
-                    $sql = "SELECT users.last, users.first, signout.current_week
-                            FROM users INNER JOIN signout ON
-                            users.id = signout.user_id";
-                    $usersWithSignOut = $db->query($sql)->results();
+                    $users = $db->query("SELECT last,first FROM users")->results();
 
-                    // loop through the joined array of users with their signout CSVs
-                    foreach($usersWithSignOut as $i) {
-                      // fill out the name column first
-                      $name = $i->last . ", " . $i->first;
-                      echo "<tr>" . "<td>" . $name . "</td>";
-
-                      $myString = $i->current_week;
-                      // append an extra comma to myString for so the final reason
-                      // can be determined. reference the while loop below
-                      $myString = $myString . ",";
-                      $j = 0;
-                      // we need to fill the remaining columns
-                      while ($j < count($timeArray)) {
-                        // strstr returns all characters to the left of ,
-                        // which gives us the reason
-                        $tempString = strstr($myString,',',true);
-                        echo "<td>" . $tempString . "</td>";
-
-                        // get rid of the the used reason
-                        $myString = strstr($myString,',');
-                        // get rid of the first character which is always ,
-                        $myString = substr($myString,1);
-                        $j++;
-                      }
-                      echo "</tr>";
+                    // display the users in a textbox
+                    foreach ($users as $i) {
+                      $temp = $i->last . ", " . $i->first;
+                      echo '<option value="' . $temp . '">' . $temp . '</option>';
                     }
 
                   ?>
+                </select>
 
-                </table>
-                </div>
+                <label> OR pick a date: &nbsp </label>
+                <input type="date" onchange="showDate(this.value)">
+              </form>
+              <br>
+              <div id="txtHint"> Absences will be shown here upon selection... </div>
+
+              </div>
               </div>
               <!-- /.nav-tabs-custom -->
             </div>
+
 
           </div>
         </section><!-- /.content -->
@@ -613,5 +487,61 @@
 
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../../js/pages/dashboard.js"></script>
+
+
+
+    <script>
+      // the purpose of this javascript is to make an ajax request based off the select box
+      // the user can select a name and then show the absences for that name
+      // alternatively they can view data based off the date
+      function showUser(str) {
+        if (str == "") {
+          document.getElementById("txtHint").innerHTML = "";
+          return;
+        } else {
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+            }
+        };
+        xmlhttp.open("GET","get_user.php?q="+str,true);
+        xmlhttp.send();
+        }
+      }
+
+      function showDate(str) {
+        if (str == "") {
+          document.getElementById("txtHint").innerHTML = "";
+          return;
+        } else {
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+            }
+        };
+        xmlhttp.open("GET","get_date.php?q="+str,true);
+        xmlhttp.send();
+        }
+      }
+
+
+    </script>
+
+
+
   </body>
 </html>

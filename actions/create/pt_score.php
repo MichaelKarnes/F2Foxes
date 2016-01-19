@@ -1,6 +1,6 @@
 <?php
 	// this script is intended to calculate both Army and Corps PT scores, and add them to the database
-	
+
     chdir(dirname(__FILE__));
     //core init required for all pages
     require_once '../../core/init.php';
@@ -10,25 +10,27 @@
 	    if(Session::exists(Config::get('session/token_name')) && Input::get('token') === Session::get(Config::get('session/token_name'))) {
             $user = new User();  //calls constructor of User.php
             $date = Input::get('date');
+
+						// normally outputs date in really wierd format. change using string functions to mm/dd/yyyy
+						// the get method only outputs strings. so can't use date_format or strftime
+						$year = substr($date,0,4);
+						$date = $date . "-";
+						$date = $date . $year;
+						$date = substr($date,5);
+
             $pushUpsRaw = Input::get('pushUpsRaw');
             $sitUpsRaw = Input::get('sitUpsRaw');
             $runRaw = Input::get('runRaw');
             $runTime = Input::get('runRaw');   // NOT AN ERROR!  --  two copies of 'runRaw' are used
             $type = Input::get('type');
 
-            $db = DB::getInstance(); 
+            $db = DB::getInstance();
 
             $error = "";
 
-            #form validation for the date and push up/sit up scores
-            if (strlen($date) != 10 || substr($date,2,1) != '-' || substr($date,5,1) != '-') {
-                $error = "The date you have inputed does not have the correct form.
-                For example, September 24th, 2015 would be typed in as 09-24-2015." . 
-                "<br>" . '<a href ="index.php"> Please Try Again </a>' . "<br>";
-                break;
-            }
+            #form validation for the push up/sit up scores
             if (is_numeric($pushUpsRaw) == 0 || is_numeric($sitUpsRaw) == 0) {
-                $error = "The request was invalid. Raw Push Up Scores and Raw Sit Up 
+                $error = "The request was invalid. Raw Push Up Scores and Raw Sit Up
                 Scores should be numbers." . "<br>" . '<a href ="index.php"> Please Try Again </a>' .
                 "<br>";
                 break;
@@ -41,7 +43,7 @@
             #form validation for running score input
             if (substr($runTime,-3,1) != ':') {
                 $error = "The run time you have inputed does not have the correct form.
-                For example, 14 minutes and 5 seconds, would be typed in as 14:05" . 
+                For example, 14 minutes and 5 seconds, would be typed in as 14:05" .
                 "<br>" . '<a href ="index.php"> Please Try Again </a>' . "<br>";
                 break;
             }
@@ -59,14 +61,14 @@
 	} elseif (strlen($runRaw) == 4) {     // user is sub 10 minute time
 		$runRaw = (intval(substr($runRaw,0,1))*60) + intval(substr($runRaw,-2));
 	}
-    
+
     #if the form has been set, do some calculations and communicate with
     #the PT table in the database. Notice if statements for male or female.
     if($user->data()->gender == 1) {
         #raw push ups to score using linear regression on score tables
-        #from military.com. Regressions made in Excel like application. 
+        #from military.com. Regressions made in Excel like application.
         #luckily error reduces to 0 for each case.
-            if($pushUpsRaw <= 71) { 
+            if($pushUpsRaw <= 71) {
                 $pushUpsScore = ($pushUpsRaw*1.37925) + 2.06930;
                 $pushUpsScore = round($pushUpsScore);
             } else {
@@ -82,12 +84,12 @@
                         #go to the next highest time divisible by 6 to calculate score
                         $runRaw = $runRaw + (6 - ($runRaw % 6));
                     }
-                        $runScore = round(($runRaw * -.229754412) + 279.18682); 
+                        $runScore = round(($runRaw * -.229754412) + 279.18682);
                 } else {
                     #Above 100! extra point for every 5 seconds below 13:00 or 780 secs
                     #5 is negative to increase score rather than decrease
                     $runRaw = $runRaw + (5 - ($runRaw % 5));
-                    $runScore = 100 + (($runRaw - 780) / -5); 
+                    $runScore = 100 + (($runRaw - 780) / -5);
                 }
             } else {
 				// then it is corps pt test
@@ -98,11 +100,11 @@
                     $runScore = $i->score;
                 }
             }
-                        
+
             #sit Ups Scores calculated same way for both genders, done at end
             } elseif ($user->data()->gender == 0) {
                 #female so new regression
-                if($pushUpsRaw <= 42) { 
+                if($pushUpsRaw <= 42) {
                     $pushUpsScore = ($pushUpsRaw*1.73996) + 26.9508;
                     $pushUpsScore = round($pushUpsScore);
                 } else {
@@ -160,11 +162,11 @@
 		   if ($runScore > 100 && ($pushUpsScore < 100 || $sitUpsScore < 100)) {
 				$runScore = 100;
 		   }
-		   
-		   
+
+
 			#overall score is useful to have!
-           $overallScore = $pushUpsScore + $sitUpsScore + $runScore;  
-          
+           $overallScore = $pushUpsScore + $sitUpsScore + $runScore;
+
            #check if any event has been failed, ie < 60.
            if ($pushUpsScore >= 60 && $sitUpsScore >= 60 && $runScore >= 60) {
                $passOrF = "Pass";
@@ -172,7 +174,7 @@
                $passOrF = "Fail";
            }
 
-           
+
            #input data into database table called pt, see cPanel for more info
            #runTime was set near the very top of this file
            $db->insert("pt", array(
@@ -190,15 +192,12 @@
                 "total_score"=>$overallScore,
                 "pass"=>$passOrF));
 
-            Session::put("success", "Thank you. Your response has been recorded. 
+            Session::put("success", "Thank you. Your response has been recorded.
             Redirecting you to your PT Scores.");
 
           }
-    }  
-          
-    Redirect::to($_SERVER['HTTP_REFERER']);  
-	
+    }
+
+    Redirect::to($_SERVER['HTTP_REFERER']);
+
 ?>
-
-
-

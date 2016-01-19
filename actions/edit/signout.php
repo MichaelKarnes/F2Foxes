@@ -1,6 +1,4 @@
 <?php
-	// this script is intended to calculate both Army and Corps PT scores, and add them to the database
-
     chdir(dirname(__FILE__));
     //core init required for all pages
     require_once '../../core/init.php';
@@ -27,6 +25,8 @@
               $tempArray = explode(",",$i->current_week);
               var_dump($tempArray);
 
+              // added j = 0, shouldn't change anything
+              $j = 0;
               // numBoxes allows to us to execute the loop for however many training times there are
               while ($j < $numBoxes) {
                   if (Input::get($j) == "on") {
