@@ -44,11 +44,14 @@ if(Input::exists()) { // if at least one input has been submitted
         ));
 
         /*
-            Return variables (Grade ID, New Assignment Grade, New Course Grade, New GPA)
+            Return grade id and update course
         */
 
         $res = get_object_vars($db->query('SELECT LAST_INSERT_ID()')->first());
         $grade_id = $res['LAST_INSERT_ID()'];
+
+        $course_id = $db->get('grade_categories', array('id', '=', $category_id))->first()->course_id;
+        $db->update('courses', $course_id, array('updated' => date('Y-m-d')));
 
         echo $grade_id;
     }

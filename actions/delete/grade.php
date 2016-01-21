@@ -26,6 +26,14 @@ if(Input::exists()) { // if at least one input has been submitted
         */
 
         $db->delete('grades', array('id', '=', $id));
+
+        /*
+            Update course
+        */
+
+        $category_id = $db->get('grades', array('id', '=', $id))->first()->category_id;
+        $course_id = $db->get('grade_categories', array('id', '=', $category_id))->first()->course_id;
+        $db->update('courses', $course_id, array('updated' => date('Y-m-d')));
     }
 }
 ?>
