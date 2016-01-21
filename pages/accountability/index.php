@@ -19,7 +19,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>F-2 Foxes | Sign Out</title>
+    <title>F-2 Foxes | Accountability</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -329,6 +329,7 @@
             </ul>
           </div>
         </nav>
+
       </header>
       <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar">
@@ -362,7 +363,6 @@
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
               </a>
             </li>
-            <?php if($user->data()->role >= 3) { ?>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-user"></i>
@@ -371,15 +371,9 @@
               </a>
               <ul class="treeview-menu" style="display: none;">
                 <li><a href="../../pages/users"><i class="fa fa-circle-o"></i> Users</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Groups</a></li>
               </ul>
             </li>
-            <?php } ?>
-            <!--<li>
-              <a href="../../pages/mailbox">
-                <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                <small class="label pull-right bg-yellow">12</small>
-              </a>
-            </li>-->
             <li>
               <a href="../../pages/training">
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
@@ -387,17 +381,17 @@
             </li>
             <li>
               <a href="../../pages/grades">
-                <i class="fa fa-graduation-cap"></i> <span>My Grades</span>
+                <i class="fa fa-graduation-cap"></i> <span>Grades</span>
               </a>
             </li>
-            <li class="active">
+            <li>
               <a href="../../pages/signout">
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
-            <li>
+            <li class="active">
               <a href="../../pages/signal">
-                <i class="fa fa-bolt"></i> <span>Signal</span>
+                <i class="fa fa-sign-out"></i> <span>Signal</span>
               </a>
             </li>
             <li>
@@ -405,41 +399,11 @@
                 <i class="fa fa-line-chart"></i> <span>PT Scores</span>
               </a>
             </li>
-            <!--<li class="treeview">
-              <a href="#">
-                <i class="fa fa-users"></i>
-                <span>Squad 1-1</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu" style="display: none;">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Squad 1-1</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Team 1-1a</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Team 1-1b</a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-user-plus"></i>
-                <span>Recruiting</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu" style="display: none;">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Page 1</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Page 2</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Page 3</a></li>
-              </ul>
-            </li>-->
+
           </ul>
         </section>
         <!-- /.sidebar -->
       </aside>
-
-
-
-
-
-
-
 
 
 
@@ -448,19 +412,20 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Sign Out Sheet
+            Accountability
             <small></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="../../"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Sign Out Sheet</li>
+            <li class="active">Accountability</li>
           </ol>
         </section>
 
         <!-- Main content -->
         <section class="content">
           <!-- Alert -->
-          <!-- Alert feature to be implemented later
+          <!--
+          This feature is to be implemented at a later time
           <div class="row">
             <div class="col-xs-12">
                 <div class="alert alert-warning alert-dismissible">
@@ -472,241 +437,109 @@
 
 
 
-          <!-- Singout Sheet Main Body -->
+          <!-- Accountability Sheet Main Body -->
           <div class="row">
-          <!-- This block of code shows the current signouts -->
+
+            <!-- This block of code collects form data from signal/index.php -->
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-thumb-tack"></i>
-                     Current Sign Out for the Week of: &nbsp
-                     <?php
-                        $d1 = strtotime("this week");
-                        echo date("d M  Y", $d1);
-                     ?>
+                  <h3 class="box-title"><i class="icon fa fa-check"></i>
+                     Accountability
                   </h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 100px;">
+                <div class="box-body" style="min-height: 100px;">
                 <!-- main code goes here -->
+
+
+                <?php
+                  // check if the correct pin has been inputted
+                  // also check if a date was inputted
+                  $pin = Input::get('pin');
+                  $date = Input::get('date');
+
+                  // normally outputs date in really wierd format. change using string functions to mm/dd/yyyy
+                  // the get method only outputs strings. so can't use date_format or strftime
+                  $year = substr($date,0,4);
+                  $date = $date . "-";
+                  $date = $date . $year;
+                  $date = substr($date,5);
+
+
+                  $event = Input::get('event');
+
+                  if ($pin != 6219) {
+                    echo "The pin number was incorrect please try again. ";
+                    echo '<a href="../../pages/signal/">Try Again</a>';
+                    break;
+                  }
+
+                  if ($date == "") {
+                    echo "A date was not selected. ";
+                    echo '<a href="../../pages/signal/">Try Again</a>';
+                    break;
+                  }
+                ?>
+
+                <form action="../../actions/create/accountability.php" method="post">
+                <input type="hidden" name="token" value="<?php echo $token; ?>" >
+                <label>Performing Accountability for: &nbsp <?php echo $event; ?> &nbsp On &nbsp <?php echo $date; ?> </label>
                 <table class="table">
                   <tr>
-                    <?php
-                      // draw in training times for the current semester, the admin can change
-                      // these training times to add special events or account for corps changes
-                      $train = $db->get('train_times', array('1','=','1'))->results();
-
-                      foreach($train as $i) {
-                        $myString = $i->times;
-                        // in the database, the training times are stored as comma seperated values
-                        // the explode function converts csv to a normal php array
-                        $timeArray = explode(',',$myString);
-                      }
-
-                      foreach($timeArray as $i) {
-                        echo "<td><b>" . $i . "</b></td>";
-                      }
-                      ?>
+                    <td><b>Name</b></td> <td><b>Reason</b></td> <td><b>Not Here?</b></td>
                   </tr>
 
-                  <tr>
-                    <?php
-                      // retreive signout CSV for the current week
-                      $signOuts = $db->get('signout', array('user_id','=', $user->data()->id))->results();
-
-                      // we explode the string into a php array to display in the next table row
-                      foreach($signOuts as $i) {
-                        $myString = $i->current_week;
-                        // in the database, the training times are stored as comma seperated values
-                        // the explode function converts csv to a normal php array
-                        $try = explode(',',$myString);
-                      }
-
-                      $j = 0;
-                      while ($j < count($timeArray)) {
-                        // the numBoxes string adds a string of html checkboxes
-                        echo "<td>" . $try[$j] . "</td>";
-                        $j++;
-                      }
-                    ?>
-                  </tr>
-                </table>
-                </div>
-              </div>
-              <!-- /.nav-tabs-custom -->
-            </div>
-
-
-
-            <!-- This block of code is to submit new Signouts -->
-            <div class="col-xs-12">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-arrow-right"></i>
-                     Edit Current Sign Out
-                  </h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 100px;">
-                <!-- main code goes here -->
-
-                <form action = "../../actions/edit/signout.php" method = "post">
-                <table class = "table">
-
-                  <!-- Table Header -->
-                  <tr>
-                    <!-- the database contains the current weekly training times in the train_times table -->
-                    <?php
-                      // recreate the first row as in the current signout top block
-                      foreach($timeArray as $i) {
-                        echo "<td><b>" . $i . "</b></td>";
-                      }
-                    ?>
-                  </tr>
-
-                  <tr>
-                  <!-- we now need to create a row of checkboxes based on the number of users -->
                   <?php
-                    // determine the amount of boxes we will need per row based off the number of weekly training times
-                    $j = 0;
-                    while ($j < count($timeArray)) {
-                      // the numBoxes string adds a string of html checkboxes
-                      echo "<td>" . '<input type="checkbox" name="' . $j . '">' . "</td>";
-                      $j++;
-                    }
-                  ?>
-                  </tr>
-                </table>
-                <b> &nbsp Select Reason for Sign Out </b> <br>
-                &nbsp <select name="reason">
-                  <option value="Work"> Work </option>
-                  <option value="Class"> Class </option>
-                  <option value="Lab"> Lab </option>
-                  <option value="Tutoring"> Tutoring </option>
-                  <option value="Student Org"> Student Org </option>
-                  <option value="Army"> Army </option>
-                  <option value="Rudders"> Rudders </option>
-                  <option value="Ranger Challenge"> Ranger Challenge </option>
-                  <option value="Fish Drill Team"> Fish Drill Team </option>
-                  <option value="Ross Volunteers"> Ross Volunteers </option>
-                  <option value="Recon CO"> Recon CO </option>
-                  <option value="Seal PLT"> Seal PLT </option>
-                  <option value="Corps Athletics"> Corps Athletics </option>
-                  <option value="Intramurals"> Intramurals </option>
-                  <option value="Other"> Other </option>
-                  <option values="none"> none </option>
-                </select>
-                <input type="hidden" name="token" value="<?php echo $token; ?>" >
-                <input type="hidden" name="numboxes" value="<?php echo count($timeArray); ?>" >
-                <input type="submit"> <br> <br>
-                </form>
-                </div>
-              </div>
-              <!-- /.nav-tabs-custom -->
-            </div>
-
-
-
-            <!-- this block of code shows the current outfit signouts -->
-            <div class="col-xs-12">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title"><i class="icon fa fa-archive"></i> Outfit Sign Outs for the Week of: &nbsp
-                    <?php
-                       echo date("d M  Y", $d1);
-                    ?>
-                  </h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body no-padding" style="min-height: 400px;">
-                <!-- main code goes here -->
-
-                <table class = "table">
-                  <!-- first table row -->
-                  <tr>
-                    <td><b>Name</b></td>
-                    <!-- the database contains the current weekly training times in the train_times table -->
-                    <?php
-                      // draw in training times for the current semester, the admin can change
-                      // these training times to add special events or account for corps changes
-                      $train = $db->get('train_times', array('1','=','1'))->results();
-
-                      foreach($train as $i) {
-                        $myString = $i->times;
-                        // in the database, the training times are stored as comma seperated values
-                        // the explode function converts csv to a normal php array
-                        $timeArray = explode(',',$myString);
-                      }
-
-                      foreach($timeArray as $i) {
-                        echo "<td><b>" . $i . "</b></td>";
-                      }
-                    ?>
-                  </tr>
-
-                  <!-- display all users and their signouts -->
-                  <?php
-                    #$tableNames = $db->get('users', array('1','=','1'))->results();
-                    #$signOuts = $db->get('signout', array('1','=','1'))->results();
-                    #var_dump($signOuts);
-                    #echo "<br>";
+                    // get all of the users w/ their signouts
                     $sql = "SELECT users.last, users.first, signout.current_week
                             FROM users INNER JOIN signout ON
                             users.id = signout.user_id";
-                    $usersWithSignOut = $db->query($sql)->results();
+                    $users = $db->query($sql)->results();
 
-                    // loop through the joined array of users with their signout CSVs
-                    foreach($usersWithSignOut as $i) {
-                      // fill out the name column first
-                      $name = $i->last . ", " . $i->first;
-                      echo "<tr>" . "<td>" . $name . "</td>";
+                    // before looping through each user, find the correct position in the CSV of train_times
+                    // using the $event
+                    $trainTimes = Input::get('train_times');
+                    $pos = strpos($trainTimes,$event);
 
-                      $myString = $i->current_week;
-                      // append an extra comma to myString for so the final reason
-                      // can be determined. reference the while loop below
-                      $myString = $myString . ",";
-                      $j = 0;
-                      // we need to fill the remaining columns
-                      while ($j < count($timeArray)) {
-                        // strstr returns all characters to the left of ,
-                        // which gives us the reason
-                        $tempString = strstr($myString,',',true);
-                        echo "<td>" . $tempString . "</td>";
+                    // the number of commas till end of string
+                    // this number tells how many commas to go back on for reasons
+                    $count = substr_count($trainTimes,",", $pos);
 
-                        // get rid of the the used reason
-                        $myString = strstr($myString,',');
-                        // get rid of the first character which is always ,
-                        $myString = substr($myString,1);
-                        $j++;
-                      }
-                      echo "</tr>";
-                    }
-
-
-
-                    /*
                     $j = 0;
-                    while ($j < count($timeArray)) {
-                      // the numBoxes string adds a string of html checkboxes
-                      $add = "<td>" . '<input type="checkbox" name="hi">' . "</td>";
-                      $numBoxes = $numBoxes . $add;
+                    // continue making the html table using database data
+                    foreach($users as $i) {
+                      $name = $i->last . ", " . $i->first;
+
+                      // grab the current week
+                      $reason = $i->current_week;
+                      // turn it into an array
+                      $reason = explode(",",$reason);
+                      // in calculating $count, we know how many commas we need to go back
+                      // from the end of the string. This can related to a position in an array of reasons
+                      // the easiest appraoch is to reverse the array and directly use the position
+                      // it helps to write it out!
+                      $reason = array_reverse($reason);
+                      $reason = $reason[$count];
+                      echo "<tr>" .
+                      "<td>" . $name . "</td>" .
+                      "<td>" . $reason . "</td>" .
+                      "<td>" . '<input type="checkbox" name="' . $j . '">' . "</td>" .
+                      "</tr>";
                       $j++;
                     }
-
-                    // loop through each user
-                    foreach($tableNames as $i) {
-                      // obtain the name to dislay
-                      //$name = $i->last . ", " . $i->first;
-                      //echo "<tr><td>" . $name . "</td>" . $numBoxes . "</tr>";
-                      //echo "<tr>" . "<td>" . $name . "</td>";
-                      //echo $name . "<br>";
-                      //$signOuts = $db->get('signout', array('user_id','=', $i->id))->results();
-                      //var_dump($signOuts);
-
-                    } */
                   ?>
-
                 </table>
+
+                <!-- using a similar approach from pages/signout/index.php, gather the number of rows -->
+                <input type="hidden" name="numrows" value="<?php echo $j; ?>" >
+                <!-- also pass on the event and date information -->
+                <input type="hidden" name="date" value="<?php echo $date; ?>" >
+                <input type="hidden" name="event" value="<?php echo $event; ?>" >
+                <input type="submit">
+                </form>
+
+
                 </div>
               </div>
               <!-- /.nav-tabs-custom -->
@@ -726,16 +559,16 @@
       <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-          <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+          <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
           <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
           <!-- Home tab content -->
-          <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">Coming Soon</h3>
+          <div class="tab-pane" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Recent Activity</h3>
             <ul class="control-sidebar-menu">
-              <!--<li>
+              <li>
                 <a href="javascript::;">
                   <i class="menu-icon fa fa-birthday-cake bg-red"></i>
                   <div class="menu-info">
@@ -770,15 +603,65 @@
                     <p>Execution time 5 seconds</p>
                   </div>
                 </a>
-              </li>-->
+              </li>
+            </ul><!-- /.control-sidebar-menu -->
+
+            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Custom Template Design
+                    <span class="label label-danger pull-right">70%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Update Resume
+                    <span class="label label-success pull-right">95%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Laravel Integration
+                    <span class="label label-warning pull-right">50%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript::;">
+                  <h4 class="control-sidebar-subheading">
+                    Back End Framework
+                    <span class="label label-primary pull-right">68%</span>
+                  </h4>
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                  </div>
+                </a>
+              </li>
             </ul><!-- /.control-sidebar-menu -->
 
           </div><!-- /.tab-pane -->
+          <!-- Stats tab content -->
+          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
           <!-- Settings tab content -->
           <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
-              <h3 class="control-sidebar-heading">Coming Soon</h3>
-              <!--<div class="form-group">
+              <h3 class="control-sidebar-heading">General Settings</h3>
+              <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Report panel usage
                   <input type="checkbox" class="pull-right" checked>
@@ -786,7 +669,7 @@
                 <p>
                   Some information about this general settings option
                 </p>
-              </div>
+              </div><!-- /.form-group -->
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
@@ -796,7 +679,7 @@
                 <p>
                   Other sets of options are available
                 </p>
-              </div>
+              </div><!-- /.form-group -->
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
@@ -806,7 +689,7 @@
                 <p>
                   Allow the user to show his name in blog posts
                 </p>
-              </div>
+              </div><!-- /.form-group -->
 
               <h3 class="control-sidebar-heading">Chat Settings</h3>
 
@@ -815,21 +698,21 @@
                   Show me as online
                   <input type="checkbox" class="pull-right" checked>
                 </label>
-              </div>
+              </div><!-- /.form-group -->
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Turn off notifications
                   <input type="checkbox" class="pull-right">
                 </label>
-              </div>
+              </div><!-- /.form-group -->
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Delete chat history
                   <a href="javascript::;" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
                 </label>
-              </div>-->
+              </div><!-- /.form-group -->
             </form>
           </div><!-- /.tab-pane -->
         </div>

@@ -395,6 +395,11 @@
                 <i class="fa fa-sign-out"></i> <span>Sign Out Sheet</span>
               </a>
             </li>
+            <li>
+              <a href="../../pages/signal">
+                <i class="fa fa-bolt"></i> <span>Signal</span>
+              </a>
+            </li>
             <li class="active">
               <a href="../../pages/pt">
                 <i class="fa fa-line-chart"></i> <span>PT Scores</span>
