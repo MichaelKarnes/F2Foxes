@@ -363,6 +363,7 @@
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
               </a>
             </li>
+            <?php if($user->data()->role >= 3) { ?>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-user"></i>
@@ -371,9 +372,9 @@
               </a>
               <ul class="treeview-menu" style="display: none;">
                 <li><a href="../../pages/users"><i class="fa fa-circle-o"></i> Users</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Groups</a></li>
               </ul>
             </li>
+            <?php } ?>
             <li>
               <a href="../../pages/training">
                 <i class="fa fa-calendar"></i> <span>Training Schedule</span>
