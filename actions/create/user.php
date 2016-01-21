@@ -18,7 +18,7 @@ if(Input::exists()) { // if at least one input has been submitted
         $password = Input::get('password'); // Password
         $role = Input::get('role'); // Role
 
-        $salt = utf8_encode(Hash::salt(32)); // create a salt of length 32, essentially a string of 32 random characters
+        $salt = Hash::salt(32); // create a salt of length 32, essentially a string of 32 random characters
 
         $user = new User(); // create a blank user object
         $hashedpw = Hash::make(Input::get('password'), $salt); // hash the password with the salt to create an uncrackable password
