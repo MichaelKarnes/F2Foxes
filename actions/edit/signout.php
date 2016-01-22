@@ -23,7 +23,6 @@
 
             if (isset($idForUpdate) == TRUE) {
               $tempArray = explode(",",$i->current_week);
-              var_dump($tempArray);
 
               // added j = 0, shouldn't change anything
               $j = 0;
